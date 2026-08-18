@@ -10,10 +10,12 @@ import {
 } from '../../shared/components/select-picker/select-picker';
 import { SecurityService } from '../../core/services/security.service';
 import { NativeIntegrationService } from '../../core/services/native-integration.service';
+import { AppLanguage, I18nService } from '../../core/i18n/i18n.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-settings',
-  imports: [ReactiveFormsModule, SelectPicker],
+  imports: [ReactiveFormsModule, SelectPicker, TranslatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './settings.html',
   styleUrls: ['./settings.scss', './settings.fields.scss'],
@@ -24,6 +26,12 @@ export class SettingsPage {
   private readonly notificationService = inject(NotificationService);
   private readonly security = inject(SecurityService);
   protected readonly native = inject(NativeIntegrationService);
+  protected readonly i18n = inject(I18nService);
+  protected readonly languageOptions: readonly SelectPickerOption[] = [
+    { value: 'en', label: 'English' },
+    { value: 'hi', label: 'हिन्दी' },
+    { value: 'ta', label: 'தமிழ்' },
+  ];
   protected readonly password = new FormControl('', { nonNullable: true });
   protected readonly confirmPassword = new FormControl('', { nonNullable: true });
   protected readonly passwordPrompt = signal<'CREATE' | 'RESTORE' | null>(null);
@@ -36,23 +44,26 @@ export class SettingsPage {
   protected readonly status = signal('');
   protected readonly busy = signal(false);
   protected readonly themeOptions: readonly SelectPickerOption[] = [
-    { value: 'LIGHT', label: 'Light', icon: 'sunny-outline' },
-    { value: 'DARK', label: 'Dark', icon: 'moon-outline' },
+    { value: 'LIGHT', label: 'i18n.settings.light', icon: 'sunny-outline' },
+    { value: 'DARK', label: 'i18n.settings.dark', icon: 'moon-outline' },
     {
       value: 'AUTOMATIC',
-      label: 'Automatic',
-      detail: 'Follow device',
+      label: 'i18n.settings.automatic',
+      detail: 'i18n.settings.followDevice',
       icon: 'phone-portrait-outline',
     },
   ];
   protected readonly reminderOptions: readonly SelectPickerOption[] = [7, 5, 3, 2, 1, 0].map(
     (days) => ({
       value: String(days),
-      label: days === 0 ? 'On predicted day' : `${days} day${days === 1 ? '' : 's'} before`,
+      label: days === 0 ? 'i18n.settings.predictedDay' : `i18n.settings.daysBefore.${days}`,
     }),
   );
   protected setTheme(value: string): void {
     void this.store.updateSettings({ ...this.store.settings(), theme: value as ThemePreference });
+  }
+  protected setLanguage(value: string): void {
+    this.i18n.setLanguage(value as AppLanguage);
   }
   protected async configurePin(): Promise<void> {
     try {

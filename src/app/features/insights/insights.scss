@@ -1,9 +1,10 @@
 .summary-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.7rem;
 }
 .summary-grid article {
+  min-width: 0;
   display: grid;
   gap: 0.15rem;
   box-shadow: none;
@@ -18,6 +19,7 @@
   text-transform: capitalize;
 }
 .section-heading {
+  min-width: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -74,6 +76,7 @@
 }
 .insight {
   display: flex;
+  min-width: 0;
   gap: 0.8rem;
   box-shadow: none;
 }
@@ -92,11 +95,21 @@
   margin: 0 0 0.25rem;
   font-size: 1rem;
 }
+.insight > div:last-child {
+  min-width: 0;
+}
 .insight p {
   margin: 0;
   color: var(--text-muted);
   font-size: 0.85rem;
   line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.export-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
 }
 .ranked {
   display: grid;

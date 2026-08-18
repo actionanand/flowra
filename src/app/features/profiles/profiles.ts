@@ -1,6 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, Component, inject, signal } from '@angular/core';
 import { Profile, ReproductiveStage } from '../../core/models/app.models';
 import { AppStore } from '../../core/services/app-store.service';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ProfileForm } from '../../shared/components/profile-form/profile-form';
 import {
   SelectPicker,
@@ -9,7 +10,7 @@ import {
 
 @Component({
   selector: 'app-profiles',
-  imports: [ProfileForm, SelectPicker],
+  imports: [ProfileForm, SelectPicker, TranslatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './profiles.html',
   styleUrls: ['./profiles.scss', './profiles.fields.scss'],
@@ -33,10 +34,7 @@ export class ProfilesPage {
     'UNKNOWN',
   ].map((value) => ({
     value,
-    label: value
-      .toLowerCase()
-      .replaceAll('_', ' ')
-      .replace(/^./, (letter) => letter.toUpperCase()),
+    label: `i18n.profilesStages.${value.toLowerCase()}`,
   }));
   protected async updateStage(profile: Profile, value: string): Promise<void> {
     const stage = value as ReproductiveStage;

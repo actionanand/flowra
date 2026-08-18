@@ -2,6 +2,8 @@ import { CUSTOM_ELEMENTS_SCHEMA, Component, computed, inject, signal } from '@an
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { DailyLog, FlowLevel, Severity } from '../../core/models/app.models';
 import { AppStore } from '../../core/services/app-store.service';
+import { TranslatePipe } from '@ngx-translate/core';
+import { I18nService } from '../../core/i18n/i18n.service';
 import { displayDate, todayCalendarDate } from '../../core/utils/calendar-date';
 import {
   SelectPicker,
@@ -10,13 +12,14 @@ import {
 
 @Component({
   selector: 'app-log',
-  imports: [ReactiveFormsModule, SelectPicker],
+  imports: [ReactiveFormsModule, SelectPicker, TranslatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './log.html',
   styleUrl: './log.scss',
 })
 export class LogPage {
   protected readonly store = inject(AppStore);
+  private readonly i18n = inject(I18nService);
   protected readonly date = new FormControl(todayCalendarDate(), { nonNullable: true });
   protected readonly notes = new FormControl('', { nonNullable: true });
   protected readonly customSymptom = new FormControl('', { nonNullable: true });
@@ -28,12 +31,12 @@ export class LogPage {
   protected readonly overallMood = signal<1 | 2 | 3 | 4 | 5 | undefined>(undefined);
   protected readonly saved = signal(false);
   protected readonly flowOptions: readonly SelectPickerOption[] = [
-    { value: '', label: 'No flow' },
-    { value: 'SPOTTING', label: 'Spotting' },
-    { value: 'LIGHT', label: 'Light' },
-    { value: 'MEDIUM', label: 'Medium' },
-    { value: 'HEAVY', label: 'Heavy' },
-    { value: 'VERY_HEAVY', label: 'Very heavy' },
+    { value: '', label: 'i18n.log.noFlow' },
+    { value: 'SPOTTING', label: 'i18n.log.spotting' },
+    { value: 'LIGHT', label: 'i18n.log.light' },
+    { value: 'MEDIUM', label: 'i18n.log.medium' },
+    { value: 'HEAVY', label: 'i18n.log.heavy' },
+    { value: 'VERY_HEAVY', label: 'i18n.log.veryHeavy' },
   ];
   protected readonly symptomGroups = [
     {
@@ -99,7 +102,13 @@ export class LogPage {
     'Period underwear',
     'Other',
   ];
-  protected readonly dateLabel = computed(() => displayDate(this.date.value, 'EEEE, d MMMM'));
+  protected readonly dateLabel = computed(() =>
+    displayDate(this.date.value, 'EEEE, d MMMM', this.i18n.language()),
+  );
+  protected logLabel(kind: 'mood' | 'product' | 'symptom' | 'symptomGroup', value: string): string {
+    const key = value.toLowerCase().replaceAll(' ', '').replaceAll('&', 'and');
+    return `logLabels.${kind}.${key}`;
+  }
 
   protected setFlow(value: string): void {
     this.flow.set(value as FlowLevel | '');

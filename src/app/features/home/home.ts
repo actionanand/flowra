@@ -3,6 +3,8 @@ import { DecimalPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { calculateCycleStatistics } from '../../core/cycle-engine/cycle-statistics';
 import { AppStore } from '../../core/services/app-store.service';
+import { TranslatePipe } from '@ngx-translate/core';
+import { I18nService } from '../../core/i18n/i18n.service';
 import {
   calendarDaysBetween,
   displayDate,
@@ -11,13 +13,14 @@ import {
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, DecimalPipe],
+  imports: [RouterLink, DecimalPipe, TranslatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './home.html',
   styleUrls: ['./home.scss', './home.flags.scss'],
 })
 export class Home {
   protected readonly store = inject(AppStore);
+  private readonly i18n = inject(I18nService);
   protected readonly today = todayCalendarDate();
   protected readonly cycleLengths = computed(() => {
     const periods = this.store.profilePeriods();
@@ -59,7 +62,14 @@ export class Home {
       return 'No period has been recorded for 12 months. If menopause has been confirmed or matches the situation, update the profile stage.';
     return undefined;
   });
-  protected displayDate = displayDate;
+  protected predictionMessage(): string {
+    const message = this.store.predictionResult()?.message;
+    if (message === 'Not enough history for a reliable prediction.') return 'home.notEnoughHistory';
+    if (message === 'No recorded period yet.') return 'home.noRecordedPeriod';
+    return message ?? 'home.noHistory';
+  }
+  protected displayDate = (value: string, pattern = 'd MMM yyyy') =>
+    displayDate(value, pattern, this.i18n.language());
   protected async primaryPeriodAction(): Promise<void> {
     if (this.store.activePeriod()) await this.store.endPeriod();
     else await this.store.startPeriod();

@@ -9,7 +9,10 @@ import {
   startOfWeek,
   subMonths,
 } from 'date-fns';
+import { enUS, hi, ta } from 'date-fns/locale';
 import { AppStore } from '../../core/services/app-store.service';
+import { TranslatePipe } from '@ngx-translate/core';
+import { I18nService } from '../../core/i18n/i18n.service';
 import { RouterLink } from '@angular/router';
 import { DailyLog } from '../../core/models/app.models';
 import {
@@ -33,16 +36,21 @@ interface CalendarDay {
 
 @Component({
   selector: 'app-calendar',
-  imports: [RouterLink],
+  imports: [RouterLink, TranslatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './calendar.html',
   styleUrl: './calendar.scss',
 })
 export class CalendarPage {
   protected readonly store = inject(AppStore);
+  private readonly i18n = inject(I18nService);
   protected readonly viewMonth = signal(startOfMonth(new Date()));
   protected readonly selectedDate = signal(todayCalendarDate());
-  protected readonly monthLabel = computed(() => format(this.viewMonth(), 'MMMM yyyy'));
+  protected readonly monthLabel = computed(() =>
+    format(this.viewMonth(), 'MMMM yyyy', {
+      locale: this.i18n.language() === 'ta' ? ta : this.i18n.language() === 'hi' ? hi : enUS,
+    }),
+  );
   protected readonly days = computed<readonly CalendarDay[]>(() => {
     const month = this.viewMonth();
     const start = startOfWeek(startOfMonth(month), { weekStartsOn: 1 });
@@ -99,8 +107,9 @@ export class CalendarPage {
     this.viewMonth.set(startOfMonth(new Date()));
     this.selectedDate.set(todayCalendarDate());
   }
-  protected displayDate = displayDate;
+  protected displayDate = (value: string, pattern = 'd MMM yyyy') =>
+    displayDate(value, pattern, this.i18n.language());
   protected symptomNames(log: DailyLog): string {
-    return log.symptoms.map((symptom) => symptom.name).join(', ') || 'None';
+    return log.symptoms.map((symptom) => symptom.name).join(', ') || 'calendar.none';
   }
 }

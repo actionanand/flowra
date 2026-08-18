@@ -1,42 +1,46 @@
 <a class="skip-link" href="#main-content">Skip to main content</a>
 <div class="app-shell">
   <header class="app-header">
-    <a class="brand" routerLink="/home" aria-label="Flowra home"
+    <a class="brand" routerLink="/home" [attr.aria-label]="'app.home' | translate"
       ><img ngSrc="flowra.png" width="44" height="44" priority alt="" /><span
-        ><strong>Flowra</strong><small>Private cycle care</small></span
+        ><strong>Flowra</strong><small>{{ 'app.privateCare' | translate }}</small></span
       ></a
     >
     @if (store.profiles().length) {
       <div class="profile-switcher">
-        <span class="sr-only">Active profile</span
+        <span class="sr-only">{{ 'app.activeProfile' | translate }}</span
         ><app-select-picker
           [compact]="true"
           [value]="store.activeProfileId()"
           [options]="profileOptions()"
-          sheetTitle="Switch profile"
+          [sheetTitle]="'app.switchProfile' | translate"
           (valueChange)="store.selectProfile($event)"
         />
       </div>
     }
     <span class="private-badge"
-      ><ion-icon name="shield-checkmark-outline" aria-hidden="true" /> On device</span
+      ><ion-icon name="shield-checkmark-outline" aria-hidden="true" />
+      {{ 'app.onDevice' | translate }}</span
     >
   </header>
-  <aside class="side-nav" aria-label="Main navigation">
+  <aside class="side-nav" [attr.aria-label]="'app.mainNavigation' | translate">
     <div class="side-brand">
       <img ngSrc="flowra.png" width="54" height="54" alt="" />
-      <div><strong>Flowra</strong><span>Your rhythm, privately.</span></div>
+      <div>
+        <strong>Flowra</strong><span>{{ 'app.yourRhythm' | translate }}</span>
+      </div>
     </div>
     <nav>
       @for (item of nav; track item.path) {
         <a [routerLink]="item.path" routerLinkActive="active"
-          ><ion-icon [name]="item.icon" aria-hidden="true" /><span>{{ item.label }}</span></a
+          ><ion-icon [name]="item.icon" aria-hidden="true" /><span>{{
+            item.label | translate
+          }}</span></a
         >
       }
     </nav>
     <p>
-      <ion-icon name="lock-closed-outline" aria-hidden="true" /> Your health data stays on this
-      device.
+      <ion-icon name="lock-closed-outline" aria-hidden="true" /> {{ 'app.deviceData' | translate }}
     </p>
   </aside>
   <main id="main-content" tabindex="-1">
@@ -45,28 +49,51 @@
     } @else {
       <div class="loading" role="status">
         <span></span>
-        <p>Opening your private space…</p>
+        <p>{{ 'app.opening' | translate }}</p>
       </div>
     }
   </main>
-  <nav class="bottom-nav" aria-label="Main navigation">
+  <nav class="bottom-nav" [attr.aria-label]="'app.mainNavigation' | translate">
     @for (item of nav.slice(0, 5); track item.path) {
       <a [routerLink]="item.path" routerLinkActive="active"
-        ><ion-icon [name]="item.icon" aria-hidden="true" /><span>{{ item.label }}</span></a
+        ><ion-icon [name]="item.icon" aria-hidden="true" /><span>{{
+          item.label | translate
+        }}</span></a
       >
     }
   </nav>
 </div>
-@if (store.ready() && !store.profiles().length && onboardingOpen()) {
+@if (store.ready() && languageSetupOpen()) {
+  <div class="onboarding-backdrop">
+    <section
+      class="onboarding language-onboarding"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="language-title"
+    >
+      <img ngSrc="flowra.png" width="76" height="76" alt="" />
+      <p class="eyebrow">{{ 'app.privateByDesign' | translate }}</p>
+      <h1 id="language-title">{{ 'app.chooseLanguage' | translate }}</h1>
+      <p>{{ 'app.chooseLanguageText' | translate }}</p>
+      <app-select-picker
+        [value]="i18n.language()"
+        [options]="languageOptions"
+        [sheetTitle]="'app.language' | translate"
+        (valueChange)="chooseLanguage($event)"
+      />
+      <button class="primary-button language-continue" type="button" (click)="confirmLanguage()">
+        {{ 'app.continue' | translate }}
+      </button>
+    </section>
+  </div>
+}
+@if (store.ready() && !languageSetupOpen() && !store.profiles().length && onboardingOpen()) {
   <div class="onboarding-backdrop">
     <section class="onboarding" role="dialog" aria-modal="true" aria-labelledby="welcome-title">
       <img ngSrc="flowra.png" width="76" height="76" alt="" />
-      <p class="eyebrow">Private by design</p>
-      <h1 id="welcome-title">Welcome to Flowra</h1>
-      <p>
-        Create your first independent profile. You can add profiles for yourself or someone you care
-        for later.
-      </p>
+      <p class="eyebrow">{{ 'app.privateByDesign' | translate }}</p>
+      <h1 id="welcome-title">{{ 'app.welcome' | translate }}</h1>
+      <p>{{ 'app.welcomeText' | translate }}</p>
       <app-profile-form (saved)="onboardingOpen.set(false)" />
     </section>
   </div>
@@ -74,13 +101,13 @@
 @if (locked()) {
   <div class="lock-backdrop">
     <section class="lock-card" role="dialog" aria-modal="true" aria-labelledby="lock-title">
-      <img ngSrc="flowra.png" width="70" height="70" alt="" /><span class="eyebrow"
-        >Private space</span
-      >
-      <h1 id="lock-title">Flowra is locked</h1>
-      <p>Enter your app PIN to continue.</p>
+      <img ngSrc="flowra.png" width="70" height="70" alt="" /><span class="eyebrow">{{
+        'app.privateSpace' | translate
+      }}</span>
+      <h1 id="lock-title">{{ 'app.locked' | translate }}</h1>
+      <p>{{ 'app.enterPin' | translate }}</p>
       <form [formGroup]="unlockForm" (ngSubmit)="unlock()">
-        <label for="unlock-pin">PIN</label
+        <label for="unlock-pin">{{ 'app.pin' | translate }}</label
         ><input
           id="unlock-pin"
           type="password"
@@ -92,7 +119,7 @@
         @if (unlockError()) {
           <p class="unlock-error" role="alert">{{ unlockError() }}</p>
         }
-        <button class="primary-button" type="submit">Unlock</button>
+        <button class="primary-button" type="submit">{{ 'app.unlock' | translate }}</button>
         @if (store.settings().biometricEnabled && native.biometricAvailable()) {
           <button class="secondary-button" type="button" (click)="unlockWithBiometric()">
             <ion-icon name="finger-print-outline" aria-hidden="true" /> Unlock with biometrics

@@ -1,8 +1,8 @@
 <section class="page">
   <header class="page-heading">
     <div>
-      <h1>Daily check-in</h1>
-      <p>Notice what is happening without judgement.</p>
+      <h1>{{ 'pages.log' | translate }}</h1>
+      <p>{{ 'pages.logText' | translate }}</p>
     </div>
     <span class="pill"
       ><ion-icon name="calendar-outline" aria-hidden="true" />{{ dateLabel() }}</span
@@ -10,9 +10,9 @@
   </header>
   <div class="log-layout">
     <aside class="date-card card">
-      <label for="log-date">Entry date</label
+      <label for="log-date">{{ 'log.entryDate' | translate }}</label
       ><input id="log-date" type="date" [formControl]="date" />
-      <p>Cycle day {{ store.currentCycleDay() ?? '—' }}</p>
+      <p>{{ 'calendar.cycleDay' | translate: { count: store.currentCycleDay() ?? '—' } }}</p>
     </aside>
     <div class="log-sections">
       <section class="card" aria-labelledby="flow-heading">
@@ -21,17 +21,17 @@
             ><ion-icon name="water-outline" aria-hidden="true"
           /></span>
           <div>
-            <h2 id="flow-heading">Flow</h2>
-            <p>Choose what best describes today.</p>
+            <h2 id="flow-heading">{{ 'log.flow' | translate }}</h2>
+            <p>{{ 'log.flowHelp' | translate }}</p>
           </div>
         </div>
         <app-select-picker
           [value]="flow()"
           [options]="flowOptions"
-          sheetTitle="Flow today"
+          [sheetTitle]="'log.flowToday' | translate"
           (valueChange)="setFlow($event)"
         />
-        <div class="chips products" aria-label="Menstrual products">
+        <div class="chips products" [attr.aria-label]="'log.products' | translate">
           @for (product of productOptions; track product) {
             <button
               type="button"
@@ -39,7 +39,7 @@
               [attr.aria-pressed]="products().includes(product)"
               (click)="toggle('products', product)"
             >
-              {{ product }}
+              {{ logLabel('product', product) | translate }}
             </button>
           }
         </div>
@@ -50,11 +50,11 @@
             ><ion-icon name="happy-outline" aria-hidden="true"
           /></span>
           <div>
-            <h2 id="mood-heading">Mood</h2>
-            <p>More than one can be true.</p>
+            <h2 id="mood-heading">{{ 'log.mood' | translate }}</h2>
+            <p>{{ 'log.moodHelp' | translate }}</p>
           </div>
         </div>
-        <div class="mood-scale" aria-label="Overall mood, 1 very low to 5 very good">
+        <div class="mood-scale" [attr.aria-label]="'log.moodScale' | translate">
           @for (value of [1, 2, 3, 4, 5]; track value) {
             <button
               type="button"
@@ -83,7 +83,7 @@
               [attr.aria-pressed]="moods().includes(mood)"
               (click)="toggle('moods', mood)"
             >
-              {{ mood }}
+              {{ logLabel('mood', mood) | translate }}
             </button>
           }
         </div>
@@ -94,25 +94,25 @@
             ><ion-icon name="pulse-outline" aria-hidden="true"
           /></span>
           <div>
-            <h2 id="symptoms-heading">Symptoms</h2>
-            <p>Selected symptoms use the severity below.</p>
+            <h2 id="symptoms-heading">{{ 'log.symptoms' | translate }}</h2>
+            <p>{{ 'log.symptomsHelp' | translate }}</p>
           </div>
         </div>
         <fieldset class="severity">
-          <legend>Severity</legend>
+          <legend>{{ 'log.severity' | translate }}</legend>
           @for (level of ['MILD', 'MODERATE', 'SEVERE']; track level) {
             <button
               type="button"
               [class.selected]="severity() === level"
               (click)="severity.set($any(level))"
             >
-              {{ level.toLowerCase() }}
+              {{ 'log.' + level.toLowerCase() | translate }}
             </button>
           }
         </fieldset>
         @for (group of symptomGroups; track group.name) {
           <div class="symptom-group">
-            <h3>{{ group.name }}</h3>
+            <h3>{{ logLabel('symptomGroup', group.name) | translate }}</h3>
             <div class="chips">
               @for (symptom of group.items; track symptom) {
                 <button
@@ -121,21 +121,23 @@
                   [attr.aria-pressed]="symptoms().includes(symptom)"
                   (click)="toggle('symptoms', symptom)"
                 >
-                  {{ symptom }}
+                  {{ logLabel('symptom', symptom) | translate }}
                 </button>
               }
             </div>
           </div>
         }
         <div class="custom">
-          <label for="custom-symptom">Custom symptom</label>
+          <label for="custom-symptom">{{ 'log.customSymptom' | translate }}</label>
           <div>
             <input
               id="custom-symptom"
               type="text"
               [formControl]="customSymptom"
-              placeholder="Add your own"
-            /><button class="quiet-button" type="button" (click)="addCustomSymptom()">Add</button>
+              [placeholder]="'log.addOwn' | translate"
+            /><button class="quiet-button" type="button" (click)="addCustomSymptom()">
+              {{ 'log.add' | translate }}
+            </button>
           </div>
         </div>
       </section>
@@ -143,17 +145,17 @@
         <label for="notes"
           ><span class="section-icon"
             ><ion-icon name="document-text-outline" aria-hidden="true" /></span
-          ><strong>Private notes</strong></label
+          ><strong>{{ 'log.privateNotes' | translate }}</strong></label
         ><textarea
           id="notes"
           rows="4"
           [formControl]="notes"
-          placeholder="Anything else you want to remember…"
+          [placeholder]="'log.notesPlaceholder' | translate"
         ></textarea>
       </section>
       <button class="save primary-button" type="button" (click)="save()">
         <ion-icon name="checkmark-circle-outline" aria-hidden="true" />{{
-          saved() ? 'Saved privately' : 'Save today’s log'
+          saved() ? ('log.saved' | translate) : ('log.save' | translate)
         }}
       </button>
     </div>

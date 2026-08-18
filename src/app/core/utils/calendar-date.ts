@@ -1,4 +1,7 @@
 import { addDays, differenceInCalendarDays, format, isValid, parseISO, startOfDay } from 'date-fns';
+import { enUS, hi, ta } from 'date-fns/locale';
+
+export type CalendarLanguage = 'en' | 'hi' | 'ta';
 
 export function parseCalendarDate(value: string): Date {
   const parsed = startOfDay(parseISO(value));
@@ -18,6 +21,11 @@ export function todayCalendarDate(): string {
   return format(new Date(), 'yyyy-MM-dd');
 }
 
-export function displayDate(value: string, pattern = 'd MMM yyyy'): string {
-  return format(parseCalendarDate(value), pattern);
+export function displayDate(
+  value: string,
+  pattern = 'd MMM yyyy',
+  language: CalendarLanguage = 'en',
+): string {
+  const locale = language === 'ta' ? ta : language === 'hi' ? hi : enUS;
+  return format(parseCalendarDate(value), pattern, { locale });
 }

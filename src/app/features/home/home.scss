@@ -42,9 +42,12 @@
   box-shadow: 0 5px 18px color-mix(in srgb, var(--primary) 14%, transparent);
 }
 .cycle-orbit span {
+  width: 100%;
   color: var(--text-muted);
   font-size: 0.68rem;
   font-weight: 700;
+  line-height: 1.1;
+  text-align: center;
   text-transform: uppercase;
 }
 .cycle-orbit strong {
@@ -101,10 +104,16 @@
   color: var(--primary);
   background: transparent;
   font-weight: 700;
+  text-align: center;
 }
 .quick-grid {
+  flex: 0 0 auto;
   display: grid;
   gap: 0.8rem;
+  .period-action span {
+    min-width: 0;
+    line-height: 1.25;
+  }
 }
 .quick {
   display: grid;
