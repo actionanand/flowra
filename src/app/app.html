@@ -79,7 +79,7 @@
       >
       <h1 id="lock-title">Flowra is locked</h1>
       <p>Enter your app PIN to continue.</p>
-      <form (ngSubmit)="unlock()">
+      <form [formGroup]="unlockForm" (ngSubmit)="unlock()">
         <label for="unlock-pin">PIN</label
         ><input
           id="unlock-pin"
