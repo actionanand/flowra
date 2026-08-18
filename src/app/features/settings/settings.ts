@@ -25,6 +25,12 @@ export class SettingsPage {
   private readonly security = inject(SecurityService);
   protected readonly native = inject(NativeIntegrationService);
   protected readonly password = new FormControl('', { nonNullable: true });
+  protected readonly confirmPassword = new FormControl('', { nonNullable: true });
+  protected readonly passwordPrompt = signal<'CREATE' | 'RESTORE' | null>(null);
+  protected readonly showPassword = signal(false);
+  protected readonly showConfirmPassword = signal(false);
+  protected readonly promptError = signal('');
+  private pendingRestoreFile: File | null = null;
   protected readonly newPin = new FormControl('', { nonNullable: true });
   protected readonly biometricPin = new FormControl('', { nonNullable: true });
   protected readonly status = signal('');
@@ -133,25 +139,65 @@ export class SettingsPage {
     }
     await this.store.updateReminder({ ...setting, [key]: !setting[key] });
   }
-  protected async createBackup(): Promise<void> {
+  protected openCreateBackupPrompt(): void {
+    this.password.setValue('');
+    this.confirmPassword.setValue('');
+    this.promptError.set('');
+    this.showPassword.set(false);
+    this.showConfirmPassword.set(false);
+    this.status.set('');
+    this.pendingRestoreFile = null;
+    this.passwordPrompt.set('CREATE');
+  }
+  protected onRestoreFileChosen(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    input.value = '';
+    if (!file) return;
+    this.pendingRestoreFile = file;
+    this.password.setValue('');
+    this.confirmPassword.setValue('');
+    this.promptError.set('');
+    this.showPassword.set(false);
+    this.status.set('');
+    this.passwordPrompt.set('RESTORE');
+  }
+  protected closePasswordPrompt(): void {
+    this.passwordPrompt.set(null);
+    this.pendingRestoreFile = null;
+    this.password.setValue('');
+    this.confirmPassword.setValue('');
+    this.promptError.set('');
+  }
+  protected async submitPasswordPrompt(): Promise<void> {
     if (this.password.value.length < 8) {
-      this.status.set('Enter at least 8 characters for the backup password.');
+      this.promptError.set('Use at least 8 characters.');
       return;
     }
+    if (this.passwordPrompt() === 'CREATE' && this.password.value !== this.confirmPassword.value) {
+      this.promptError.set('Passwords do not match.');
+      return;
+    }
+    this.promptError.set('');
+    if (this.passwordPrompt() === 'CREATE') await this.createBackup();
+    else await this.restore();
+  }
+  private async createBackup(): Promise<void> {
     this.busy.set(true);
     try {
       const target = await this.backup.save(await this.backup.create(this.password.value));
       this.status.set(`Encrypted backup saved: ${target}`);
+      this.closePasswordPrompt();
     } catch (error) {
-      this.status.set(error instanceof Error ? error.message : 'Backup failed.');
+      this.promptError.set(error instanceof Error ? error.message : 'Backup failed.');
     } finally {
       this.busy.set(false);
     }
   }
-  protected async restore(event: Event): Promise<void> {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (!file || this.password.value.length < 8) {
-      this.status.set('Choose a backup and enter its password.');
+  private async restore(): Promise<void> {
+    const file = this.pendingRestoreFile;
+    if (!file) {
+      this.promptError.set('Choose a .flowra backup file first.');
       return;
     }
     this.busy.set(true);
@@ -160,12 +206,19 @@ export class SettingsPage {
       this.status.set(
         `Restored ${summary.profiles} profiles, ${summary.periods} periods and ${summary.logs} daily logs. Reopen Flowra to refresh.`,
       );
+      this.closePasswordPrompt();
     } catch (error) {
-      this.status.set(
-        error instanceof Error ? error.message : 'Restore failed without changing existing data.',
-      );
+      this.promptError.set(this.restoreErrorMessage(error));
     } finally {
       this.busy.set(false);
     }
+  }
+  /** Web Crypto reports a wrong password as a generic decrypt failure. */
+  private restoreErrorMessage(error: unknown): string {
+    if (error instanceof SyntaxError)
+      return 'That file is not a Flowra backup. Choose a .flowra file.';
+    if (error instanceof Error && !(error instanceof DOMException) && error.message)
+      return error.message;
+    return 'Incorrect backup password. Your existing data was not changed.';
   }
 }
