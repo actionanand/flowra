@@ -212,7 +212,7 @@
       <button
         class="password-backdrop-close"
         type="button"
-        aria-label="Cancel"
+        [attr.aria-label]="'common.cancel' | translate"
         (click)="closePasswordPrompt()"
       ></button>
       <section
@@ -225,7 +225,11 @@
           <h2 id="backup-password-title">
             {{ mode === 'CREATE' ? 'Backup password' : 'Unlock backup' }}
           </h2>
-          <button type="button" aria-label="Close" (click)="closePasswordPrompt()">
+          <button
+            type="button"
+            [attr.aria-label]="'common.close' | translate"
+            (click)="closePasswordPrompt()"
+          >
             <ion-icon name="close-outline" aria-hidden="true" />
           </button>
         </header>
@@ -238,12 +242,12 @@
         </p>
         <form (submit)="$event.preventDefault(); submitPasswordPrompt()">
           <label
-            ><span>Password</span>
+            ><span>{{ 'settings.password' | translate }}</span>
             <span class="password-input">
               <input
                 [type]="showPassword() ? 'text' : 'password'"
                 autocomplete="new-password"
-                placeholder="At least 8 characters"
+                [placeholder]="'settings.passwordPlaceholder' | translate"
                 [formControl]="password"
               />
               <button
@@ -260,12 +264,12 @@
           </label>
           @if (mode === 'CREATE') {
             <label
-              ><span>Confirm password</span>
+              ><span>{{ 'settings.confirmPassword' | translate }}</span>
               <span class="password-input">
                 <input
                   [type]="showConfirmPassword() ? 'text' : 'password'"
                   autocomplete="new-password"
-                  placeholder="Re-enter password"
+                  [placeholder]="'settings.confirmPasswordPlaceholder' | translate"
                   [formControl]="confirmPassword"
                 />
                 <button

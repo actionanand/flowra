@@ -24,34 +24,34 @@ export class ProfileForm {
     { value: 'OTHER', label: 'i18n.profile.other', icon: 'ellipsis-horizontal-outline' },
   ];
   readonly statusOptions: readonly SelectPickerOption[] = [
-    { value: 'YES', label: 'Yes' },
-    { value: 'NO', label: 'No' },
-    { value: 'UNKNOWN', label: 'Not sure' },
-    { value: 'PREFER_NOT_TO_SAY', label: 'Prefer not to say' },
+    { value: 'YES', label: 'i18n.profile.yes' },
+    { value: 'NO', label: 'i18n.profile.no' },
+    { value: 'UNKNOWN', label: 'i18n.profile.notSure' },
+    { value: 'PREFER_NOT_TO_SAY', label: 'i18n.profile.preferNot' },
   ];
   readonly agePrecisionOptions: readonly SelectPickerOption[] = [
-    { value: 'EXACT_DOB', label: 'Exact date of birth' },
-    { value: 'BIRTH_YEAR', label: 'Birth year only' },
-    { value: 'APPROXIMATE_AGE', label: 'Approximate current age' },
-    { value: 'AGE_RANGE', label: 'Age range' },
+    { value: 'EXACT_DOB', label: 'i18n.profile.exactDob' },
+    { value: 'BIRTH_YEAR', label: 'i18n.profile.birthYearOnly' },
+    { value: 'APPROXIMATE_AGE', label: 'i18n.profile.approximateAge' },
+    { value: 'AGE_RANGE', label: 'i18n.profile.ageRange' },
   ];
   readonly ageRangeOptions: readonly SelectPickerOption[] = [
-    'Under 10',
-    '10–12',
-    '13–15',
-    '16–19',
-    '20–29',
-    '30–39',
-    '40–44',
-    '45–49',
-    '50–55',
-    '56+',
-  ].map((label) => ({ value: label, label }));
+    ['Under 10', 'i18n.profile.under10'],
+    ['10–12', 'i18n.profile.age10to12'],
+    ['13–15', 'i18n.profile.age13to15'],
+    ['16–19', 'i18n.profile.age16to19'],
+    ['20–29', 'i18n.profile.age20to29'],
+    ['30–39', 'i18n.profile.age30to39'],
+    ['40–44', 'i18n.profile.age40to44'],
+    ['45–49', 'i18n.profile.age45to49'],
+    ['50–55', 'i18n.profile.age50to55'],
+    ['56+', 'i18n.profile.age56Plus'],
+  ].map(([value, label]) => ({ value, label }));
   readonly menarcheOptions: readonly SelectPickerOption[] = [
-    { value: 'EXACT', label: 'Exact first-period date' },
-    { value: 'YEAR', label: 'First-period year' },
-    { value: 'APPROXIMATE_AGE', label: 'Approximate age at first period' },
-    { value: 'UNKNOWN', label: 'Unknown' },
+    { value: 'EXACT', label: 'i18n.profile.exactFirstPeriodDate' },
+    { value: 'YEAR', label: 'i18n.profile.firstPeriodYear' },
+    { value: 'APPROXIMATE_AGE', label: 'i18n.profile.approximateFirstPeriodAge' },
+    { value: 'UNKNOWN', label: 'i18n.profile.unknown' },
   ];
   readonly form = new FormGroup({
     name: new FormControl('', {

@@ -6,9 +6,10 @@
     </div>
     <div class="export-actions">
       <button class="secondary-button" type="button" (click)="exportCsv()">
-        <ion-icon name="download-outline" aria-hidden="true" /> CSV</button
+        <ion-icon name="download-outline" aria-hidden="true" />
+        {{ 'insights.csv' | translate }}</button
       ><button class="secondary-button" type="button" (click)="exportPdf()">
-        <ion-icon name="print-outline" aria-hidden="true" /> PDF
+        <ion-icon name="print-outline" aria-hidden="true" /> {{ 'insights.pdf' | translate }}
       </button>
     </div>
   </header>

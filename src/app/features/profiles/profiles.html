@@ -70,7 +70,11 @@
           <span class="eyebrow">{{ 'profilesPage.independent' | translate }}</span>
           <h2 id="add-profile-title">{{ 'profilesPage.addSomeone' | translate }}</h2>
         </div>
-        <button type="button" aria-label="Close" (click)="adding.set(false)">
+        <button
+          type="button"
+          [attr.aria-label]="'profilesPage.close' | translate"
+          (click)="adding.set(false)"
+        >
           <ion-icon name="close-outline" aria-hidden="true" />
           {{ 'profilesPage.close' | translate }}
         </button>

@@ -47,7 +47,7 @@ export class App {
     this.store.profiles().map((profile) => ({
       value: profile.id,
       label: profile.name,
-      detail: this.titleCase(profile.relationship),
+      detail: `i18n.profile.${profile.relationship.toLowerCase()}`,
       icon: 'person-circle-outline',
     })),
   );

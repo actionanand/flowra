@@ -41,7 +41,7 @@
           type="number"
           inputmode="numeric"
           [formControl]="form.controls.birthYear"
-          placeholder="e.g. 1996"
+          [placeholder]="'profile.birthYearPlaceholder' | translate"
       /></label>
     }
     @case ('APPROXIMATE_AGE') {
@@ -53,7 +53,7 @@
           type="number"
           inputmode="numeric"
           [formControl]="form.controls.approximateAge"
-          placeholder="Age"
+          [placeholder]="'profile.agePlaceholder' | translate"
       /></label>
     }
     @case ('AGE_RANGE') {
@@ -103,7 +103,7 @@
             type="number"
             inputmode="numeric"
             [formControl]="form.controls.menarcheYear"
-            placeholder="e.g. 2012"
+            [placeholder]="'profile.firstPeriodYearPlaceholder' | translate"
         /></label>
       }
       @case ('APPROXIMATE_AGE') {
@@ -118,9 +118,9 @@
     }
   }
   <p class="privacy-note">
-    Stored privately on this device. Exact date of birth is never required.
+    {{ 'profile.privacyNote' | translate }}
   </p>
   <button class="primary-button" type="submit" [disabled]="!canSave()">
-    {{ busy() ? 'Saving…' : 'Create profile' }}
+    {{ busy() ? ('profile.saving' | translate) : ('profile.create' | translate) }}
   </button>
 </form>
