@@ -1,0 +1,197 @@
+<section class="page">
+  <header class="page-heading">
+    <div>
+      <h1>Settings</h1>
+      <p>Privacy, appearance, reminders, and portability.</p>
+    </div>
+  </header>
+  <section class="card settings-group">
+    <div class="group-title">
+      <span><ion-icon name="color-palette-outline" aria-hidden="true" /></span>
+      <div>
+        <h2>Appearance</h2>
+        <p>Pink, calm, and comfortable in any light.</p>
+      </div>
+    </div>
+    <div class="picker-field">
+      <span>Theme</span
+      ><app-select-picker
+        [value]="store.settings().theme"
+        [options]="themeOptions"
+        sheetTitle="Choose theme"
+        (valueChange)="setTheme($event)"
+      />
+    </div>
+  </section>
+  @if (store.activeProfile(); as profile) {
+    <section class="card settings-group">
+      <div class="group-title">
+        <span><ion-icon name="notifications-outline" aria-hidden="true" /></span>
+        <div>
+          <h2>Period reminder</h2>
+          <p>Scheduled locally for {{ profile.name }}.</p>
+        </div>
+      </div>
+      <button
+        class="setting-row"
+        type="button"
+        role="switch"
+        [attr.aria-checked]="store.reminderFor(profile.id).enabled"
+        (click)="toggleReminder('enabled')"
+      >
+        <span
+          ><strong>Enable reminder</strong
+          ><small>Default is 3 days before the estimate</small></span
+        ><i [class.on]="store.reminderFor(profile.id).enabled"><b></b></i>
+      </button>
+      <div class="picker-field">
+        <span>Reminder timing</span
+        ><app-select-picker
+          [value]="store.reminderFor(profile.id).daysBefore.toString()"
+          [options]="reminderOptions"
+          sheetTitle="Reminder timing"
+          (valueChange)="setReminderDays($event)"
+        />
+      </div>
+      <button
+        class="setting-row"
+        type="button"
+        role="switch"
+        [attr.aria-checked]="store.reminderFor(profile.id).privacyMode"
+        (click)="toggleReminder('privacyMode')"
+      >
+        <span><strong>Private wording</strong><small>Shows “Upcoming health reminder”</small></span
+        ><i [class.on]="store.reminderFor(profile.id).privacyMode"><b></b></i>
+      </button>
+    </section>
+  }
+  <section class="card settings-group">
+    <div class="group-title">
+      <span><ion-icon name="shield-checkmark-outline" aria-hidden="true" /></span>
+      <div>
+        <h2>App security</h2>
+        <p>PIN locking and Android privacy controls.</p>
+      </div>
+    </div>
+    @if (!store.settings().pinEnabled) {
+      <label
+        ><span>New PIN</span
+        ><input
+          type="password"
+          inputmode="numeric"
+          autocomplete="new-password"
+          maxlength="8"
+          [formControl]="newPin"
+          placeholder="4–8 digits"
+      /></label>
+    }
+    <button class="secondary-button" type="button" (click)="configurePin()">
+      <ion-icon name="keypad-outline" aria-hidden="true" />{{
+        store.settings().pinEnabled ? 'Disable app PIN' : 'Enable app PIN'
+      }}
+    </button>
+    @if (store.settings().pinEnabled && native.isAndroid()) {
+      @if (!store.settings().biometricEnabled) {
+        <label
+          ><span>Current PIN <small>required to enable biometrics</small></span
+          ><input
+            type="password"
+            inputmode="numeric"
+            autocomplete="current-password"
+            maxlength="8"
+            [formControl]="biometricPin"
+            placeholder="Current PIN"
+        /></label>
+      }
+      <button
+        class="setting-row"
+        type="button"
+        role="switch"
+        [attr.aria-checked]="store.settings().biometricEnabled"
+        [disabled]="busy() || (!store.settings().biometricEnabled && !native.biometricAvailable())"
+        (click)="configureBiometric()"
+      >
+        <span
+          ><strong>Biometric unlock</strong
+          ><small>{{
+            native.biometricAvailable()
+              ? 'Protected by Android Keystore'
+              : 'No strong biometric is enrolled'
+          }}</small></span
+        ><i [class.on]="store.settings().biometricEnabled"><b></b></i>
+      </button>
+    }
+    @for (
+      setting of [
+        {
+          key: 'lockWhenBackgrounded',
+          title: 'Lock when backgrounded',
+          detail: 'Protect the app when switching away',
+        },
+        {
+          key: 'screenshotBlocking',
+          title: 'Block screenshots',
+          detail: 'Android secure-window protection',
+        },
+        {
+          key: 'hideRecentPreview',
+          title: 'Hide recent-app preview',
+          detail: 'Cover sensitive content in app switcher',
+        },
+      ];
+      track setting.key
+    ) {
+      <button
+        class="setting-row"
+        type="button"
+        role="switch"
+        [attr.aria-checked]="$any(store.settings())[setting.key]"
+        (click)="toggle($any(setting.key))"
+      >
+        <span
+          ><strong>{{ setting.title }}</strong
+          ><small>{{ setting.detail }}</small></span
+        ><i [class.on]="$any(store.settings())[setting.key]"><b></b></i>
+      </button>
+    }
+  </section>
+  <section class="card settings-group">
+    <div class="group-title">
+      <span><ion-icon name="archive-outline" aria-hidden="true" /></span>
+      <div>
+        <h2>Encrypted backup</h2>
+        <p>AES-GCM with a password-derived key. Flowra never stores your password.</p>
+      </div>
+    </div>
+    <label
+      ><span>Backup password</span
+      ><input
+        type="password"
+        autocomplete="new-password"
+        [formControl]="password"
+        placeholder="At least 8 characters"
+    /></label>
+    <div class="backup-actions">
+      <button class="primary-button" type="button" [disabled]="busy()" (click)="createBackup()">
+        <ion-icon name="download-outline" aria-hidden="true" />Create backup</button
+      ><label class="secondary-button file-button"
+        ><ion-icon name="cloud-upload-outline" aria-hidden="true" />Restore backup<input
+          type="file"
+          accept=".flowra,application/json"
+          (change)="restore($event)"
+      /></label>
+    </div>
+    @if (status()) {
+      <p class="status" role="status">{{ status() }}</p>
+    }
+  </section>
+  <aside class="privacy-card">
+    <ion-icon name="wifi-outline" aria-hidden="true" />
+    <div>
+      <strong>No account. No analytics. No cloud sync.</strong>
+      <p>
+        Your menstrual data is stored in SQLite on Android and encrypted IndexedDB in the browser.
+      </p>
+    </div>
+  </aside>
+</section>

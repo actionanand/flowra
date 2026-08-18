@@ -1,0 +1,73 @@
+<section class="page">
+  <header class="page-heading">
+    <div>
+      <h1>Profiles</h1>
+      <p>Independent histories, preferences, and predictions.</p>
+    </div>
+    <button class="primary-button" type="button" (click)="adding.set(true)">
+      <ion-icon name="person-add-outline" aria-hidden="true" /> Add
+    </button>
+  </header>
+  <div class="profile-grid">
+    @for (profile of store.profiles(); track profile.id) {
+      <article class="card profile-card" [class.active]="profile.id === store.activeProfileId()">
+        <button class="profile-title" type="button" (click)="store.selectProfile(profile.id)">
+          <span>{{ profile.name.slice(0, 1).toUpperCase() }}</span>
+          <div>
+            <h2>{{ profile.name }}</h2>
+            <p>
+              {{ profile.relationship.toLowerCase() }} ·
+              {{ profile.approximateAge ? 'about ' + profile.approximateAge : 'age not set' }}
+            </p>
+          </div>
+          @if (profile.id === store.activeProfileId()) {
+            <ion-icon name="checkmark-circle" aria-label="Active profile" />
+          }
+        </button>
+        <div class="stage-field">
+          <span>Life stage <small>Chosen, never diagnosed</small></span
+          ><app-select-picker
+            [compact]="true"
+            [value]="profile.reproductiveStage"
+            [options]="stages"
+            sheetTitle="Life stage"
+            (valueChange)="updateStage(profile, $event)"
+          />
+        </div>
+        <div class="privacy-row">
+          <button
+            type="button"
+            [class.on]="profile.hiddenFromPreviews"
+            [attr.aria-pressed]="profile.hiddenFromPreviews"
+            (click)="toggle(profile, 'hiddenFromPreviews')"
+          >
+            <ion-icon name="eye-off-outline" aria-hidden="true" /> Hide previews</button
+          ><button
+            type="button"
+            [class.on]="profile.requiresAuthentication"
+            [attr.aria-pressed]="profile.requiresAuthentication"
+            (click)="toggle(profile, 'requiresAuthentication')"
+          >
+            <ion-icon name="lock-closed-outline" aria-hidden="true" /> Require unlock
+          </button>
+        </div>
+      </article>
+    }
+  </div>
+</section>
+@if (adding()) {
+  <div class="modal-backdrop">
+    <section class="modal card" role="dialog" aria-modal="true" aria-labelledby="add-profile-title">
+      <header>
+        <div>
+          <span class="eyebrow">Independent profile</span>
+          <h2 id="add-profile-title">Add someone</h2>
+        </div>
+        <button type="button" aria-label="Close" (click)="adding.set(false)">
+          <ion-icon name="close-outline" aria-hidden="true" />
+        </button>
+      </header>
+      <app-profile-form (saved)="adding.set(false)" />
+    </section>
+  </div>
+}

@@ -1,0 +1,15 @@
+.export-actions {
+  display: flex;
+  gap: 0.4rem;
+}
+@media print {
+  .export-actions,
+  .health-note,
+  .debug {
+    display: none;
+  }
+  .card {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+}
