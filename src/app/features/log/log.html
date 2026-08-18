@@ -1,0 +1,161 @@
+<section class="page">
+  <header class="page-heading">
+    <div>
+      <h1>Daily check-in</h1>
+      <p>Notice what is happening without judgement.</p>
+    </div>
+    <span class="pill"
+      ><ion-icon name="calendar-outline" aria-hidden="true" />{{ dateLabel() }}</span
+    >
+  </header>
+  <div class="log-layout">
+    <aside class="date-card card">
+      <label for="log-date">Entry date</label
+      ><input id="log-date" type="date" [formControl]="date" />
+      <p>Cycle day {{ store.currentCycleDay() ?? '—' }}</p>
+    </aside>
+    <div class="log-sections">
+      <section class="card" aria-labelledby="flow-heading">
+        <div class="section-heading">
+          <span class="section-icon flow"
+            ><ion-icon name="water-outline" aria-hidden="true"
+          /></span>
+          <div>
+            <h2 id="flow-heading">Flow</h2>
+            <p>Choose what best describes today.</p>
+          </div>
+        </div>
+        <app-select-picker
+          [value]="flow()"
+          [options]="flowOptions"
+          sheetTitle="Flow today"
+          (valueChange)="setFlow($event)"
+        />
+        <div class="chips products" aria-label="Menstrual products">
+          @for (product of productOptions; track product) {
+            <button
+              type="button"
+              [class.selected]="products().includes(product)"
+              [attr.aria-pressed]="products().includes(product)"
+              (click)="toggle('products', product)"
+            >
+              {{ product }}
+            </button>
+          }
+        </div>
+      </section>
+      <section class="card" aria-labelledby="mood-heading">
+        <div class="section-heading">
+          <span class="section-icon mood"
+            ><ion-icon name="happy-outline" aria-hidden="true"
+          /></span>
+          <div>
+            <h2 id="mood-heading">Mood</h2>
+            <p>More than one can be true.</p>
+          </div>
+        </div>
+        <div class="mood-scale" aria-label="Overall mood, 1 very low to 5 very good">
+          @for (value of [1, 2, 3, 4, 5]; track value) {
+            <button
+              type="button"
+              [class.selected]="overallMood() === value"
+              [attr.aria-pressed]="overallMood() === value"
+              (click)="overallMood.set($any(value))"
+            >
+              <ion-icon
+                [name]="
+                  value < 3
+                    ? 'sad-outline'
+                    : value === 3
+                      ? 'remove-circle-outline'
+                      : 'happy-outline'
+                "
+                aria-hidden="true"
+              /><span>{{ value }}</span>
+            </button>
+          }
+        </div>
+        <div class="chips">
+          @for (mood of moodOptions; track mood) {
+            <button
+              type="button"
+              [class.selected]="moods().includes(mood)"
+              [attr.aria-pressed]="moods().includes(mood)"
+              (click)="toggle('moods', mood)"
+            >
+              {{ mood }}
+            </button>
+          }
+        </div>
+      </section>
+      <section class="card symptoms" aria-labelledby="symptoms-heading">
+        <div class="section-heading">
+          <span class="section-icon symptom"
+            ><ion-icon name="pulse-outline" aria-hidden="true"
+          /></span>
+          <div>
+            <h2 id="symptoms-heading">Symptoms</h2>
+            <p>Selected symptoms use the severity below.</p>
+          </div>
+        </div>
+        <fieldset class="severity">
+          <legend>Severity</legend>
+          @for (level of ['MILD', 'MODERATE', 'SEVERE']; track level) {
+            <button
+              type="button"
+              [class.selected]="severity() === level"
+              (click)="severity.set($any(level))"
+            >
+              {{ level.toLowerCase() }}
+            </button>
+          }
+        </fieldset>
+        @for (group of symptomGroups; track group.name) {
+          <div class="symptom-group">
+            <h3>{{ group.name }}</h3>
+            <div class="chips">
+              @for (symptom of group.items; track symptom) {
+                <button
+                  type="button"
+                  [class.selected]="symptoms().includes(symptom)"
+                  [attr.aria-pressed]="symptoms().includes(symptom)"
+                  (click)="toggle('symptoms', symptom)"
+                >
+                  {{ symptom }}
+                </button>
+              }
+            </div>
+          </div>
+        }
+        <div class="custom">
+          <label for="custom-symptom">Custom symptom</label>
+          <div>
+            <input
+              id="custom-symptom"
+              type="text"
+              [formControl]="customSymptom"
+              placeholder="Add your own"
+            /><button class="quiet-button" type="button" (click)="addCustomSymptom()">Add</button>
+          </div>
+        </div>
+      </section>
+      <section class="card notes">
+        <label for="notes"
+          ><span class="section-icon"
+            ><ion-icon name="document-text-outline" aria-hidden="true" /></span
+          ><strong>Private notes</strong></label
+        ><textarea
+          id="notes"
+          rows="4"
+          [formControl]="notes"
+          placeholder="Anything else you want to remember…"
+        ></textarea>
+      </section>
+      <button class="save primary-button" type="button" (click)="save()">
+        <ion-icon name="checkmark-circle-outline" aria-hidden="true" />{{
+          saved() ? 'Saved privately' : 'Save today’s log'
+        }}
+      </button>
+    </div>
+  </div>
+</section>

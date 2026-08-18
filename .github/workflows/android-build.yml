@@ -1,0 +1,134 @@
+name: Android APK and AAB
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main-android]
+    tags: ['v*']
+
+permissions:
+  contents: write
+concurrency:
+  group: android-${{ github.ref }}
+  cancel-in-progress: false
+env:
+  MIN_SDK_VERSION: 24
+  TARGET_SDK_VERSION: 36
+  RELEASE_BASENAME: flowra
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '24.16.0', cache: npm }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '21' }
+      - uses: android-actions/setup-android@v3
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Unit and cycle-engine tests
+        run: npm test -- --watch=false
+      - name: Auto-bump Android version code
+        if: github.ref == 'refs/heads/main-android'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          npm run android:version
+          git add android-version.json
+          git diff --cached --quiet || git commit -m "chore: bump Android version [skip ci]"
+          git pull --rebase --autostash
+          git push
+      - name: Build Angular application
+        run: npm run build -- --configuration=production
+      - name: Generate and sync Android
+        run: |
+          npx cap add android
+          npx cap sync android
+          node scripts/patch-android.mjs
+      - name: Apply Android versions
+        working-directory: android/app
+        run: |
+          VERSION_CODE=$(node -p "require('../../android-version.json').versionCode")
+          VERSION_NAME=$(node -p "require('../../android-version.json').versionName")
+          sed -i 's/versionCode [0-9]*/versionCode project.hasProperty("versionCode") ? project.versionCode.toInteger() : 1/' build.gradle
+          sed -i 's/versionName "[^"]*"/versionName project.hasProperty("versionName") ? project.versionName : "1.0.0"/' build.gradle
+          sed -i "s/minSdkVersion = .*/minSdkVersion = $MIN_SDK_VERSION/" ../variables.gradle
+          sed -i "s/targetSdkVersion = .*/targetSdkVersion = $TARGET_SDK_VERSION/" ../variables.gradle
+          echo "VERSION_CODE=$VERSION_CODE" >> "$GITHUB_ENV"
+          echo "VERSION_NAME=$VERSION_NAME" >> "$GITHUB_ENV"
+          echo "RELEASE_FILE=${RELEASE_BASENAME}-${VERSION_NAME//./-}" >> "$GITHUB_ENV"
+      - name: Generate branded icons
+        run: |
+          sudo apt-get update && sudo apt-get install -y imagemagick
+          declare -A SIZES=([mipmap-mdpi]=48 [mipmap-hdpi]=72 [mipmap-xhdpi]=96 [mipmap-xxhdpi]=144 [mipmap-xxxhdpi]=192)
+          for DIR in "${!SIZES[@]}"; do SIZE=${SIZES[$DIR]}; mkdir -p "android/app/src/main/res/$DIR"; convert public/flowra.png -background none -resize "${SIZE}x${SIZE}" -gravity center -extent "${SIZE}x${SIZE}" "android/app/src/main/res/$DIR/ic_launcher.png"; cp "android/app/src/main/res/$DIR/ic_launcher.png" "android/app/src/main/res/$DIR/ic_launcher_round.png"; cp "android/app/src/main/res/$DIR/ic_launcher.png" "android/app/src/main/res/$DIR/ic_launcher_foreground.png"; done
+          mkdir -p releases
+          convert public/flowra.png -background none -resize 512x512 -gravity center -extent 512x512 releases/playstore-icon.png
+      - name: Build release APK and AAB
+        working-directory: android
+        run: ./gradlew assembleRelease bundleRelease -PversionCode="$VERSION_CODE" -PversionName="$VERSION_NAME"
+      - name: Collect mapping and unsigned artifacts
+        run: |
+          mkdir -p releases
+          cp android/app/build/outputs/mapping/release/mapping.txt "releases/${RELEASE_FILE}-mapping.txt"
+          cp "$(find android/app/build -name '*-release-unsigned.apk' | head -1)" "releases/${RELEASE_FILE}-unsigned.apk"
+          cp "$(find android/app/build -name '*-release.aab' | head -1)" "releases/${RELEASE_FILE}-unsigned.aab"
+      - name: Decode release keystore
+        id: keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          if [[ -n "$KEYSTORE_BASE64" && -n "$KEYSTORE_PASSWORD" && -n "$KEY_ALIAS" && -n "$KEY_PASSWORD" ]]; then printf '%s' "$KEYSTORE_BASE64" | base64 --decode > android/app/release-keystore.jks && echo "available=true" >> "$GITHUB_OUTPUT"; else echo "available=false" >> "$GITHUB_OUTPUT"; fi
+      - name: Sign APK and AAB
+        id: sign
+        if: steps.keystore.outputs.available == 'true'
+        continue-on-error: true
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          BUILD_TOOLS="${ANDROID_HOME}/build-tools/$(ls "${ANDROID_HOME}/build-tools" | sort -V | tail -1)"
+          "$BUILD_TOOLS/zipalign" -v 4 "releases/${RELEASE_FILE}-unsigned.apk" "releases/${RELEASE_FILE}.apk"
+          "$BUILD_TOOLS/apksigner" sign --ks android/app/release-keystore.jks --ks-pass env:KEYSTORE_PASSWORD --ks-key-alias "$KEY_ALIAS" --key-pass env:KEY_PASSWORD "releases/${RELEASE_FILE}.apk"
+          jarsigner -keystore android/app/release-keystore.jks -storepass "$KEYSTORE_PASSWORD" -keypass "$KEY_PASSWORD" -signedjar "releases/${RELEASE_FILE}.aab" "releases/${RELEASE_FILE}-unsigned.aab" "$KEY_ALIAS"
+          rm releases/${RELEASE_FILE}-unsigned.apk releases/${RELEASE_FILE}-unsigned.aab
+      - name: Verify artifact set
+        run: |
+          test -s "$(find releases -maxdepth 1 -name '*.apk' | head -1)"
+          test -s "$(find releases -maxdepth 1 -name '*.aab' | head -1)"
+          test -s "releases/${RELEASE_FILE}-mapping.txt"
+      - name: Commit release files
+        if: github.ref == 'refs/heads/main-android'
+        run: |
+          git pull --rebase --autostash
+          git add releases/
+          git diff --cached --quiet || git commit -m "build: update Android release files [skip ci]"
+          git push
+      - uses: actions/upload-artifact@v4
+        with:
+          name: flowra-android-${{ env.VERSION_NAME }}
+          path: |
+            releases/*.apk
+            releases/*.aab
+            releases/*-mapping.txt
+            releases/playstore-icon.png
+          if-no-files-found: error
+          retention-days: 30
+      - uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          files: |
+            releases/*.apk
+            releases/*.aab
+            releases/*-mapping.txt
+            releases/playstore-icon.png
+      - if: always()
+        run: rm -f android/app/release-keystore.jks

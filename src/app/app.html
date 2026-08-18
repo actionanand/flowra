@@ -1,44 +1,104 @@
-<style>
-  :host {
-    display: block;
-    min-height: 100dvh;
-    color: #17202a;
-    background: #f6f8fb;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-
-  main {
-    display: grid;
-    min-height: 100dvh;
-    place-items: center;
-    padding: 2rem;
-    text-align: center;
-  }
-
-  .intro {
-    max-width: 36rem;
-  }
-
-  h1 {
-    margin: 0;
-    font-size: clamp(2rem, 6vw, 4rem);
-    font-weight: 700;
-    line-height: 1.1;
-  }
-
-  p {
-    margin: 1rem 0 0;
-    color: #415164;
-    font-size: 1.125rem;
-    line-height: 1.6;
-  }
-</style>
-
-<main>
-  <section class="intro" aria-labelledby="page-title">
-    <h1 id="page-title">flowra</h1>
-    <p>A simple default project template ready to clone and build from.</p>
-  </section>
-</main>
-
-<router-outlet />
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<div class="app-shell">
+  <header class="app-header">
+    <a class="brand" routerLink="/home" aria-label="Flowra home"
+      ><img ngSrc="flowra.png" width="44" height="44" priority alt="" /><span
+        ><strong>Flowra</strong><small>Private cycle care</small></span
+      ></a
+    >
+    @if (store.profiles().length) {
+      <div class="profile-switcher">
+        <span class="sr-only">Active profile</span
+        ><app-select-picker
+          [compact]="true"
+          [value]="store.activeProfileId()"
+          [options]="profileOptions()"
+          sheetTitle="Switch profile"
+          (valueChange)="store.selectProfile($event)"
+        />
+      </div>
+    }
+    <span class="private-badge"
+      ><ion-icon name="shield-checkmark-outline" aria-hidden="true" /> On device</span
+    >
+  </header>
+  <aside class="side-nav" aria-label="Main navigation">
+    <div class="side-brand">
+      <img ngSrc="flowra.png" width="54" height="54" alt="" />
+      <div><strong>Flowra</strong><span>Your rhythm, privately.</span></div>
+    </div>
+    <nav>
+      @for (item of nav; track item.path) {
+        <a [routerLink]="item.path" routerLinkActive="active"
+          ><ion-icon [name]="item.icon" aria-hidden="true" /><span>{{ item.label }}</span></a
+        >
+      }
+    </nav>
+    <p>
+      <ion-icon name="lock-closed-outline" aria-hidden="true" /> Your health data stays on this
+      device.
+    </p>
+  </aside>
+  <main id="main-content" tabindex="-1">
+    @if (store.ready()) {
+      <router-outlet />
+    } @else {
+      <div class="loading" role="status">
+        <span></span>
+        <p>Opening your private space…</p>
+      </div>
+    }
+  </main>
+  <nav class="bottom-nav" aria-label="Main navigation">
+    @for (item of nav.slice(0, 5); track item.path) {
+      <a [routerLink]="item.path" routerLinkActive="active"
+        ><ion-icon [name]="item.icon" aria-hidden="true" /><span>{{ item.label }}</span></a
+      >
+    }
+  </nav>
+</div>
+@if (store.ready() && !store.profiles().length && onboardingOpen()) {
+  <div class="onboarding-backdrop">
+    <section class="onboarding" role="dialog" aria-modal="true" aria-labelledby="welcome-title">
+      <img ngSrc="flowra.png" width="76" height="76" alt="" />
+      <p class="eyebrow">Private by design</p>
+      <h1 id="welcome-title">Welcome to Flowra</h1>
+      <p>
+        Create your first independent profile. You can add profiles for yourself or someone you care
+        for later.
+      </p>
+      <app-profile-form (saved)="onboardingOpen.set(false)" />
+    </section>
+  </div>
+}
+@if (locked()) {
+  <div class="lock-backdrop">
+    <section class="lock-card" role="dialog" aria-modal="true" aria-labelledby="lock-title">
+      <img ngSrc="flowra.png" width="70" height="70" alt="" /><span class="eyebrow"
+        >Private space</span
+      >
+      <h1 id="lock-title">Flowra is locked</h1>
+      <p>Enter your app PIN to continue.</p>
+      <form (ngSubmit)="unlock()">
+        <label for="unlock-pin">PIN</label
+        ><input
+          id="unlock-pin"
+          type="password"
+          inputmode="numeric"
+          autocomplete="current-password"
+          maxlength="8"
+          [formControl]="unlockPin"
+        />
+        @if (unlockError()) {
+          <p class="unlock-error" role="alert">{{ unlockError() }}</p>
+        }
+        <button class="primary-button" type="submit">Unlock</button>
+        @if (store.settings().biometricEnabled && native.biometricAvailable()) {
+          <button class="secondary-button" type="button" (click)="unlockWithBiometric()">
+            <ion-icon name="finger-print-outline" aria-hidden="true" /> Unlock with biometrics
+          </button>
+        }
+      </form>
+    </section>
+  </div>
+}

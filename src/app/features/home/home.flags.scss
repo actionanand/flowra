@@ -1,0 +1,22 @@
+.health-flag {
+  display: flex;
+  gap: 0.7rem;
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, var(--warning) 32%, var(--border));
+  border-radius: 1.2rem;
+  background: color-mix(in srgb, var(--warning) 8%, var(--surface));
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+.health-flag ion-icon {
+  color: var(--warning);
+  font-size: 1.4rem;
+}
+.health-flag p {
+  margin: 0;
+}
+.health-flag strong {
+  display: block;
+  color: var(--text);
+}

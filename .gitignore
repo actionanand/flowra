@@ -4,6 +4,9 @@
 /dist
 /tmp
 /out-tsc
+/android
+release-keystore.jks
+keystore.b64.txt
 /bazel-out
 
 # Node

@@ -1,0 +1,131 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+.picker-trigger {
+  display: grid;
+  width: 100%;
+  min-height: 3rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  color: var(--text);
+  background: var(--surface);
+  text-align: left;
+  font: inherit;
+}
+.picker-trigger.compact {
+  min-height: 2.65rem;
+  padding: 0.55rem 0.75rem;
+}
+.picker-overlay {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  align-items: end;
+}
+.picker-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgb(37 14 27 / 58%);
+  backdrop-filter: blur(4px);
+}
+.picker-sheet {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: min(100%, 34rem);
+  max-height: min(78dvh, 40rem);
+  flex-direction: column;
+  margin: auto;
+  overflow: hidden;
+  border-radius: 1.5rem 1.5rem 0 0;
+  color: var(--text);
+  background: var(--surface);
+  box-shadow: 0 -1rem 4rem rgb(55 15 35 / 25%);
+}
+header {
+  display: flex;
+  min-height: 4rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+header button {
+  display: grid;
+  width: 2.6rem;
+  height: 2.6rem;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  color: var(--text);
+  background: var(--surface-raised);
+}
+.picker-search {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.75rem;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+}
+.picker-search input {
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  color: var(--text);
+  background: transparent;
+  font: inherit;
+}
+.picker-options {
+  min-height: 0;
+  padding: 0.45rem;
+  overflow: auto;
+}
+.picker-option {
+  display: grid;
+  width: 100%;
+  min-height: 3.6rem;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.65rem 0.8rem;
+  border: 0;
+  border-radius: 1rem;
+  color: var(--text);
+  background: transparent;
+  text-align: left;
+  font: inherit;
+}
+.picker-option.selected {
+  color: var(--primary);
+  background: var(--primary-soft);
+}
+.picker-option span {
+  display: grid;
+  gap: 0.12rem;
+}
+.picker-option small {
+  color: var(--text-muted);
+}
+@media (min-width: 720px) {
+  .picker-overlay {
+    place-items: center;
+    padding: 1rem;
+  }
+  .picker-sheet {
+    border-radius: 1.5rem;
+  }
+}

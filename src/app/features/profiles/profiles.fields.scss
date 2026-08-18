@@ -1,0 +1,9 @@
+.stage-field {
+  display: grid;
+  gap: 0.45rem;
+  font-weight: 700;
+}
+.stage-field > span {
+  display: flex;
+  justify-content: space-between;
+}

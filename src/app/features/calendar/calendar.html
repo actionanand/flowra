@@ -1,0 +1,107 @@
+<section class="page">
+  <header class="page-heading">
+    <div>
+      <h1>Calendar</h1>
+      <p>Recorded days always take priority over estimates.</p>
+    </div>
+    <button class="quiet-button" type="button" (click)="today()">
+      <ion-icon name="locate-outline" aria-hidden="true" /> Today
+    </button>
+  </header>
+  <div class="calendar-layout">
+    <section class="calendar card" aria-labelledby="month-title">
+      <header>
+        <button type="button" aria-label="Previous month" (click)="previous()">
+          <ion-icon name="chevron-back-outline" aria-hidden="true" />
+        </button>
+        <h2 id="month-title" aria-live="polite">{{ monthLabel() }}</h2>
+        <button type="button" aria-label="Next month" (click)="next()">
+          <ion-icon name="chevron-forward-outline" aria-hidden="true" />
+        </button>
+      </header>
+      <div class="weekdays" aria-hidden="true">
+        @for (day of ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']; track day) {
+          <span>{{ day }}</span>
+        }
+      </div>
+      <div class="month-grid" role="grid" [attr.aria-label]="monthLabel()">
+        @for (day of days(); track day.date) {
+          <button
+            type="button"
+            role="gridcell"
+            [class.outside]="!day.inMonth"
+            [class.today]="day.today"
+            [class.selected]="day.date === selectedDate()"
+            [class.recorded]="day.recorded"
+            [class.predicted]="day.predicted && !day.recorded"
+            [attr.aria-label]="
+              displayDate(day.date, 'EEEE d MMMM yyyy') +
+              (day.recorded ? ', recorded period' : day.predicted ? ', prediction window' : '')
+            "
+            (click)="selectedDate.set(day.date)"
+          >
+            <span>{{ day.day }}</span
+            ><span class="markers" aria-hidden="true">
+              @if (day.recorded) {
+                <i class="drop"></i>
+              }
+              @if (day.spotting) {
+                <i class="spot"></i>
+              }
+              @if (day.hasMood) {
+                <ion-icon name="happy-outline" />
+              }
+              @if (day.hasSymptoms) {
+                <ion-icon name="medical-outline" />
+              }
+            </span>
+          </button>
+        }
+      </div>
+      <div class="legend" aria-label="Calendar legend">
+        <span><i class="recorded-key"></i>Recorded</span
+        ><span><i class="predicted-key"></i>Prediction window</span
+        ><span><i class="spot-key"></i>Spotting</span
+        ><span><ion-icon name="happy-outline" />Mood</span
+        ><span><ion-icon name="medical-outline" />Symptom</span>
+      </div>
+    </section>
+    <aside class="day-detail card" aria-labelledby="selected-date-title">
+      <span class="eyebrow">Selected day</span>
+      <h2 id="selected-date-title">{{ displayDate(selectedDate(), 'd MMMM yyyy') }}</h2>
+      @if (selectedDay()?.cycleDay; as day) {
+        <span class="pill">Cycle day {{ day }}</span>
+      }
+      @if (selectedLog(); as log) {
+        <dl>
+          <div>
+            <dt>Flow</dt>
+            <dd>{{ log.flow ? log.flow.toLowerCase().replace('_', ' ') : 'None' }}</dd>
+          </div>
+          <div>
+            <dt>Mood</dt>
+            <dd>{{ log.moods.join(', ') || 'None' }}</dd>
+          </div>
+          <div>
+            <dt>Symptoms</dt>
+            <dd>{{ symptomNames(log) }}</dd>
+          </div>
+          @if (log.notes) {
+            <div>
+              <dt>Notes</dt>
+              <dd>{{ log.notes }}</dd>
+            </div>
+          }
+        </dl>
+      } @else {
+        <div class="no-entry">
+          <ion-icon name="leaf-outline" aria-hidden="true" />
+          <p>No entry for this day.</p>
+        </div>
+      }
+      <a class="primary-button" routerLink="/log"
+        ><ion-icon name="create-outline" aria-hidden="true" /> Add / edit entry</a
+      >
+    </aside>
+  </div>
+</section>

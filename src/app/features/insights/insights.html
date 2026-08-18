@@ -1,0 +1,127 @@
+<section class="page">
+  <header class="page-heading">
+    <div>
+      <h1>Insights</h1>
+      <p>Descriptive patterns from this profile’s records.</p>
+    </div>
+    <div class="export-actions">
+      <button class="secondary-button" type="button" (click)="exportCsv()">
+        <ion-icon name="download-outline" aria-hidden="true" /> CSV</button
+      ><button class="secondary-button" type="button" (click)="exportPdf()">
+        <ion-icon name="print-outline" aria-hidden="true" /> PDF
+      </button>
+    </div>
+  </header>
+  @if (statistics(); as stats) {
+    <section class="summary-grid" aria-label="Cycle statistics">
+      <article class="card">
+        <span>Recent median</span><strong>{{ stats.median | number: '1.0-1' }}</strong
+        ><small>days</small>
+      </article>
+      <article class="card">
+        <span>Variation</span><strong>{{ stats.pattern.toLowerCase().replace('_', ' ') }}</strong
+        ><small>not a diagnosis</small>
+      </article>
+      <article class="card">
+        <span>Range</span><strong>{{ stats.minimum }}–{{ stats.maximum }}</strong
+        ><small>days</small>
+      </article>
+      <article class="card">
+        <span>Typical period</span
+        ><strong>{{
+          averagePeriodDuration() !== undefined ? (averagePeriodDuration() | number: '1.0-1') : '—'
+        }}</strong
+        ><small>days</small>
+      </article>
+    </section>
+    <section class="card chart" aria-labelledby="trend-heading">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">Cycle</span>
+          <h2 id="trend-heading">Length trend</h2>
+        </div>
+        <span class="pill">Last {{ cycleLengths().length }}</span>
+      </div>
+      <div class="bars" role="img" aria-label="Cycle length trend bar chart">
+        @for (length of cycleLengths(); track $index) {
+          <div>
+            <span [style.height.%]="(length / maxCycle()) * 100"></span><small>{{ length }}</small>
+          </div>
+        }
+      </div>
+      <details>
+        <summary>Readable data</summary>
+        <p>
+          {{ cycleLengths().join(', ') }} days. Median {{ stats.median | number: '1.0-1' }}, IQR
+          {{ stats.interquartileRange | number: '1.0-1' }}, standard deviation
+          {{ stats.standardDeviation | number: '1.0-1' }}.
+        </p>
+      </details>
+    </section>
+    <div class="insight-grid">
+      <article class="card insight">
+        <span class="insight-icon"><ion-icon name="analytics-outline" aria-hidden="true" /></span>
+        <div>
+          <h2>Your recent rhythm</h2>
+          <p>
+            Your last {{ stats.count }} usable cycles have a median of
+            {{ stats.median | number: '1.0-1' }} days and a
+            {{ stats.pattern.toLowerCase().replace('_', ' ') }} pattern.
+          </p>
+        </div>
+      </article>
+      <article class="card insight">
+        <span class="insight-icon"><ion-icon name="timer-outline" aria-hidden="true" /></span>
+        <div>
+          <h2>Prediction accuracy</h2>
+          <p>
+            @if (recentErrors().length) {
+              {{ recentErrors().length }} recent predicted starts have actual comparisons.
+            } @else {
+              Accuracy appears after a predicted period is followed by an actual start.
+            }
+          </p>
+        </div>
+      </article>
+    </div>
+  } @else {
+    <section class="card empty">
+      <ion-icon name="flower-outline" aria-hidden="true" />
+      <h2>Insights grow with your history</h2>
+      <p>Record at least three period starts to begin seeing personal patterns.</p>
+    </section>
+  }
+  <section class="card">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">Symptoms</span>
+        <h2>Most often recorded</h2>
+      </div>
+    </div>
+    @if (commonSymptoms().length) {
+      <ol class="ranked">
+        @for (symptom of commonSymptoms(); track symptom[0]) {
+          <li>
+            <span>{{ symptom[0] }}</span
+            ><strong>{{ symptom[1] }} days</strong>
+          </li>
+        }
+      </ol>
+    } @else {
+      <p class="muted">No symptom patterns yet.</p>
+    }
+  </section>
+  <aside class="health-note">
+    <ion-icon name="medical-outline" aria-hidden="true" />
+    <p>
+      <strong>For your wellbeing</strong>A noticeable or concerning change is worth discussing with
+      a qualified healthcare professional. Flowra never converts a pattern into a diagnosis.
+    </p>
+  </aside>
+  @if (development && store.predictionResult(); as result) {
+    <details class="card debug">
+      <summary>Prediction Debug</summary>
+      <pre>{{ result.debug | json }}</pre>
+    </details>
+  }
+</section>

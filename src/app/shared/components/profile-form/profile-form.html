@@ -1,0 +1,120 @@
+<form (ngSubmit)="submit()">
+  <label
+    ><span>Name or nickname</span
+    ><input
+      type="text"
+      autocomplete="off"
+      [formControl]="form.controls.name"
+      placeholder="e.g. Meera"
+  /></label>
+  <div class="field">
+    <span>Relationship</span
+    ><app-select-picker
+      [value]="form.controls.relationship.value"
+      [options]="relationshipOptions"
+      sheetTitle="Relationship"
+      (valueChange)="setRelationship($event)"
+    />
+  </div>
+  <div class="field">
+    <span>Age detail</span
+    ><app-select-picker
+      [value]="form.controls.agePrecision.value"
+      [options]="agePrecisionOptions"
+      sheetTitle="Age detail"
+      (valueChange)="setAgePrecision($event)"
+    />
+  </div>
+  @switch (form.controls.agePrecision.value) {
+    @case ('EXACT_DOB') {
+      <label
+        ><span>Date of birth <small>optional</small></span
+        ><input type="date" [formControl]="form.controls.dateOfBirth"
+      /></label>
+    }
+    @case ('BIRTH_YEAR') {
+      <label
+        ><span>Birth year</span
+        ><input
+          type="number"
+          inputmode="numeric"
+          [formControl]="form.controls.birthYear"
+          placeholder="e.g. 1996"
+      /></label>
+    }
+    @case ('APPROXIMATE_AGE') {
+      <label
+        ><span>Approximate age <small>optional</small></span
+        ><input
+          type="number"
+          inputmode="numeric"
+          [formControl]="form.controls.approximateAge"
+          placeholder="Age"
+      /></label>
+    }
+    @case ('AGE_RANGE') {
+      <div class="field">
+        <span>Age range</span
+        ><app-select-picker
+          [value]="form.controls.ageRange.value"
+          [options]="ageRangeOptions"
+          sheetTitle="Age range"
+          (valueChange)="setAgeRange($event)"
+        />
+      </div>
+    }
+  }
+  <div class="field">
+    <span>Have periods started?</span
+    ><app-select-picker
+      [value]="form.controls.menstruationStarted.value"
+      [options]="statusOptions"
+      sheetTitle="Have periods started?"
+      (valueChange)="setStatus($event)"
+    />
+  </div>
+  @if (form.controls.menstruationStarted.value === 'YES') {
+    <div class="field">
+      <span>First-period detail <small>optional</small></span
+      ><app-select-picker
+        [value]="form.controls.menarchePrecision.value"
+        [options]="menarcheOptions"
+        sheetTitle="First period"
+        (valueChange)="setMenarchePrecision($event)"
+      />
+    </div>
+    @switch (form.controls.menarchePrecision.value) {
+      @case ('EXACT') {
+        <label
+          ><span>First-period date</span
+          ><input type="date" [formControl]="form.controls.menarcheDate"
+        /></label>
+      }
+      @case ('YEAR') {
+        <label
+          ><span>First-period year</span
+          ><input
+            type="number"
+            inputmode="numeric"
+            [formControl]="form.controls.menarcheYear"
+            placeholder="e.g. 2012"
+        /></label>
+      }
+      @case ('APPROXIMATE_AGE') {
+        <label
+          ><span>Approximate age at first period</span
+          ><input
+            type="number"
+            inputmode="numeric"
+            [formControl]="form.controls.approximateMenarcheAge"
+        /></label>
+      }
+    }
+  }
+  <p class="privacy-note">
+    Stored privately on this device. Exact date of birth is never required.
+  </p>
+  <button class="primary-button" type="submit" [disabled]="!canSave()">
+    {{ busy() ? 'Saving…' : 'Create profile' }}
+  </button>
+</form>

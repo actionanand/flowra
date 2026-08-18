@@ -1,0 +1,169 @@
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.7rem;
+}
+.summary-grid article {
+  display: grid;
+  gap: 0.15rem;
+  box-shadow: none;
+}
+.summary-grid span,
+.summary-grid small {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+}
+.summary-grid strong {
+  font-size: 1.35rem;
+  text-transform: capitalize;
+}
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.section-heading h2 {
+  margin: 0.15rem 0;
+  font-size: 1.1rem;
+}
+.eyebrow {
+  color: var(--primary);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.bars {
+  display: flex;
+  height: 12rem;
+  align-items: end;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  padding: 1rem 0 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.bars > div {
+  position: relative;
+  display: flex;
+  height: 100%;
+  flex: 1;
+  align-items: end;
+  justify-content: center;
+}
+.bars span {
+  width: min(100%, 2rem);
+  min-height: 0.4rem;
+  border-radius: 0.6rem 0.6rem 0.2rem 0.2rem;
+  background: linear-gradient(
+    var(--primary),
+    color-mix(in srgb, var(--primary) 45%, var(--primary-soft))
+  );
+}
+.bars small {
+  position: absolute;
+  bottom: -1.25rem;
+  color: var(--text-muted);
+}
+.chart details {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+.insight-grid {
+  display: grid;
+  gap: 0.8rem;
+}
+.insight {
+  display: flex;
+  gap: 0.8rem;
+  box-shadow: none;
+}
+.insight-icon {
+  display: grid;
+  width: 2.8rem;
+  height: 2.8rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 0.9rem;
+  color: var(--primary);
+  background: var(--primary-soft);
+  font-size: 1.3rem;
+}
+.insight h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+}
+.insight p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.ranked {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0;
+  list-style: none;
+}
+.ranked li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.ranked strong {
+  color: var(--primary);
+}
+.muted {
+  color: var(--text-muted);
+}
+.health-note {
+  display: flex;
+  gap: 0.8rem;
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, var(--warning) 30%, var(--border));
+  border-radius: 1.2rem;
+  color: var(--text-muted);
+  background: color-mix(in srgb, var(--warning) 8%, var(--surface));
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+.health-note ion-icon {
+  color: var(--warning);
+  font-size: 1.5rem;
+}
+.health-note p {
+  margin: 0;
+}
+.health-note strong {
+  display: block;
+  color: var(--text);
+}
+.empty {
+  display: grid;
+  place-items: center;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+.empty ion-icon {
+  color: var(--primary);
+  font-size: 2.4rem;
+}
+.empty h2 {
+  margin: 0.7rem 0 0.3rem;
+}
+.empty p {
+  margin: 0;
+  color: var(--text-muted);
+}
+.debug pre {
+  overflow: auto;
+  font-size: 0.72rem;
+}
+@media (min-width: 720px) {
+  .summary-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .insight-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
