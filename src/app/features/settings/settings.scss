@@ -1,5 +1,6 @@
 .settings-group {
   display: grid;
+  align-content: start;
   gap: 1rem;
   box-shadow: none;
 }
@@ -89,11 +90,11 @@
 .backup-actions {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 0.6rem;
 }
 .backup-actions > * {
-  flex: 1 1 12rem;
-  max-width: 16rem;
+  flex: 1 1 100%;
 }
 .file-button {
   position: relative;
@@ -141,6 +142,10 @@
   .page-heading,
   .privacy-card {
     grid-column: 1/-1;
+  }
+  .backup-actions > * {
+    flex: 0 1 auto;
+    min-width: 11rem;
   }
 }
 .password-backdrop {

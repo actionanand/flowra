@@ -208,11 +208,17 @@ export class SettingsPage {
       );
       this.closePasswordPrompt();
     } catch (error) {
-      this.promptError.set(
-        error instanceof Error ? error.message : 'Restore failed without changing existing data.',
-      );
+      this.promptError.set(this.restoreErrorMessage(error));
     } finally {
       this.busy.set(false);
     }
+  }
+  /** Web Crypto reports a wrong password as a generic decrypt failure. */
+  private restoreErrorMessage(error: unknown): string {
+    if (error instanceof SyntaxError)
+      return 'That file is not a Flowra backup. Choose a .flowra file.';
+    if (error instanceof Error && !(error instanceof DOMException) && error.message)
+      return error.message;
+    return 'Incorrect backup password. Your existing data was not changed.';
   }
 }
