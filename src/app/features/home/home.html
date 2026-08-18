@@ -2,11 +2,12 @@
   @if (store.activeProfile(); as profile) {
     <header class="page-heading">
       <div>
-        <p class="hello">Hello, {{ profile.name }}</p>
+        <p class="hello">{{ 'home.hello' | translate: { name: profile.name } }}</p>
         <h1>{{ store.activePeriod() ? 'Take gentle care today' : 'Your cycle at a glance' }}</h1>
       </div>
       <span class="pill"
-        ><ion-icon name="shield-checkmark-outline" aria-hidden="true" /> Private</span
+        ><ion-icon name="shield-checkmark-outline" aria-hidden="true" />
+        {{ 'home.private' | translate }}</span
       >
     </header>
     <article class="hero card" [class.active-period]="store.activePeriod()">
@@ -55,27 +56,33 @@
         />{{ store.activePeriod() ? 'Period Ended' : 'Period Started Today' }}
       </button>
       @if (!store.activePeriod()) {
-        <button class="earlier" type="button" routerLink="/log">Period started earlier</button>
+        <button class="earlier" type="button" routerLink="/log">
+          {{ 'home.periodEarlier' | translate }}
+        </button>
       }
     </article>
     <div class="quick-grid">
       <a class="quick card" routerLink="/log"
         ><span class="icon mood"><ion-icon name="happy-outline" aria-hidden="true" /></span
-        ><span><strong>Log today</strong><small>Mood, flow & symptoms</small></span
+        ><span
+          ><strong>{{ 'home.logToday' | translate }}</strong
+          ><small>{{ 'home.moodFlow' | translate }}</small></span
         ><ion-icon name="chevron-forward-outline" aria-hidden="true"
       /></a>
       <a class="quick card" routerLink="/calendar"
         ><span class="icon calendar"
           ><ion-icon name="calendar-clear-outline" aria-hidden="true" /></span
-        ><span><strong>Calendar</strong><small>See recorded & expected days</small></span
+        ><span
+          ><strong>{{ 'home.calendar' | translate }}</strong
+          ><small>{{ 'home.recordedExpected' | translate }}</small></span
         ><ion-icon name="chevron-forward-outline" aria-hidden="true"
       /></a>
     </div>
     <section class="forecast card" aria-labelledby="forecast-title">
       <div class="section-heading">
         <div>
-          <span class="eyebrow">Personal forecast</span>
-          <h2 id="forecast-title">Next period</h2>
+          <span class="eyebrow">{{ 'home.forecast' | translate }}</span>
+          <h2 id="forecast-title">{{ 'home.nextPeriod' | translate }}</h2>
         </div>
         @if (store.prediction(); as prediction) {
           <span class="confidence">{{
@@ -86,14 +93,14 @@
       @if (store.prediction(); as prediction) {
         <div class="forecast-dates">
           <div>
-            <span>Expected window</span
+            <span>{{ 'home.expectedWindow' | translate }}</span
             ><strong
               >{{ displayDate(prediction.windowStart, 'd MMM') }} –
               {{ displayDate(prediction.windowEnd, 'd MMM') }}</strong
             >
           </div>
           <div>
-            <span>Most likely</span
+            <span>{{ 'home.mostLikely' | translate }}</span
             ><strong>{{ displayDate(prediction.mostLikelyDate, 'd MMMM') }}</strong>
           </div>
         </div>
@@ -110,33 +117,39 @@
     </section>
     <section class="metrics" aria-label="Cycle summary">
       <article class="card">
-        <ion-icon name="sync-outline" aria-hidden="true" /><span>Median cycle</span
+        <ion-icon name="sync-outline" aria-hidden="true" /><span>{{
+          'home.medianCycle' | translate
+        }}</span
         ><strong>{{
           statistics() ? (statistics()!.median | number: '1.0-0') + ' days' : '—'
         }}</strong>
       </article>
       <article class="card">
-        <ion-icon name="pulse-outline" aria-hidden="true" /><span>Pattern</span
+        <ion-icon name="pulse-outline" aria-hidden="true" /><span>{{
+          'home.pattern' | translate
+        }}</span
         ><strong>{{
           statistics() ? statistics()!.pattern.toLowerCase().replace('_', ' ') : 'Learning'
         }}</strong>
       </article>
       <article class="card">
-        <ion-icon name="analytics-outline" aria-hidden="true" /><span>Cycles used</span
+        <ion-icon name="analytics-outline" aria-hidden="true" /><span>{{
+          'home.cyclesUsed' | translate
+        }}</span
         ><strong>{{ statistics()?.count ?? 0 }}</strong>
       </article>
     </section>
     @if (recentLog(); as log) {
       <section class="today card">
         <div>
-          <span class="eyebrow">Latest check-in</span>
+          <span class="eyebrow">{{ 'home.latestCheckin' | translate }}</span>
           <h2>{{ displayDate(log.date, 'EEEE, d MMM') }}</h2>
         </div>
         <p>
           {{ log.moods.length ? log.moods.join(', ') : 'No mood' }} ·
           {{ log.symptoms.length ? log.symptoms.length + ' symptoms' : 'No symptoms' }}
         </p>
-        <a class="quiet-button" routerLink="/log">Edit log</a>
+        <a class="quiet-button" routerLink="/log">{{ 'home.editLog' | translate }}</a>
       </section>
     }
     @if (healthNotice(); as notice) {

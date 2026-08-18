@@ -7,6 +7,8 @@ import { SelectPicker, SelectPickerOption } from './shared/components/select-pic
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { SecurityService } from './core/services/security.service';
 import { NativeIntegrationService } from './core/services/native-integration.service';
+import { I18nService } from './core/i18n/i18n.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +20,7 @@ import { NativeIntegrationService } from './core/services/native-integration.ser
     NgOptimizedImage,
     SelectPicker,
     ProfileForm,
+    TranslatePipe,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './app.html',
@@ -28,6 +31,7 @@ export class App {
   protected readonly store = inject(AppStore);
   private readonly security = inject(SecurityService);
   protected readonly native = inject(NativeIntegrationService);
+  private readonly i18n = inject(I18nService);
   protected readonly onboardingOpen = signal(true);
   protected readonly locked = signal(false);
   protected readonly unlockError = signal('');
@@ -42,12 +46,12 @@ export class App {
     })),
   );
   protected readonly nav = [
-    { path: '/home', label: 'Home', icon: 'home-outline' },
-    { path: '/calendar', label: 'Calendar', icon: 'calendar-outline' },
-    { path: '/log', label: 'Log', icon: 'add-circle-outline' },
-    { path: '/insights', label: 'Insights', icon: 'stats-chart-outline' },
-    { path: '/profiles', label: 'Profiles', icon: 'people-outline' },
-    { path: '/settings', label: 'Settings', icon: 'settings-outline' },
+    { path: '/home', label: 'nav.home', icon: 'home-outline' },
+    { path: '/calendar', label: 'nav.calendar', icon: 'calendar-outline' },
+    { path: '/log', label: 'nav.log', icon: 'add-circle-outline' },
+    { path: '/insights', label: 'nav.insights', icon: 'stats-chart-outline' },
+    { path: '/profiles', label: 'nav.profiles', icon: 'people-outline' },
+    { path: '/settings', label: 'nav.settings', icon: 'settings-outline' },
   ];
   constructor() {
     void this.initialize();

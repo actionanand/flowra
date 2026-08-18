@@ -1,14 +1,14 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
   <label
-    ><span>Name or nickname</span
+    ><span>{{ 'profile.name' | translate }}</span
     ><input
       type="text"
       autocomplete="off"
       [formControl]="form.controls.name"
-      placeholder="e.g. Meera"
+      [placeholder]="'profile.namePlaceholder' | translate"
   /></label>
   <div class="field">
-    <span>Relationship</span
+    <span>{{ 'profile.relationship' | translate }}</span
     ><app-select-picker
       [value]="form.controls.relationship.value"
       [options]="relationshipOptions"
@@ -17,7 +17,7 @@
     />
   </div>
   <div class="field">
-    <span>Age detail</span
+    <span>{{ 'profile.ageDetail' | translate }}</span
     ><app-select-picker
       [value]="form.controls.agePrecision.value"
       [options]="agePrecisionOptions"
@@ -28,13 +28,15 @@
   @switch (form.controls.agePrecision.value) {
     @case ('EXACT_DOB') {
       <label
-        ><span>Date of birth <small>optional</small></span
+        ><span
+          >{{ 'profile.exactDob' | translate }}
+          <small>{{ 'common.optional' | translate }}</small></span
         ><input type="date" [formControl]="form.controls.dateOfBirth"
       /></label>
     }
     @case ('BIRTH_YEAR') {
       <label
-        ><span>Birth year</span
+        ><span>{{ 'profile.birthYearOnly' | translate }}</span
         ><input
           type="number"
           inputmode="numeric"
@@ -44,7 +46,9 @@
     }
     @case ('APPROXIMATE_AGE') {
       <label
-        ><span>Approximate age <small>optional</small></span
+        ><span
+          >{{ 'profile.approximateAge' | translate }}
+          <small>{{ 'common.optional' | translate }}</small></span
         ><input
           type="number"
           inputmode="numeric"
@@ -54,7 +58,7 @@
     }
     @case ('AGE_RANGE') {
       <div class="field">
-        <span>Age range</span
+        <span>{{ 'profile.ageRange' | translate }}</span
         ><app-select-picker
           [value]="form.controls.ageRange.value"
           [options]="ageRangeOptions"
@@ -65,7 +69,7 @@
     }
   }
   <div class="field">
-    <span>Have periods started?</span
+    <span>{{ 'profile.periodsStarted' | translate }}</span
     ><app-select-picker
       [value]="form.controls.menstruationStarted.value"
       [options]="statusOptions"
@@ -75,7 +79,9 @@
   </div>
   @if (form.controls.menstruationStarted.value === 'YES') {
     <div class="field">
-      <span>First-period detail <small>optional</small></span
+      <span
+        >{{ 'profile.firstPeriod' | translate }}
+        <small>{{ 'common.optional' | translate }}</small></span
       ><app-select-picker
         [value]="form.controls.menarchePrecision.value"
         [options]="menarcheOptions"
@@ -86,13 +92,13 @@
     @switch (form.controls.menarchePrecision.value) {
       @case ('EXACT') {
         <label
-          ><span>First-period date</span
+          ><span>{{ 'profile.firstPeriodDate' | translate }}</span
           ><input type="date" [formControl]="form.controls.menarcheDate"
         /></label>
       }
       @case ('YEAR') {
         <label
-          ><span>First-period year</span
+          ><span>{{ 'profile.firstPeriodYear' | translate }}</span
           ><input
             type="number"
             inputmode="numeric"
@@ -102,7 +108,7 @@
       }
       @case ('APPROXIMATE_AGE') {
         <label
-          ><span>Approximate age at first period</span
+          ><span>{{ 'profile.approximateFirstPeriodAge' | translate }}</span
           ><input
             type="number"
             inputmode="numeric"

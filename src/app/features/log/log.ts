@@ -2,6 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, Component, computed, inject, signal } from '@an
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { DailyLog, FlowLevel, Severity } from '../../core/models/app.models';
 import { AppStore } from '../../core/services/app-store.service';
+import { TranslatePipe } from '@ngx-translate/core';
 import { displayDate, todayCalendarDate } from '../../core/utils/calendar-date';
 import {
   SelectPicker,
@@ -10,7 +11,7 @@ import {
 
 @Component({
   selector: 'app-log',
-  imports: [ReactiveFormsModule, SelectPicker],
+  imports: [ReactiveFormsModule, SelectPicker, TranslatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './log.html',
   styleUrl: './log.scss',

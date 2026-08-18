@@ -10,10 +10,12 @@ import {
 } from '../../shared/components/select-picker/select-picker';
 import { SecurityService } from '../../core/services/security.service';
 import { NativeIntegrationService } from '../../core/services/native-integration.service';
+import { AppLanguage, I18nService } from '../../core/i18n/i18n.service';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-settings',
-  imports: [ReactiveFormsModule, SelectPicker],
+  imports: [ReactiveFormsModule, SelectPicker, TranslatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './settings.html',
   styleUrls: ['./settings.scss', './settings.fields.scss'],
@@ -24,6 +26,12 @@ export class SettingsPage {
   private readonly notificationService = inject(NotificationService);
   private readonly security = inject(SecurityService);
   protected readonly native = inject(NativeIntegrationService);
+  protected readonly i18n = inject(I18nService);
+  protected readonly languageOptions: readonly SelectPickerOption[] = [
+    { value: 'en', label: 'English' },
+    { value: 'hi', label: 'हिन्दी' },
+    { value: 'ta', label: 'தமிழ்' },
+  ];
   protected readonly password = new FormControl('', { nonNullable: true });
   protected readonly confirmPassword = new FormControl('', { nonNullable: true });
   protected readonly passwordPrompt = signal<'CREATE' | 'RESTORE' | null>(null);
@@ -53,6 +61,9 @@ export class SettingsPage {
   );
   protected setTheme(value: string): void {
     void this.store.updateSettings({ ...this.store.settings(), theme: value as ThemePreference });
+  }
+  protected setLanguage(value: string): void {
+    this.i18n.setLanguage(value as AppLanguage);
   }
   protected async configurePin(): Promise<void> {
     try {

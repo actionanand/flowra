@@ -3,6 +3,7 @@ import { DecimalPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { calculateCycleStatistics } from '../../core/cycle-engine/cycle-statistics';
 import { AppStore } from '../../core/services/app-store.service';
+import { TranslatePipe } from '@ngx-translate/core';
 import {
   calendarDaysBetween,
   displayDate,
@@ -11,7 +12,7 @@ import {
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, DecimalPipe],
+  imports: [RouterLink, DecimalPipe, TranslatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './home.html',
   styleUrls: ['./home.scss', './home.flags.scss'],

@@ -2,12 +2,13 @@ import { CUSTOM_ELEMENTS_SCHEMA, Component, computed, inject } from '@angular/co
 import { DecimalPipe, JsonPipe } from '@angular/common';
 import { calculateCycleStatistics } from '../../core/cycle-engine/cycle-statistics';
 import { AppStore } from '../../core/services/app-store.service';
+import { TranslatePipe } from '@ngx-translate/core';
 import { calendarDaysBetween, displayDate } from '../../core/utils/calendar-date';
 import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-insights',
-  imports: [DecimalPipe, JsonPipe],
+  imports: [DecimalPipe, JsonPipe, TranslatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './insights.html',
   styleUrls: ['./insights.scss', './insights.export.scss'],

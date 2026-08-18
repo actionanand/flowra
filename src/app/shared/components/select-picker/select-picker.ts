@@ -8,6 +8,7 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 export interface SelectPickerOption {
   readonly value: string;
@@ -19,6 +20,7 @@ export interface SelectPickerOption {
 @Component({
   selector: 'app-select-picker',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [TranslatePipe],
   templateUrl: './select-picker.html',
   styleUrl: './select-picker.scss',
   host: { '(document:keydown.escape)': 'close()' },

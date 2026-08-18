@@ -10,6 +10,7 @@ import {
   subMonths,
 } from 'date-fns';
 import { AppStore } from '../../core/services/app-store.service';
+import { TranslatePipe } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
 import { DailyLog } from '../../core/models/app.models';
 import {
@@ -33,7 +34,7 @@ interface CalendarDay {
 
 @Component({
   selector: 'app-calendar',
-  imports: [RouterLink],
+  imports: [RouterLink, TranslatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './calendar.html',
   styleUrl: './calendar.scss',

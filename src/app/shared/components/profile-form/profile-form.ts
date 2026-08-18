@@ -3,10 +3,11 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AppStore } from '../../../core/services/app-store.service';
 import { AgePrecision, Relationship } from '../../../core/models/app.models';
 import { SelectPicker, SelectPickerOption } from '../select-picker/select-picker';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-profile-form',
-  imports: [ReactiveFormsModule, SelectPicker],
+  imports: [ReactiveFormsModule, SelectPicker, TranslatePipe],
   templateUrl: './profile-form.html',
   styleUrl: './profile-form.scss',
 })

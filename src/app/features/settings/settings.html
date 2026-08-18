@@ -1,25 +1,43 @@
 <section class="page">
   <header class="page-heading">
     <div>
-      <h1>Settings</h1>
-      <p>Privacy, appearance, reminders, and portability.</p>
+      <h1>{{ 'settings.title' | translate }}</h1>
+      <p>{{ 'settings.subtitle' | translate }}</p>
     </div>
   </header>
   <section class="card settings-group">
     <div class="group-title">
       <span><ion-icon name="color-palette-outline" aria-hidden="true" /></span>
       <div>
-        <h2>Appearance</h2>
-        <p>Pink, calm, and comfortable in any light.</p>
+        <h2>{{ 'settings.appearance' | translate }}</h2>
+        <p>{{ 'settings.appearanceText' | translate }}</p>
       </div>
     </div>
     <div class="picker-field">
-      <span>Theme</span
+      <span>{{ 'settings.theme' | translate }}</span
       ><app-select-picker
         [value]="store.settings().theme"
         [options]="themeOptions"
-        sheetTitle="Choose theme"
+        [sheetTitle]="'settings.chooseTheme' | translate"
         (valueChange)="setTheme($event)"
+      />
+    </div>
+  </section>
+  <section class="card settings-group">
+    <div class="group-title">
+      <span><ion-icon name="language-outline" aria-hidden="true" /></span>
+      <div>
+        <h2>{{ 'settings.language' | translate }}</h2>
+        <p>{{ 'settings.languageText' | translate }}</p>
+      </div>
+    </div>
+    <div class="picker-field">
+      <span>{{ 'settings.language' | translate }}</span
+      ><app-select-picker
+        [value]="i18n.language()"
+        [options]="languageOptions"
+        [sheetTitle]="'settings.language' | translate"
+        (valueChange)="setLanguage($event)"
       />
     </div>
   </section>
@@ -28,8 +46,8 @@
       <div class="group-title">
         <span><ion-icon name="notifications-outline" aria-hidden="true" /></span>
         <div>
-          <h2>Period reminder</h2>
-          <p>Scheduled locally for {{ profile.name }}.</p>
+          <h2>{{ 'settings.periodReminder' | translate }}</h2>
+          <p>{{ 'settings.scheduled' | translate: { name: profile.name } }}</p>
         </div>
       </div>
       <button
@@ -40,16 +58,16 @@
         (click)="toggleReminder('enabled')"
       >
         <span
-          ><strong>Enable reminder</strong
-          ><small>Default is 3 days before the estimate</small></span
+          ><strong>{{ 'settings.enableReminder' | translate }}</strong
+          ><small>{{ 'settings.defaultReminder' | translate }}</small></span
         ><i [class.on]="store.reminderFor(profile.id).enabled"><b></b></i>
       </button>
       <div class="picker-field">
-        <span>Reminder timing</span
+        <span>{{ 'settings.reminderTiming' | translate }}</span
         ><app-select-picker
           [value]="store.reminderFor(profile.id).daysBefore.toString()"
           [options]="reminderOptions"
-          sheetTitle="Reminder timing"
+          [sheetTitle]="'settings.reminderTiming' | translate"
           (valueChange)="setReminderDays($event)"
         />
       </div>
@@ -60,7 +78,9 @@
         [attr.aria-checked]="store.reminderFor(profile.id).privacyMode"
         (click)="toggleReminder('privacyMode')"
       >
-        <span><strong>Private wording</strong><small>Shows “Upcoming health reminder”</small></span
+        <span
+          ><strong>{{ 'settings.privateWording' | translate }}</strong
+          ><small>{{ 'settings.upcomingReminder' | translate }}</small></span
         ><i [class.on]="store.reminderFor(profile.id).privacyMode"><b></b></i>
       </button>
     </section>
@@ -69,31 +89,35 @@
     <div class="group-title">
       <span><ion-icon name="shield-checkmark-outline" aria-hidden="true" /></span>
       <div>
-        <h2>App security</h2>
-        <p>PIN locking and Android privacy controls.</p>
+        <h2>{{ 'settings.security' | translate }}</h2>
+        <p>{{ 'settings.securityText' | translate }}</p>
       </div>
     </div>
     @if (!store.settings().pinEnabled) {
       <label
-        ><span>New PIN</span
+        ><span>{{ 'settings.newPin' | translate }}</span
         ><input
           type="password"
           inputmode="numeric"
           autocomplete="new-password"
           maxlength="8"
           [formControl]="newPin"
-          placeholder="4–8 digits"
+          [placeholder]="'settings.digits' | translate"
       /></label>
     }
     <button class="secondary-button" type="button" (click)="configurePin()">
       <ion-icon name="keypad-outline" aria-hidden="true" />{{
-        store.settings().pinEnabled ? 'Disable app PIN' : 'Enable app PIN'
+        store.settings().pinEnabled
+          ? ('settings.disablePin' | translate)
+          : ('settings.enablePin' | translate)
       }}
     </button>
     @if (store.settings().pinEnabled && native.isAndroid()) {
       @if (!store.settings().biometricEnabled) {
         <label
-          ><span>Current PIN <small>required to enable biometrics</small></span
+          ><span
+            >{{ 'settings.currentPin' | translate }}
+            <small>{{ 'settings.requiredBiometrics' | translate }}</small></span
           ><input
             type="password"
             inputmode="numeric"
@@ -112,7 +136,7 @@
         (click)="configureBiometric()"
       >
         <span
-          ><strong>Biometric unlock</strong
+          ><strong>{{ 'settings.biometric' | translate }}</strong
           ><small>{{
             native.biometricAvailable()
               ? 'Protected by Android Keystore'
@@ -159,8 +183,8 @@
     <div class="group-title">
       <span><ion-icon name="archive-outline" aria-hidden="true" /></span>
       <div>
-        <h2>Encrypted backup</h2>
-        <p>AES-GCM with a password-derived key. Flowra never stores your password.</p>
+        <h2>{{ 'settings.backup' | translate }}</h2>
+        <p>{{ 'settings.backupText' | translate }}</p>
       </div>
     </div>
     <div class="backup-actions">
@@ -170,12 +194,13 @@
         [disabled]="busy()"
         (click)="openCreateBackupPrompt()"
       >
-        <ion-icon name="download-outline" aria-hidden="true" />Create backup</button
+        <ion-icon name="download-outline" aria-hidden="true" />{{
+          'settings.createBackup' | translate
+        }}</button
       ><label class="secondary-button file-button"
-        ><ion-icon name="cloud-upload-outline" aria-hidden="true" />Restore backup<input
-          type="file"
-          accept=".flowra"
-          (change)="onRestoreFileChosen($event)"
+        ><ion-icon name="cloud-upload-outline" aria-hidden="true" />{{
+          'settings.restoreBackup' | translate
+        }}<input type="file" accept=".flowra" (change)="onRestoreFileChosen($event)"
       /></label>
     </div>
     @if (status()) {
@@ -263,7 +288,7 @@
           }
           <div class="password-dialog-actions">
             <button class="secondary-button" type="button" (click)="closePasswordPrompt()">
-              Cancel
+              {{ 'common.cancel' | translate }}
             </button>
             <button class="primary-button" type="submit" [disabled]="busy()">
               {{ mode === 'CREATE' ? 'Create backup' : 'Restore backup' }}
