@@ -163,28 +163,116 @@
         <p>AES-GCM with a password-derived key. Flowra never stores your password.</p>
       </div>
     </div>
-    <label
-      ><span>Backup password</span
-      ><input
-        type="password"
-        autocomplete="new-password"
-        [formControl]="password"
-        placeholder="At least 8 characters"
-    /></label>
     <div class="backup-actions">
-      <button class="primary-button" type="button" [disabled]="busy()" (click)="createBackup()">
+      <button
+        class="primary-button"
+        type="button"
+        [disabled]="busy()"
+        (click)="openCreateBackupPrompt()"
+      >
         <ion-icon name="download-outline" aria-hidden="true" />Create backup</button
       ><label class="secondary-button file-button"
         ><ion-icon name="cloud-upload-outline" aria-hidden="true" />Restore backup<input
           type="file"
-          accept=".flowra,application/json"
-          (change)="restore($event)"
+          accept=".flowra"
+          (change)="onRestoreFileChosen($event)"
       /></label>
     </div>
     @if (status()) {
       <p class="status" role="status">{{ status() }}</p>
     }
   </section>
+  @if (passwordPrompt(); as mode) {
+    <div class="password-backdrop">
+      <button
+        class="password-backdrop-close"
+        type="button"
+        aria-label="Cancel"
+        (click)="closePasswordPrompt()"
+      ></button>
+      <section
+        class="card password-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="backup-password-title"
+      >
+        <header>
+          <h2 id="backup-password-title">
+            {{ mode === 'CREATE' ? 'Backup password' : 'Unlock backup' }}
+          </h2>
+          <button type="button" aria-label="Close" (click)="closePasswordPrompt()">
+            <ion-icon name="close-outline" aria-hidden="true" />
+          </button>
+        </header>
+        <p>
+          {{
+            mode === 'CREATE'
+              ? 'This password encrypts your backup. Flowra cannot recover it for you.'
+              : 'Enter the password used when this backup was created.'
+          }}
+        </p>
+        <form (submit)="$event.preventDefault(); submitPasswordPrompt()">
+          <label
+            ><span>Password</span>
+            <span class="password-input">
+              <input
+                [type]="showPassword() ? 'text' : 'password'"
+                autocomplete="new-password"
+                placeholder="At least 8 characters"
+                [formControl]="password"
+              />
+              <button
+                type="button"
+                [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+                (click)="showPassword.set(!showPassword())"
+              >
+                <ion-icon
+                  [name]="showPassword() ? 'eye-off-outline' : 'eye-outline'"
+                  aria-hidden="true"
+                />
+              </button>
+            </span>
+          </label>
+          @if (mode === 'CREATE') {
+            <label
+              ><span>Confirm password</span>
+              <span class="password-input">
+                <input
+                  [type]="showConfirmPassword() ? 'text' : 'password'"
+                  autocomplete="new-password"
+                  placeholder="Re-enter password"
+                  [formControl]="confirmPassword"
+                />
+                <button
+                  type="button"
+                  [attr.aria-label]="
+                    showConfirmPassword() ? 'Hide confirm password' : 'Show confirm password'
+                  "
+                  (click)="showConfirmPassword.set(!showConfirmPassword())"
+                >
+                  <ion-icon
+                    [name]="showConfirmPassword() ? 'eye-off-outline' : 'eye-outline'"
+                    aria-hidden="true"
+                  />
+                </button>
+              </span>
+            </label>
+          }
+          @if (promptError()) {
+            <p class="prompt-error" role="alert">{{ promptError() }}</p>
+          }
+          <div class="password-dialog-actions">
+            <button class="secondary-button" type="button" (click)="closePasswordPrompt()">
+              Cancel
+            </button>
+            <button class="primary-button" type="submit" [disabled]="busy()">
+              {{ mode === 'CREATE' ? 'Create backup' : 'Restore backup' }}
+            </button>
+          </div>
+        </form>
+      </section>
+    </div>
+  }
   <aside class="privacy-card">
     <ion-icon name="wifi-outline" aria-hidden="true" />
     <div>

@@ -87,11 +87,17 @@
   transform: translateX(1.25rem);
 }
 .backup-actions {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   gap: 0.6rem;
+}
+.backup-actions > * {
+  flex: 1 1 12rem;
+  max-width: 16rem;
 }
 .file-button {
   position: relative;
+  cursor: pointer;
 }
 .file-button input {
   position: absolute;
@@ -136,7 +142,108 @@
   .privacy-card {
     grid-column: 1/-1;
   }
-  .backup-actions {
-    grid-template-columns: 1fr 1fr;
-  }
+}
+.password-backdrop {
+  position: fixed;
+  z-index: 400;
+  inset: 0;
+  display: grid;
+  padding: 1rem;
+  place-items: center;
+}
+.password-backdrop-close {
+  position: absolute;
+  border: 0;
+  background: rgb(41 13 27 / 55%);
+  backdrop-filter: blur(6px);
+  inset: 0;
+}
+.password-dialog {
+  position: relative;
+  width: min(100%, 26rem);
+  padding: 1.2rem;
+  background: var(--surface);
+}
+.password-dialog header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+.password-dialog header h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+.password-dialog header button {
+  display: inline-flex;
+  width: 2.2rem;
+  height: 2.2rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--text-muted);
+  background: var(--surface-raised);
+}
+.password-dialog > p {
+  margin: 0.4rem 0 1rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.password-dialog form {
+  display: grid;
+  gap: 0.8rem;
+}
+.password-dialog label {
+  display: grid;
+  gap: 0.35rem;
+  font-weight: 700;
+}
+.password-input {
+  display: flex;
+  align-items: center;
+  padding-right: 0.35rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--surface);
+  gap: 0.3rem;
+}
+.password-input:focus-within {
+  border-color: var(--primary);
+}
+.password-input input {
+  min-height: 2.9rem;
+  flex: 1;
+  padding: 0.6rem 0.85rem;
+  border: 0;
+  border-radius: 1rem;
+  color: var(--text);
+  background: none;
+  font-weight: 500;
+}
+.password-input input:focus {
+  outline: none;
+}
+.password-input > button {
+  display: inline-flex;
+  width: 2.4rem;
+  height: 2.4rem;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 0.8rem;
+  color: var(--text-muted);
+  background: none;
+  font-size: 1.05rem;
+}
+.prompt-error {
+  margin: 0;
+  color: var(--danger);
+  font-size: 0.82rem;
+}
+.password-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
 }
