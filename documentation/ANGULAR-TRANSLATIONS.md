@@ -122,6 +122,17 @@ If a date-fns locale does not exist, keep the numeric date format and add transl
 - Prefer polite, natural instructions for the target language rather than literal word-for-word translation.
 - Avoid translating product names, technical names, or health terms when a local user would recognize the established term more easily.
 
+## Flowra Translation Decisions
+
+The following product-specific decisions are recorded so later language edits remain consistent:
+
+- Tamil uses the compact `சுழற்சி நாள்` for “cycle day”; avoid the longer `சுழற்சியின் நாள்` in compact badges and pills.
+- Tamil action labels prefer polite imperative forms such as `மூடுக`, `ரத்துசெய்க`, `தேர்ந்தெடுக்குக`, and `மீட்டெடுக்குக`.
+- CSV and PDF export buttons include a localized caption in Tamil (`CSV கோப்பு`, `PDF கோப்பு`) while retaining the standard file-format abbreviations.
+- Severity values are translated through dictionary keys (`mild`, `moderate`, `severe`) rather than rendering the stored enum names directly.
+- Health-data enum values and profile values remain stable in storage; only their display labels are translated.
+- When a translated label wraps on mobile, icons remain separate flex items so the icon does not move into the text line.
+
 ## Verification Checklist
 
 1. Start the app and choose the new language in the first-run language screen.

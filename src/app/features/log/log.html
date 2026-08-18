@@ -106,7 +106,7 @@
               [class.selected]="severity() === level"
               (click)="severity.set($any(level))"
             >
-              {{ level.toLowerCase() }}
+              {{ 'log.' + level.toLowerCase() | translate }}
             </button>
           }
         </fieldset>

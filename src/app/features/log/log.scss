@@ -109,14 +109,16 @@
 }
 .severity {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.4rem;
-  margin: 0 0 1rem;
+  margin: 0 0 2rem;
   padding: 0;
   border: 0;
 }
 .severity legend {
-  margin-right: 0.3rem;
+  flex: 0 0 100%;
+  margin: 0 0 0.15rem;
   color: var(--text-muted);
   font-size: 0.78rem;
 }

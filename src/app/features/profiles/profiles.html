@@ -16,8 +16,12 @@
           <div>
             <h2>{{ profile.name }}</h2>
             <p>
-              {{ profile.relationship.toLowerCase() }} ·
-              {{ profile.approximateAge ? 'about ' + profile.approximateAge : 'age not set' }}
+              {{ 'profile.' + profile.relationship.toLowerCase() | translate }} ·
+              {{
+                profile.approximateAge
+                  ? ('profilesPage.about' | translate: { age: profile.approximateAge })
+                  : ('profilesPage.ageNotSet' | translate)
+              }}
             </p>
           </div>
           @if (profile.id === store.activeProfileId()) {
