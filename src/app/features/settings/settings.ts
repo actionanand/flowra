@@ -56,7 +56,7 @@ export class SettingsPage {
   protected readonly reminderOptions: readonly SelectPickerOption[] = [7, 5, 3, 2, 1, 0].map(
     (days) => ({
       value: String(days),
-      label: days === 0 ? 'On predicted day' : `${days} day${days === 1 ? '' : 's'} before`,
+      label: days === 0 ? 'i18n.settings.predictedDay' : `i18n.settings.daysBefore.${days}`,
     }),
   );
   protected setTheme(value: string): void {

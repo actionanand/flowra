@@ -31,7 +31,13 @@ export class App {
   protected readonly store = inject(AppStore);
   private readonly security = inject(SecurityService);
   protected readonly native = inject(NativeIntegrationService);
-  private readonly i18n = inject(I18nService);
+  protected readonly i18n = inject(I18nService);
+  protected readonly languageOptions: readonly SelectPickerOption[] = [
+    { value: 'en', label: 'English' },
+    { value: 'hi', label: 'हिन्दी' },
+    { value: 'ta', label: 'தமிழ்' },
+  ];
+  protected readonly languageSetupOpen = signal(!this.i18n.hasStoredLanguage());
   protected readonly onboardingOpen = signal(true);
   protected readonly locked = signal(false);
   protected readonly unlockError = signal('');
@@ -101,5 +107,12 @@ export class App {
         /(^|_)([a-z])/g,
         (_, space: string, letter: string) => `${space ? ' ' : ''}${letter.toUpperCase()}`,
       );
+  }
+  protected chooseLanguage(value: string): void {
+    this.i18n.setLanguage(value as 'en' | 'hi' | 'ta');
+  }
+  protected confirmLanguage(): void {
+    this.i18n.confirmLanguage();
+    this.languageSetupOpen.set(false);
   }
 }

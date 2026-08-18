@@ -16,12 +16,12 @@ export class ProfileForm {
   readonly saved = output<void>();
   readonly busy = signal(false);
   readonly relationshipOptions: readonly SelectPickerOption[] = [
-    { value: 'SELF', label: 'Self', icon: 'person-outline' },
-    { value: 'CHILD', label: 'Child', icon: 'happy-outline' },
-    { value: 'PARTNER', label: 'Partner', icon: 'heart-outline' },
-    { value: 'RELATIVE', label: 'Relative', icon: 'people-outline' },
-    { value: 'FRIEND', label: 'Friend', icon: 'sparkles-outline' },
-    { value: 'OTHER', label: 'Other', icon: 'ellipsis-horizontal-outline' },
+    { value: 'SELF', label: 'i18n.profile.self', icon: 'person-outline' },
+    { value: 'CHILD', label: 'i18n.profile.child', icon: 'happy-outline' },
+    { value: 'PARTNER', label: 'i18n.profile.partner', icon: 'heart-outline' },
+    { value: 'RELATIVE', label: 'i18n.profile.relative', icon: 'people-outline' },
+    { value: 'FRIEND', label: 'i18n.profile.friend', icon: 'sparkles-outline' },
+    { value: 'OTHER', label: 'i18n.profile.other', icon: 'ellipsis-horizontal-outline' },
   ];
   readonly statusOptions: readonly SelectPickerOption[] = [
     { value: 'YES', label: 'Yes' },

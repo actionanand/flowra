@@ -10,7 +10,7 @@
 >
   <span>{{
     selectedOption()?.label?.startsWith('i18n.')
-      ? (selectedOption()?.label?.slice(6) | translate)
+      ? (selectedOption()?.label?.slice(5) | translate)
       : (selectedOption()?.label ?? placeholder())
   }}</span>
   <ion-icon name="chevron-down-outline" aria-hidden="true" />
@@ -64,11 +64,15 @@
             <span
               ><strong>{{
                 option.label.startsWith('i18n.')
-                  ? (option.label.slice(6) | translate)
+                  ? (option.label.slice(5) | translate)
                   : option.label
               }}</strong>
               @if (option.detail) {
-                <small>{{ option.detail }}</small>
+                <small>{{
+                  option.detail.startsWith('i18n.')
+                    ? (option.detail.slice(5) | translate)
+                    : option.detail
+                }}</small>
               }
             </span>
             @if (option.value === value()) {

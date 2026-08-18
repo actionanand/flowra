@@ -63,7 +63,31 @@
     }
   </nav>
 </div>
-@if (store.ready() && !store.profiles().length && onboardingOpen()) {
+@if (store.ready() && languageSetupOpen()) {
+  <div class="onboarding-backdrop">
+    <section
+      class="onboarding language-onboarding"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="language-title"
+    >
+      <img ngSrc="flowra.png" width="76" height="76" alt="" />
+      <p class="eyebrow">{{ 'app.privateByDesign' | translate }}</p>
+      <h1 id="language-title">{{ 'app.chooseLanguage' | translate }}</h1>
+      <p>{{ 'app.chooseLanguageText' | translate }}</p>
+      <app-select-picker
+        [value]="i18n.language()"
+        [options]="languageOptions"
+        [sheetTitle]="'app.language' | translate"
+        (valueChange)="chooseLanguage($event)"
+      />
+      <button class="primary-button language-continue" type="button" (click)="confirmLanguage()">
+        {{ 'app.continue' | translate }}
+      </button>
+    </section>
+  </div>
+}
+@if (store.ready() && !languageSetupOpen() && !store.profiles().length && onboardingOpen()) {
   <div class="onboarding-backdrop">
     <section class="onboarding" role="dialog" aria-modal="true" aria-labelledby="welcome-title">
       <img ngSrc="flowra.png" width="76" height="76" alt="" />

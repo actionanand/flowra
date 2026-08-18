@@ -124,7 +124,7 @@
             autocomplete="current-password"
             maxlength="8"
             [formControl]="biometricPin"
-            placeholder="Current PIN"
+            [placeholder]="'settings.currentPin' | translate"
         /></label>
       }
       <button
@@ -139,8 +139,8 @@
           ><strong>{{ 'settings.biometric' | translate }}</strong
           ><small>{{
             native.biometricAvailable()
-              ? 'Protected by Android Keystore'
-              : 'No strong biometric is enrolled'
+              ? ('settings.androidKeystore' | translate)
+              : ('settings.noBiometric' | translate)
           }}</small></span
         ><i [class.on]="store.settings().biometricEnabled"><b></b></i>
       </button>
@@ -149,18 +149,18 @@
       setting of [
         {
           key: 'lockWhenBackgrounded',
-          title: 'Lock when backgrounded',
-          detail: 'Protect the app when switching away',
+          title: 'settings.lockBackground',
+          detail: 'settings.lockBackgroundDetail',
         },
         {
           key: 'screenshotBlocking',
-          title: 'Block screenshots',
-          detail: 'Android secure-window protection',
+          title: 'settings.blockScreenshots',
+          detail: 'settings.blockScreenshotsDetail',
         },
         {
           key: 'hideRecentPreview',
-          title: 'Hide recent-app preview',
-          detail: 'Cover sensitive content in app switcher',
+          title: 'settings.hidePreview',
+          detail: 'settings.hidePreviewDetail',
         },
       ];
       track setting.key
@@ -173,8 +173,8 @@
         (click)="toggle($any(setting.key))"
       >
         <span
-          ><strong>{{ setting.title }}</strong
-          ><small>{{ setting.detail }}</small></span
+          ><strong>{{ setting.title | translate }}</strong
+          ><small>{{ setting.detail | translate }}</small></span
         ><i [class.on]="$any(store.settings())[setting.key]"><b></b></i>
       </button>
     }
@@ -291,7 +291,11 @@
               {{ 'common.cancel' | translate }}
             </button>
             <button class="primary-button" type="submit" [disabled]="busy()">
-              {{ mode === 'CREATE' ? 'Create backup' : 'Restore backup' }}
+              {{
+                mode === 'CREATE'
+                  ? ('settings.createBackup' | translate)
+                  : ('settings.restoreBackup' | translate)
+              }}
             </button>
           </div>
         </form>
@@ -301,10 +305,8 @@
   <aside class="privacy-card">
     <ion-icon name="wifi-outline" aria-hidden="true" />
     <div>
-      <strong>No account. No analytics. No cloud sync.</strong>
-      <p>
-        Your menstrual data is stored in SQLite on Android and encrypted IndexedDB in the browser.
-      </p>
+      <strong>{{ 'settings.noAccount' | translate }}</strong>
+      <p>{{ 'settings.storageText' | translate }}</p>
     </div>
   </aside>
 </section>

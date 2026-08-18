@@ -34,10 +34,7 @@ export class ProfilesPage {
     'UNKNOWN',
   ].map((value) => ({
     value,
-    label: value
-      .toLowerCase()
-      .replaceAll('_', ' ')
-      .replace(/^./, (letter) => letter.toUpperCase()),
+    label: `i18n.profilesStages.${value.toLowerCase()}`,
   }));
   protected async updateStage(profile: Profile, value: string): Promise<void> {
     const stage = value as ReproductiveStage;

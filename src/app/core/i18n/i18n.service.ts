@@ -9,6 +9,7 @@ export class I18nService {
   private readonly translate = inject(TranslateService);
 
   readonly language = signal<AppLanguage>(this.readLanguage());
+  readonly languageSelected = signal(this.hasStoredLanguage());
 
   constructor() {
     const translate = this.translate;
@@ -22,8 +23,17 @@ export class I18nService {
 
   setLanguage(language: AppLanguage): void {
     this.language.set(language);
+    this.languageSelected.set(true);
     localStorage.setItem('flowra-language', language);
     this.translate.use(language);
+  }
+
+  confirmLanguage(): void {
+    localStorage.setItem('flowra-language-confirmed', 'true');
+  }
+
+  hasStoredLanguage(): boolean {
+    return localStorage.getItem('flowra-language-confirmed') === 'true';
   }
 
   private readLanguage(): AppLanguage {

@@ -56,7 +56,7 @@
           </p>
         } @else {
           <p>
-            {{ store.predictionResult()?.message ?? ('home.noHistory' | translate) }}
+            {{ predictionMessage() | translate }}
           </p>
         }
       </div>
@@ -64,9 +64,9 @@
         <ion-icon
           [name]="store.activePeriod() ? 'checkmark-circle-outline' : 'water-outline'"
           aria-hidden="true"
-        />{{
+        /><span>{{
           store.activePeriod() ? ('home.endPeriod' | translate) : ('home.startPeriod' | translate)
-        }}
+        }}</span>
       </button>
       @if (!store.activePeriod()) {
         <button class="earlier" type="button" routerLink="/log">
@@ -124,7 +124,7 @@
       } @else {
         <div class="empty">
           <ion-icon name="flower-outline" aria-hidden="true" />
-          <p>{{ store.predictionResult()?.message }}</p>
+          <p>{{ predictionMessage() | translate }}</p>
         </div>
       }
     </section>

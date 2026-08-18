@@ -3,6 +3,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { DailyLog, FlowLevel, Severity } from '../../core/models/app.models';
 import { AppStore } from '../../core/services/app-store.service';
 import { TranslatePipe } from '@ngx-translate/core';
+import { I18nService } from '../../core/i18n/i18n.service';
 import { displayDate, todayCalendarDate } from '../../core/utils/calendar-date';
 import {
   SelectPicker,
@@ -18,6 +19,7 @@ import {
 })
 export class LogPage {
   protected readonly store = inject(AppStore);
+  private readonly i18n = inject(I18nService);
   protected readonly date = new FormControl(todayCalendarDate(), { nonNullable: true });
   protected readonly notes = new FormControl('', { nonNullable: true });
   protected readonly customSymptom = new FormControl('', { nonNullable: true });
@@ -100,7 +102,9 @@ export class LogPage {
     'Period underwear',
     'Other',
   ];
-  protected readonly dateLabel = computed(() => displayDate(this.date.value, 'EEEE, d MMMM'));
+  protected readonly dateLabel = computed(() =>
+    displayDate(this.date.value, 'EEEE, d MMMM', this.i18n.language()),
+  );
   protected logLabel(kind: 'mood' | 'product' | 'symptom' | 'symptomGroup', value: string): string {
     const key = value.toLowerCase().replaceAll(' ', '').replaceAll('&', 'and');
     return `logLabels.${kind}.${key}`;
