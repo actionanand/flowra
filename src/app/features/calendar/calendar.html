@@ -5,17 +5,21 @@
       <p>{{ 'pages.calendarText' | translate }}</p>
     </div>
     <button class="quiet-button" type="button" (click)="today()">
-      <ion-icon name="locate-outline" aria-hidden="true" /> Today
+      <ion-icon name="locate-outline" aria-hidden="true" /> {{ 'calendar.today' | translate }}
     </button>
   </header>
   <div class="calendar-layout">
     <section class="calendar card" aria-labelledby="month-title">
       <header>
-        <button type="button" aria-label="Previous month" (click)="previous()">
+        <button
+          type="button"
+          [attr.aria-label]="'calendar.previous' | translate"
+          (click)="previous()"
+        >
           <ion-icon name="chevron-back-outline" aria-hidden="true" />
         </button>
         <h2 id="month-title" aria-live="polite">{{ monthLabel() }}</h2>
-        <button type="button" aria-label="Next month" (click)="next()">
+        <button type="button" [attr.aria-label]="'calendar.next' | translate" (click)="next()">
           <ion-icon name="chevron-forward-outline" aria-hidden="true" />
         </button>
       </header>
@@ -58,37 +62,41 @@
           </button>
         }
       </div>
-      <div class="legend" aria-label="Calendar legend">
-        <span><i class="recorded-key"></i>Recorded</span
-        ><span><i class="predicted-key"></i>Prediction window</span
-        ><span><i class="spot-key"></i>Spotting</span
-        ><span><ion-icon name="happy-outline" />Mood</span
-        ><span><ion-icon name="medical-outline" />Symptom</span>
+      <div class="legend" [attr.aria-label]="'calendar.legend' | translate">
+        <span><i class="recorded-key"></i>{{ 'calendar.recorded' | translate }}</span
+        ><span><i class="predicted-key"></i>{{ 'calendar.predictionWindow' | translate }}</span
+        ><span><i class="spot-key"></i>{{ 'calendar.spotting' | translate }}</span
+        ><span><ion-icon name="happy-outline" />{{ 'calendar.mood' | translate }}</span
+        ><span><ion-icon name="medical-outline" />{{ 'calendar.symptom' | translate }}</span>
       </div>
     </section>
     <aside class="day-detail card" aria-labelledby="selected-date-title">
-      <span class="eyebrow">Selected day</span>
+      <span class="eyebrow">{{ 'calendar.selectedDay' | translate }}</span>
       <h2 id="selected-date-title">{{ displayDate(selectedDate(), 'd MMMM yyyy') }}</h2>
       @if (selectedDay()?.cycleDay; as day) {
-        <span class="pill">Cycle day {{ day }}</span>
+        <span class="pill">{{ 'calendar.cycleDay' | translate: { count: day } }}</span>
       }
       @if (selectedLog(); as log) {
         <dl>
           <div>
-            <dt>Flow</dt>
-            <dd>{{ log.flow ? log.flow.toLowerCase().replace('_', ' ') : 'None' }}</dd>
+            <dt>{{ 'calendar.flow' | translate }}</dt>
+            <dd>
+              {{
+                log.flow ? log.flow.toLowerCase().replace('_', ' ') : ('calendar.none' | translate)
+              }}
+            </dd>
           </div>
           <div>
-            <dt>Mood</dt>
-            <dd>{{ log.moods.join(', ') || 'None' }}</dd>
+            <dt>{{ 'calendar.mood' | translate }}</dt>
+            <dd>{{ log.moods.join(', ') || ('calendar.none' | translate) }}</dd>
           </div>
           <div>
-            <dt>Symptoms</dt>
+            <dt>{{ 'calendar.symptom' | translate }}</dt>
             <dd>{{ symptomNames(log) }}</dd>
           </div>
           @if (log.notes) {
             <div>
-              <dt>Notes</dt>
+              <dt>{{ 'calendar.notes' | translate }}</dt>
               <dd>{{ log.notes }}</dd>
             </div>
           }
@@ -96,11 +104,12 @@
       } @else {
         <div class="no-entry">
           <ion-icon name="leaf-outline" aria-hidden="true" />
-          <p>No entry for this day.</p>
+          <p>{{ 'calendar.noEntry' | translate }}</p>
         </div>
       }
       <a class="primary-button" routerLink="/log"
-        ><ion-icon name="create-outline" aria-hidden="true" /> Add / edit entry</a
+        ><ion-icon name="create-outline" aria-hidden="true" />
+        {{ 'calendar.addEntry' | translate }}</a
       >
     </aside>
   </div>

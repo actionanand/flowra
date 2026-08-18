@@ -44,12 +44,12 @@ export class SettingsPage {
   protected readonly status = signal('');
   protected readonly busy = signal(false);
   protected readonly themeOptions: readonly SelectPickerOption[] = [
-    { value: 'LIGHT', label: 'Light', icon: 'sunny-outline' },
-    { value: 'DARK', label: 'Dark', icon: 'moon-outline' },
+    { value: 'LIGHT', label: 'i18n.settings.light', icon: 'sunny-outline' },
+    { value: 'DARK', label: 'i18n.settings.dark', icon: 'moon-outline' },
     {
       value: 'AUTOMATIC',
-      label: 'Automatic',
-      detail: 'Follow device',
+      label: 'i18n.settings.automatic',
+      detail: 'i18n.settings.followDevice',
       icon: 'phone-portrait-outline',
     },
   ];

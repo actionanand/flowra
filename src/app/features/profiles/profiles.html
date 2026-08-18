@@ -5,7 +5,7 @@
       <p>{{ 'pages.profilesText' | translate }}</p>
     </div>
     <button class="primary-button" type="button" (click)="adding.set(true)">
-      <ion-icon name="person-add-outline" aria-hidden="true" /> Add
+      <ion-icon name="person-add-outline" aria-hidden="true" /> {{ 'profilesPage.add' | translate }}
     </button>
   </header>
   <div class="profile-grid">
@@ -21,16 +21,21 @@
             </p>
           </div>
           @if (profile.id === store.activeProfileId()) {
-            <ion-icon name="checkmark-circle" aria-label="Active profile" />
+            <ion-icon
+              name="checkmark-circle"
+              [attr.aria-label]="'profilesPage.active' | translate"
+            />
           }
         </button>
         <div class="stage-field">
-          <span>Life stage <small>Chosen, never diagnosed</small></span
+          <span
+            >{{ 'profilesPage.lifeStage' | translate }}
+            <small>{{ 'profilesPage.chosen' | translate }}</small></span
           ><app-select-picker
             [compact]="true"
             [value]="profile.reproductiveStage"
             [options]="stages"
-            sheetTitle="Life stage"
+            [sheetTitle]="'profilesPage.lifeStageTitle' | translate"
             (valueChange)="updateStage(profile, $event)"
           />
         </div>
@@ -41,14 +46,16 @@
             [attr.aria-pressed]="profile.hiddenFromPreviews"
             (click)="toggle(profile, 'hiddenFromPreviews')"
           >
-            <ion-icon name="eye-off-outline" aria-hidden="true" /> Hide previews</button
+            <ion-icon name="eye-off-outline" aria-hidden="true" />
+            {{ 'profilesPage.hide' | translate }}</button
           ><button
             type="button"
             [class.on]="profile.requiresAuthentication"
             [attr.aria-pressed]="profile.requiresAuthentication"
             (click)="toggle(profile, 'requiresAuthentication')"
           >
-            <ion-icon name="lock-closed-outline" aria-hidden="true" /> Require unlock
+            <ion-icon name="lock-closed-outline" aria-hidden="true" />
+            {{ 'profilesPage.require' | translate }}
           </button>
         </div>
       </article>
@@ -60,11 +67,12 @@
     <section class="modal card" role="dialog" aria-modal="true" aria-labelledby="add-profile-title">
       <header>
         <div>
-          <span class="eyebrow">Independent profile</span>
-          <h2 id="add-profile-title">Add someone</h2>
+          <span class="eyebrow">{{ 'profilesPage.independent' | translate }}</span>
+          <h2 id="add-profile-title">{{ 'profilesPage.addSomeone' | translate }}</h2>
         </div>
         <button type="button" aria-label="Close" (click)="adding.set(false)">
           <ion-icon name="close-outline" aria-hidden="true" />
+          {{ 'profilesPage.close' | translate }}
         </button>
       </header>
       <app-profile-form (saved)="adding.set(false)" />

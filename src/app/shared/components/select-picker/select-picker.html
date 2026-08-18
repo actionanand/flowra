@@ -8,7 +8,11 @@
   [attr.aria-expanded]="open()"
   (click)="openPicker()"
 >
-  <span>{{ selectedOption()?.label ?? placeholder() }}</span>
+  <span>{{
+    selectedOption()?.label?.startsWith('i18n.')
+      ? (selectedOption()?.label?.slice(6) | translate)
+      : (selectedOption()?.label ?? placeholder())
+  }}</span>
   <ion-icon name="chevron-down-outline" aria-hidden="true" />
 </button>
 @if (open()) {
@@ -58,7 +62,11 @@
               <ion-icon [name]="option.icon" aria-hidden="true" />
             }
             <span
-              ><strong>{{ option.label }}</strong>
+              ><strong>{{
+                option.label.startsWith('i18n.')
+                  ? (option.label.slice(6) | translate)
+                  : option.label
+              }}</strong>
               @if (option.detail) {
                 <small>{{ option.detail }}</small>
               }

@@ -13,7 +13,7 @@
           [compact]="true"
           [value]="store.activeProfileId()"
           [options]="profileOptions()"
-          sheetTitle="Switch profile"
+          [sheetTitle]="'app.switchProfile' | translate"
           (valueChange)="store.selectProfile($event)"
         />
       </div>

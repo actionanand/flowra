@@ -12,7 +12,7 @@
     ><app-select-picker
       [value]="form.controls.relationship.value"
       [options]="relationshipOptions"
-      sheetTitle="Relationship"
+      [sheetTitle]="'profile.relationship' | translate"
       (valueChange)="setRelationship($event)"
     />
   </div>
@@ -21,7 +21,7 @@
     ><app-select-picker
       [value]="form.controls.agePrecision.value"
       [options]="agePrecisionOptions"
-      sheetTitle="Age detail"
+      [sheetTitle]="'profile.ageDetail' | translate"
       (valueChange)="setAgePrecision($event)"
     />
   </div>
@@ -62,7 +62,7 @@
         ><app-select-picker
           [value]="form.controls.ageRange.value"
           [options]="ageRangeOptions"
-          sheetTitle="Age range"
+          [sheetTitle]="'profile.ageRange' | translate"
           (valueChange)="setAgeRange($event)"
         />
       </div>
@@ -73,7 +73,7 @@
     ><app-select-picker
       [value]="form.controls.menstruationStarted.value"
       [options]="statusOptions"
-      sheetTitle="Have periods started?"
+      [sheetTitle]="'profile.periodsStarted' | translate"
       (valueChange)="setStatus($event)"
     />
   </div>
@@ -85,7 +85,7 @@
       ><app-select-picker
         [value]="form.controls.menarchePrecision.value"
         [options]="menarcheOptions"
-        sheetTitle="First period"
+        [sheetTitle]="'profile.firstPeriod' | translate"
         (valueChange)="setMenarchePrecision($event)"
       />
     </div>
