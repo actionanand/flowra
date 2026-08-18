@@ -4,7 +4,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AppStore } from './core/services/app-store.service';
 import { ProfileForm } from './shared/components/profile-form/profile-form';
 import { SelectPicker, SelectPickerOption } from './shared/components/select-picker/select-picker';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { SecurityService } from './core/services/security.service';
 import { NativeIntegrationService } from './core/services/native-integration.service';
 
@@ -32,15 +32,14 @@ export class App {
   protected readonly locked = signal(false);
   protected readonly unlockError = signal('');
   protected readonly unlockPin = new FormControl('', { nonNullable: true });
+  protected readonly unlockForm = new FormGroup({ pin: this.unlockPin });
   protected readonly profileOptions = computed<readonly SelectPickerOption[]>(() =>
-    this.store
-      .profiles()
-      .map((profile) => ({
-        value: profile.id,
-        label: profile.name,
-        detail: this.titleCase(profile.relationship),
-        icon: 'person-circle-outline',
-      })),
+    this.store.profiles().map((profile) => ({
+      value: profile.id,
+      label: profile.name,
+      detail: this.titleCase(profile.relationship),
+      icon: 'person-circle-outline',
+    })),
   );
   protected readonly nav = [
     { path: '/home', label: 'Home', icon: 'home-outline' },
