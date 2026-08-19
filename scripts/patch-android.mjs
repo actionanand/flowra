@@ -75,6 +75,9 @@ let proguard = await readFile(proguardPath, 'utf8');
 if (!proguard.includes('@android.webkit.JavascriptInterface'))
   proguard +=
     '\n# Preserve the narrow native bridge exposed to the Flowra WebView.\n-keepclassmembers class * {\n    @android.webkit.JavascriptInterface <methods>;\n}\n';
+if (!proguard.includes('com.google.errorprone.annotations'))
+  proguard +=
+    '\n# Suppress R8 warnings for compile-time annotation classes used by Tink and Guava.\n-dontwarn com.google.errorprone.annotations.**\n-dontwarn javax.annotation.**\n-dontwarn javax.annotation.concurrent.**\n';
 await writeFile(proguardPath, proguard, 'utf8');
 
 await mkdir(resolve(resPath, 'drawable-nodpi'), { recursive: true });
