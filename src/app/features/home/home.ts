@@ -1,4 +1,12 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Component, computed, inject } from '@angular/core';
+import {
+  CUSTOM_ELEMENTS_SCHEMA,
+  Component,
+  ElementRef,
+  computed,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { calculateCycleStatistics } from '../../core/cycle-engine/cycle-statistics';
@@ -11,10 +19,11 @@ import {
   todayCalendarDate,
 } from '../../core/utils/calendar-date';
 import { SnackbarService } from '../../core/services/snackbar.service';
+import { ConfirmationDialog } from '../../shared/components/confirmation-dialog/confirmation-dialog';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, DecimalPipe, TranslatePipe],
+  imports: [RouterLink, DecimalPipe, ConfirmationDialog, TranslatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './home.html',
   styleUrls: ['./home.scss', './home.flags.scss'],
@@ -23,6 +32,9 @@ export class Home {
   protected readonly store = inject(AppStore);
   private readonly i18n = inject(I18nService);
   private readonly snackbar = inject(SnackbarService);
+  protected readonly periodConfirmationOpen = signal(false);
+  private readonly periodActionButton =
+    viewChild<ElementRef<HTMLButtonElement>>('periodActionButton');
   protected readonly today = todayCalendarDate();
   protected readonly cycleLengths = computed(() => {
     const periods = this.store.profilePeriods();
@@ -72,11 +84,29 @@ export class Home {
   }
   protected displayDate = (value: string, pattern = 'd MMM yyyy') =>
     displayDate(value, pattern, this.i18n.language());
+  protected requestPeriodAction(): void {
+    this.snackbar.dismiss();
+    this.periodConfirmationOpen.set(true);
+  }
+  protected cancelPeriodAction(): void {
+    this.periodConfirmationOpen.set(false);
+    globalThis.setTimeout(() => this.periodActionButton()?.nativeElement.focus());
+  }
   protected async primaryPeriodAction(): Promise<void> {
     const endingPeriod = !!this.store.activePeriod();
-    if (endingPeriod) await this.store.endPeriod();
-    else await this.store.startPeriod();
-    const action = this.i18n.text(endingPeriod ? 'home.endPeriod' : 'home.startPeriod');
-    this.snackbar.show(`${action} — ${this.i18n.text('log.saved')}`);
+    this.periodConfirmationOpen.set(false);
+    try {
+      if (endingPeriod) await this.store.endPeriod();
+      else await this.store.startPeriod();
+      const action = this.i18n.text(endingPeriod ? 'home.endPeriod' : 'home.startPeriod');
+      this.snackbar.show(`${action} — ${this.i18n.text('log.saved')}`);
+    } catch (error) {
+      this.snackbar.show(
+        error instanceof Error ? error.message : 'The period was not changed.',
+        'WARNING',
+      );
+    } finally {
+      globalThis.setTimeout(() => this.periodActionButton()?.nativeElement.focus());
+    }
   }
 }

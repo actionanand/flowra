@@ -31,7 +31,7 @@ import { DOCUMENT } from '@angular/common';
         (keydown.tab)="trapFocus($event)"
       >
         <span class="confirmation-icon" aria-hidden="true">
-          <ion-icon name="create-outline" />
+          <ion-icon [name]="iconName()" />
         </span>
         <div>
           <h2 id="confirmation-title">{{ title() }}</h2>
@@ -42,7 +42,7 @@ import { DOCUMENT } from '@angular/common';
             {{ cancelLabel() }}
           </button>
           <button #confirmButton class="primary-button" type="button" (click)="confirmed.emit()">
-            <ion-icon name="create-outline" aria-hidden="true" />
+            <ion-icon [name]="iconName()" aria-hidden="true" />
             {{ confirmLabel() }}
           </button>
         </div>
@@ -117,6 +117,7 @@ export class ConfirmationDialog {
   readonly message = input.required<string>();
   readonly confirmLabel = input.required<string>();
   readonly cancelLabel = input.required<string>();
+  readonly iconName = input('create-outline');
   readonly confirmed = output<void>();
   readonly cancelled = output<void>();
   private readonly document = inject(DOCUMENT);
