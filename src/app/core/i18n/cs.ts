@@ -60,7 +60,7 @@ export const CS_TRANSLATIONS = {
     security: 'Zabezpečení aplikace',
     securityText: 'Zámek PIN a nastavení soukromí Android.',
     newPin: 'Nový PIN',
-    digits: '4–8 číslic',
+    digits: '4-8 číslic',
     enablePin: 'Zapnout PIN',
     disablePin: 'Vypnout PIN',
     currentPin: 'Aktuální PIN',

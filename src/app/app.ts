@@ -34,7 +34,10 @@ export class App {
   protected readonly native = inject(NativeIntegrationService);
   protected readonly i18n = inject(I18nService);
   protected readonly languageOptions: readonly SelectPickerOption[] = LANGUAGE_OPTIONS.map(
-    ({ code, nativeName }) => ({ value: code, label: nativeName }),
+    ({ code, nativeName, englishName }) => ({
+      value: code,
+      label: `${nativeName} (${englishName})`,
+    }),
   );
   protected readonly languageSetupOpen = signal(false);
   protected readonly onboardingOpen = signal(true);
