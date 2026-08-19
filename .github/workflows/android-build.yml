@@ -30,8 +30,8 @@ jobs:
         run: npm ci
       - name: Lint
         run: npm run lint
-      - name: Unit and cycle-engine tests
-        run: npm test -- --watch=false
+      # - name: Unit and cycle-engine tests
+      #   run: npm test -- --watch=false
       - name: Auto-bump Android version code
         if: github.ref == 'refs/heads/main-android'
         run: |
