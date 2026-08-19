@@ -1,6 +1,5 @@
+import { DOCUMENT } from '@angular/common';
 import { inject, Injectable } from '@angular/core';
-import { Directory, Encoding, Filesystem } from '@capacitor/filesystem';
-import { Capacitor } from '@capacitor/core';
 import { CryptoService, PasswordEnvelope } from '../crypto/crypto.service';
 import {
   AppSnapshot,
@@ -14,6 +13,8 @@ import {
   Profile,
 } from '../models/app.models';
 import { LOCAL_RECORD_REPOSITORY } from '../repositories/repository.contracts';
+import { NativeIntegrationService } from './native-integration.service';
+import { NotificationService } from './notification.service';
 
 interface VersionedBackup {
   readonly format: 'flowra-data';
@@ -26,6 +27,9 @@ interface VersionedBackup {
 export class BackupService {
   private readonly repository = inject(LOCAL_RECORD_REPOSITORY);
   private readonly crypto = inject(CryptoService);
+  private readonly native = inject(NativeIntegrationService);
+  private readonly notifications = inject(NotificationService);
+  private readonly document = inject(DOCUMENT);
 
   async create(password: string): Promise<string> {
     const [
@@ -64,23 +68,50 @@ export class BackupService {
 
   async save(content: string): Promise<string> {
     const filename = `flowra-backup-${new Date().toISOString().slice(0, 10)}.flowra`;
-    if (Capacitor.isNativePlatform()) {
-      const result = await Filesystem.writeFile({
-        path: filename,
-        data: content,
-        directory: Directory.Documents,
-        encoding: Encoding.UTF8,
-        recursive: true,
-      });
-      return result.uri;
+    if (this.native.isAndroid()) {
+      await this.native.saveBackup(filename, content);
+      return filename;
     }
-    const url = URL.createObjectURL(new Blob([content], { type: 'application/json' }));
-    const anchor = document.createElement('a');
+    const file = new File([content], filename, { type: 'application/json' });
+    const navigatorRef = this.document.defaultView?.navigator as Navigator & {
+      canShare?: (data: ShareData) => boolean;
+    };
+    if (navigatorRef?.share && navigatorRef.canShare?.({ files: [file] })) {
+      try {
+        await navigatorRef.share({ files: [file], title: 'Flowra encrypted backup' });
+        return filename;
+      } catch {
+        // Fall through to a normal browser download.
+      }
+    }
+    const url = URL.createObjectURL(file);
+    const anchor = this.document.createElement('a');
     anchor.href = url;
     anchor.download = filename;
+    anchor.style.display = 'none';
+    this.document.body.append(anchor);
     anchor.click();
-    URL.revokeObjectURL(url);
+    anchor.remove();
+    globalThis.setTimeout(() => URL.revokeObjectURL(url), 1_000);
     return filename;
+  }
+
+  async choose(): Promise<string> {
+    if (this.native.isAndroid()) return this.native.openBackup();
+    return new Promise<string>((resolve, reject) => {
+      const input = this.document.createElement('input');
+      input.type = 'file';
+      input.accept = '.flowra,application/json';
+      input.addEventListener('change', () => {
+        const file = input.files?.[0];
+        if (!file) {
+          reject(new Error('No backup file was selected.'));
+          return;
+        }
+        void file.text().then(resolve, reject);
+      });
+      input.click();
+    });
   }
 
   async restore(
@@ -105,8 +136,18 @@ export class BackupService {
     ]);
     try {
       await this.replaceSnapshot(data);
+      await this.notifications.rebuildAfterRestore(safety[0], data);
     } catch (error) {
       await this.replaceSnapshot({
+        profiles: safety[0],
+        periods: safety[1],
+        dailyLogs: safety[2],
+        healthEvents: safety[3],
+        predictions: safety[4],
+        notificationSettings: safety[5],
+        appSettings: safety[6][0] ?? DEFAULT_APP_SETTINGS,
+      });
+      await this.notifications.rebuildAfterRestore(data.profiles, {
         profiles: safety[0],
         periods: safety[1],
         dailyLogs: safety[2],

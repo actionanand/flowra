@@ -1,4 +1,4 @@
-import { access, copyFile, mkdir, readFile, writeFile } from 'node:fs/promises';
+import { access, copyFile, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 
 const configPath = resolve('android/app/src/main/assets/capacitor.config.json');
@@ -6,6 +6,11 @@ const config = JSON.parse(await readFile(configPath, 'utf8'));
 const appId = config.appId;
 if (typeof appId !== 'string' || !appId) throw new Error('Android appId is missing.');
 const javaPath = resolve('android/app/src/main/java', ...appId.split('.'), 'MainActivity.java');
+const exportPluginPath = resolve(
+  'android/app/src/main/java',
+  ...appId.split('.'),
+  'FlowraExportPlugin.java',
+);
 const manifestPath = resolve('android/app/src/main/AndroidManifest.xml');
 const gradlePath = resolve('android/app/build.gradle');
 const proguardPath = resolve('android/app/proguard-rules.pro');
@@ -40,6 +45,20 @@ manifest = manifest.replace(/<application\b[^>]*>/, (application) => {
     application,
   );
 });
+if (!manifest.includes('androidx.core.content.FileProvider'))
+  manifest = manifest.replace(
+    /<\/application>/,
+    `        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="\${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/flowra_file_paths" />
+        </provider>
+    </application>`,
+  );
 await writeFile(manifestPath, manifest, 'utf8');
 
 await mkdir(resolve(resPath, 'xml'), { recursive: true });
@@ -51,6 +70,10 @@ await writeFile(
 await writeFile(
   resolve(resPath, 'xml/data_extraction_rules.xml'),
   `<?xml version="1.0" encoding="utf-8"?>\n<data-extraction-rules><cloud-backup>${domains.map((domain) => `<exclude domain="${domain}" path="." />`).join('')}</cloud-backup><device-transfer>${domains.map((domain) => `<exclude domain="${domain}" path="." />`).join('')}</device-transfer></data-extraction-rules>\n`,
+);
+await writeFile(
+  resolve(resPath, 'xml/flowra_file_paths.xml'),
+  `<?xml version="1.0" encoding="utf-8"?>\n<paths xmlns:android="http://schemas.android.com/apk/res/android"><cache-path name="exports" path="exports/" /></paths>\n`,
 );
 
 let gradle = await readFile(gradlePath, 'utf8');
@@ -80,6 +103,15 @@ if (!proguard.includes('com.google.errorprone.annotations'))
     '\n# Suppress R8 warnings for compile-time annotation classes used by Tink and Guava.\n-dontwarn com.google.errorprone.annotations.**\n-dontwarn javax.annotation.**\n-dontwarn javax.annotation.concurrent.**\n';
 await writeFile(proguardPath, proguard, 'utf8');
 
+const drawableDirectories = (await readdir(resPath, { withFileTypes: true })).filter(
+  (entry) => entry.isDirectory() && entry.name.startsWith('drawable'),
+);
+for (const directory of drawableDirectories) {
+  const splashPng = resolve(resPath, directory.name, 'splash.png');
+  await rm(splashPng, { force: true });
+  if (directory.name !== 'drawable')
+    await rm(resolve(resPath, directory.name, 'splash.xml'), { force: true });
+}
 await mkdir(resolve(resPath, 'drawable-nodpi'), { recursive: true });
 await mkdir(resolve(resPath, 'drawable'), { recursive: true });
 await copyFile(
@@ -88,7 +120,23 @@ await copyFile(
 );
 await writeFile(
   resolve(resPath, 'drawable/flowra_splash_icon.xml'),
-  `<?xml version="1.0" encoding="utf-8"?>\n<layer-list xmlns:android="http://schemas.android.com/apk/res/android"><item android:gravity="center"><bitmap android:src="@drawable/flowra_splash_logo" android:gravity="center" /></item></layer-list>\n`,
+  `<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:width="160dp" android:height="160dp" android:gravity="center">
+        <shape android:shape="oval"><solid android:color="#FFF0F6" /></shape>
+    </item>
+    <item android:width="104dp" android:height="104dp" android:gravity="center">
+        <bitmap android:src="@drawable/flowra_splash_logo" android:gravity="fill" />
+    </item>
+</layer-list>\n`,
+);
+await writeFile(
+  resolve(resPath, 'drawable/splash.xml'),
+  `<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item><shape android:shape="rectangle"><solid android:color="#FFF7FB" /></shape></item>
+    <item android:drawable="@drawable/flowra_splash_icon" android:gravity="center" />
+</layer-list>\n`,
 );
 await writeFile(
   resolve(resPath, 'drawable/ic_stat_flowra.xml'),
@@ -105,6 +153,16 @@ for (const styleFile of [
       /(<style name="AppTheme\.NoActionBarLaunch"[^>]*>)[\s\S]*?(<\/style>)/,
       `$1\n        <item name="windowSplashScreenBackground">#FFF7FB</item>\n        <item name="windowSplashScreenAnimatedIcon">@drawable/flowra_splash_icon</item>\n        <item name="windowSplashScreenIconBackgroundColor">@android:color/transparent</item>\n        <item name="postSplashScreenTheme">@style/AppTheme.NoActionBar</item>\n    $2`,
     );
+    styles = styles.replace(
+      /(<style name="AppTheme\.NoActionBarLaunch"[^>]*>)([\s\S]*?)(<\/style>)/,
+      (_match, open, body, close) => {
+        const background = '        <item name="android:background">@drawable/splash</item>';
+        const patched = body.includes('android:background')
+          ? body.replace(/\s*<item name="android:background">[\s\S]*?<\/item>/, `\n${background}`)
+          : `${body}${background}\n`;
+        return `${open}${patched}${close}`;
+      },
+    );
     await writeFile(styleFile, styles, 'utf8');
   } catch {
     /* values-night may not exist in a fresh shell */
@@ -113,15 +171,24 @@ for (const styleFile of [
 
 const java = `package ${appId};
 
+import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.util.Base64;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
@@ -131,6 +198,9 @@ import com.getcapacitor.BridgeActivity;
 
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.security.KeyStore;
 import java.util.concurrent.Executor;
 
@@ -140,12 +210,18 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 
 public class MainActivity extends BridgeActivity {
+  private static final int CREATE_BACKUP_REQUEST = 4101;
+  private static final int OPEN_BACKUP_REQUEST = 4102;
   private static final String BIOMETRIC_KEY_ALIAS = "flowra_biometric_key";
   private static final String SECURITY_PREFERENCES = "flowra_security";
   private BiometricPrompt biometricPrompt;
+  private byte[] pendingBackup;
+  private View launchOverlay;
 
   @Override public void onCreate(Bundle savedInstanceState) {
+    registerPlugin(FlowraExportPlugin.class);
     super.onCreate(savedInstanceState);
+    showLaunchOverlay();
     getBridge().getWebView().setBackgroundColor(Color.parseColor("#FFF7FB"));
     getBridge().getWebView().addJavascriptInterface(new FlowraNativeBridge(), "FlowraNative");
     createReminderChannel();
@@ -158,6 +234,34 @@ public class MainActivity extends BridgeActivity {
     getSystemService(NotificationManager.class).createNotificationChannel(channel);
   }
   public class FlowraNativeBridge {
+    @JavascriptInterface public void hideSplash() {
+      runOnUiThread(() -> hideLaunchOverlay());
+    }
+
+    @JavascriptInterface public void saveBackup(String fileName, String base64Data) {
+      runOnUiThread(() -> {
+        try {
+          pendingBackup = Base64.decode(base64Data, Base64.DEFAULT);
+          Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+          intent.addCategory(Intent.CATEGORY_OPENABLE);
+          intent.setType("application/octet-stream");
+          intent.putExtra(Intent.EXTRA_TITLE, fileName);
+          startActivityForResult(intent, CREATE_BACKUP_REQUEST);
+        } catch (Exception error) {
+          dispatchNativeResult("backup-saved", false, "", error.getMessage());
+        }
+      });
+    }
+
+    @JavascriptInterface public void openBackup() {
+      runOnUiThread(() -> {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*");
+        startActivityForResult(intent, OPEN_BACKUP_REQUEST);
+      });
+    }
+
     @JavascriptInterface public void setScreenshotProtection(boolean enabled) {
       runOnUiThread(() -> { if (enabled) getWindow().setFlags(android.view.WindowManager.LayoutParams.FLAG_SECURE, android.view.WindowManager.LayoutParams.FLAG_SECURE); else getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_SECURE); });
     }
@@ -227,6 +331,78 @@ public class MainActivity extends BridgeActivity {
     }
 
     @JavascriptInterface public void disableBiometric() { clearBiometricState(); }
+  }
+
+  @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (requestCode != CREATE_BACKUP_REQUEST && requestCode != OPEN_BACKUP_REQUEST) return;
+    String action = requestCode == CREATE_BACKUP_REQUEST ? "backup-saved" : "backup-opened";
+    if (resultCode != Activity.RESULT_OK || data == null || data.getData() == null) {
+      pendingBackup = null;
+      dispatchNativeResult(action, false, "", "File selection was cancelled.");
+      return;
+    }
+    Uri uri = data.getData();
+    try {
+      if (requestCode == CREATE_BACKUP_REQUEST) {
+        try (OutputStream output = getContentResolver().openOutputStream(uri)) {
+          if (output == null) throw new IllegalStateException("The selected file could not be opened.");
+          output.write(pendingBackup);
+        }
+        pendingBackup = null;
+        dispatchNativeResult(action, true, "", "");
+        return;
+      }
+      ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+      try (InputStream input = getContentResolver().openInputStream(uri)) {
+        if (input == null) throw new IllegalStateException("The selected file could not be opened.");
+        byte[] buffer = new byte[8192];
+        int count;
+        while ((count = input.read(buffer)) != -1) bytes.write(buffer, 0, count);
+      }
+      dispatchNativeResult(action, true, Base64.encodeToString(bytes.toByteArray(), Base64.NO_WRAP), "");
+    } catch (Exception error) {
+      pendingBackup = null;
+      dispatchNativeResult(action, false, "", error.getMessage());
+    }
+  }
+
+  private void showLaunchOverlay() {
+    FrameLayout overlay = new FrameLayout(this);
+    overlay.setBackgroundColor(Color.parseColor("#FFF7FB"));
+    overlay.setClickable(true);
+    ImageView icon = new ImageView(this);
+    icon.setImageResource(R.drawable.flowra_splash_logo);
+    icon.setScaleType(ImageView.ScaleType.FIT_CENTER);
+    int padding = dp(25);
+    icon.setPadding(padding, padding, padding, padding);
+    GradientDrawable tile = new GradientDrawable();
+    tile.setShape(GradientDrawable.OVAL);
+    tile.setColor(Color.parseColor("#FFF0F6"));
+    icon.setBackground(tile);
+    icon.setElevation(dp(6));
+    FrameLayout.LayoutParams layout = new FrameLayout.LayoutParams(dp(164), dp(164));
+    layout.gravity = Gravity.CENTER;
+    overlay.addView(icon, layout);
+    addContentView(overlay, new ViewGroup.LayoutParams(
+      ViewGroup.LayoutParams.MATCH_PARENT,
+      ViewGroup.LayoutParams.MATCH_PARENT
+    ));
+    launchOverlay = overlay;
+  }
+
+  private void hideLaunchOverlay() {
+    View overlay = launchOverlay;
+    if (overlay == null) return;
+    launchOverlay = null;
+    overlay.animate().alpha(0f).setDuration(180).withEndAction(() -> {
+      if (overlay.getParent() instanceof ViewGroup)
+        ((ViewGroup) overlay.getParent()).removeView(overlay);
+    }).start();
+  }
+
+  private int dp(int value) {
+    return Math.round(value * getResources().getDisplayMetrics().density);
   }
 
   private SecretKey createBiometricKey() throws Exception {
@@ -304,6 +480,11 @@ public class MainActivity extends BridgeActivity {
 `;
 await mkdir(dirname(javaPath), { recursive: true });
 await writeFile(javaPath, java, 'utf8');
+const exportPluginTemplate = await readFile(
+  resolve('scripts/android/FlowraExportPlugin.java'),
+  'utf8',
+);
+await writeFile(exportPluginPath, exportPluginTemplate.replaceAll('__APP_ID__', appId), 'utf8');
 console.log(
-  'Applied Flowra Android biometric, privacy, notification, splash, R8, and backup patches.',
+  'Applied Flowra Android biometric, privacy, notification, splash, export, R8, and backup patches.',
 );

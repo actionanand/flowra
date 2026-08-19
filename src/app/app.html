@@ -1,11 +1,20 @@
 <a class="skip-link" href="#main-content">{{ 'app.skipToContent' | translate }}</a>
-<div class="app-shell">
+<div
+  class="app-shell"
+  [attr.aria-hidden]="notificationPromptOpen() ? 'true' : null"
+  [attr.inert]="notificationPromptOpen() ? '' : null"
+>
   <header class="app-header">
-    <a class="brand" routerLink="/home" [attr.aria-label]="'app.home' | translate"
-      ><img ngSrc="flowra.png" width="44" height="44" priority alt="" /><span
-        ><strong>Flowra</strong><small>{{ 'app.privateCare' | translate }}</small></span
-      ></a
+    <button
+      class="mobile-menu-button"
+      type="button"
+      [attr.aria-label]="'app.mainNavigation' | translate"
+      aria-controls="primary-side-navigation"
+      [attr.aria-expanded]="mobileNavOpen()"
+      (click)="mobileNavOpen.set(true)"
     >
+      <img ngSrc="flowra.png" width="48" height="48" priority alt="" />
+    </button>
     @if (store.profiles().length) {
       <div class="profile-switcher">
         <span class="sr-only">{{ 'app.activeProfile' | translate }}</span
@@ -23,16 +32,37 @@
       {{ 'app.onDevice' | translate }}</span
     >
   </header>
-  <aside class="side-nav" [attr.aria-label]="'app.mainNavigation' | translate">
+  @if (mobileNavOpen()) {
+    <button
+      class="nav-scrim"
+      type="button"
+      [attr.aria-label]="'common.close' | translate"
+      (click)="closeMobileNav()"
+    ></button>
+  }
+  <aside
+    id="primary-side-navigation"
+    class="side-nav"
+    [class.open]="mobileNavOpen()"
+    [attr.aria-label]="'app.mainNavigation' | translate"
+  >
     <div class="side-brand">
       <img ngSrc="flowra.png" width="54" height="54" alt="" />
       <div>
         <strong>Flowra</strong><span>{{ 'app.yourRhythm' | translate }}</span>
       </div>
+      <button
+        class="side-nav-close"
+        type="button"
+        [attr.aria-label]="'common.close' | translate"
+        (click)="closeMobileNav()"
+      >
+        <ion-icon name="close-outline" aria-hidden="true" />
+      </button>
     </div>
     <nav>
       @for (item of nav; track item.path) {
-        <a [routerLink]="item.path" routerLinkActive="active"
+        <a [routerLink]="item.path" routerLinkActive="active" (click)="closeMobileNav()"
           ><ion-icon [name]="item.icon" aria-hidden="true" /><span>{{
             item.label | translate
           }}</span></a
@@ -63,6 +93,62 @@
     }
   </nav>
 </div>
+@if (snackbar.message(); as message) {
+  <div class="app-snackbar" [class]="'app-snackbar ' + message.tone.toLowerCase()" role="status">
+    <ion-icon
+      [name]="message.tone === 'WARNING' ? 'warning-outline' : 'checkmark-circle-outline'"
+      aria-hidden="true"
+    />
+    <span>{{ message.text }}</span>
+    <button
+      type="button"
+      [attr.aria-label]="'common.close' | translate"
+      (click)="snackbar.dismiss()"
+    >
+      <ion-icon name="close-outline" aria-hidden="true" />
+    </button>
+  </div>
+}
+@if (notificationPromptOpen()) {
+  <div class="permission-backdrop">
+    <section
+      class="permission-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="notification-permission-title"
+      aria-describedby="notification-permission-description"
+      [attr.aria-busy]="notificationPermissionBusy()"
+    >
+      <span class="permission-icon" aria-hidden="true">
+        <ion-icon name="notifications-outline" />
+      </span>
+      <h2 id="notification-permission-title">{{ 'settings.periodReminder' | translate }}</h2>
+      <p id="notification-permission-description">
+        {{ 'settings.defaultReminder' | translate }}. {{ 'settings.upcomingReminder' | translate }}.
+      </p>
+      <div>
+        <button
+          class="secondary-button"
+          type="button"
+          [disabled]="notificationPermissionBusy()"
+          (click)="dismissNotificationPrompt()"
+        >
+          {{ 'common.cancel' | translate }}
+        </button>
+        <button
+          #notificationPermissionButton
+          class="primary-button"
+          type="button"
+          [disabled]="notificationPermissionBusy()"
+          (click)="allowNotifications()"
+        >
+          <ion-icon name="notifications-outline" aria-hidden="true" />
+          {{ 'settings.enableReminder' | translate }}
+        </button>
+      </div>
+    </section>
+  </div>
+}
 @if (store.ready() && languageSetupOpen()) {
   <div class="onboarding-backdrop">
     <section

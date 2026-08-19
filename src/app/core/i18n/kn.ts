@@ -115,7 +115,7 @@ export const KN_TRANSLATIONS = {
     backupFailed: 'ಬ್ಯಾಕಪ್ ವಿಫಲವಾಗಿದೆ.',
     chooseBackup: 'ಮೊದಲು .flowra ಬ್ಯಾಕಪ್ ಫೈಲ್ ಆಯ್ಕೆಮಾಡಿ.',
     restoreSummary:
-      '{{profiles}} ಪ್ರೊಫೈಲ್‌ಗಳು, {{periods}} ಋತುಸ್ರಾವಗಳು ಮತ್ತು {{logs}} ದಿನದ ದಾಖಲೆಗಳನ್ನು ಮರುಸ್ಥಾಪಿಸಲಾಗಿದೆ. ನವೀಕರಿಸಲು Flowra ಮತ್ತೆ ತೆರೆಯಿರಿ.',
+      '{{profiles}} ಪ್ರೊಫೈಲ್‌ಗಳು, {{periods}} ಋತುಸ್ರಾವಗಳು ಮತ್ತು {{logs}} ದಿನದ ದಾಖಲೆಗಳನ್ನು ಮರುಸ್ಥಾಪಿಸಲಾಗಿದೆ.',
     invalidBackup: 'ಇದು Flowra ಬ್ಯಾಕಪ್ ಅಲ್ಲ. .flowra ಫೈಲ್ ಆಯ್ಕೆಮಾಡಿ.',
     incorrectBackupPassword: 'ಬ್ಯಾಕಪ್ ಪಾಸ್‌ವರ್ಡ್ ತಪ್ಪಾಗಿದೆ. ನಿಮ್ಮ ಈಗಿನ ಡೇಟಾ ಬದಲಾಗಿಲ್ಲ.',
   },

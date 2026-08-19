@@ -27,6 +27,7 @@
     "format:all": "prettier --config ./.prettierrc --write \"src/{app,environments,assets}/**/*{.ts,.js,.json,.css,.scss}\"",
     "lint": "ng lint",
     "i18n:check": "node scripts/check-translations.mjs",
+    "demo:backup": "node scripts/generate-dummy-backup.mjs",
     "prepare": "husky"
   },
   "private": true,

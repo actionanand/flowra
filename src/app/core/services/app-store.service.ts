@@ -55,6 +55,13 @@ export class AppStore {
   });
 
   async initialize(): Promise<void> {
+    await this.refreshFromStorage();
+    this.ready.set(true);
+    await this.rescheduleAllReminders();
+  }
+
+  async refreshFromStorage(): Promise<void> {
+    const preferredProfileId = this.activeProfileId();
     const [profiles, periods, logs, events, predictions, reminderSettings, settings] =
       await Promise.all([
         this.repository.list<Profile>('profiles'),
@@ -73,8 +80,11 @@ export class AppStore {
     this.notificationSettings.set(reminderSettings);
     this.settings.set({ ...DEFAULT_APP_SETTINGS, ...(settings[0] ?? {}) });
     this.themeService.setPreference(this.settings().theme);
-    this.activeProfileId.set(profiles[0]?.id ?? '');
-    this.ready.set(true);
+    this.activeProfileId.set(
+      profiles.some((profile) => profile.id === preferredProfileId)
+        ? preferredProfileId
+        : (profiles[0]?.id ?? ''),
+    );
   }
 
   async createProfile(input: {
@@ -216,8 +226,20 @@ export class AppStore {
   }
 
   async saveDailyLog(log: DailyLog): Promise<void> {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(log.date) || log.date > todayCalendarDate())
+      throw new Error('Daily logs cannot be saved for a future or invalid date.');
     await this.repository.put('daily_logs', log);
-    this.dailyLogs.update((logs) => [...logs.filter((item) => item.id !== log.id), log]);
+    const duplicates = this.dailyLogs().filter(
+      (item) => item.id !== log.id && item.profileId === log.profileId && item.date === log.date,
+    );
+    await Promise.all(duplicates.map((item) => this.repository.remove('daily_logs', item.id)));
+    this.dailyLogs.update((logs) => [
+      ...logs.filter(
+        (item) =>
+          item.id !== log.id && !(item.profileId === log.profileId && item.date === log.date),
+      ),
+      log,
+    ]);
   }
 
   async updateSettings(settings: AppSettings): Promise<void> {
@@ -245,6 +267,21 @@ export class AppStore {
         privacyMode: true,
       }
     );
+  }
+
+  async rescheduleAllReminders(): Promise<void> {
+    for (const profile of this.profiles()) {
+      const prediction = this.engine.predict(
+        profile.id,
+        this.periods(),
+        profile.reproductiveStage,
+      ).prediction;
+      try {
+        await this.notifications.reschedule(profile, prediction, this.reminderFor(profile.id));
+      } catch {
+        // Stored reminder choices remain intact if Android cannot schedule at startup.
+      }
+    }
   }
 
   private async syncReminder(): Promise<void> {

@@ -116,7 +116,7 @@ export const DE_TRANSLATIONS = {
     backupFailed: 'Backup fehlgeschlagen.',
     chooseBackup: 'Wähle zuerst eine .flowra-Backupdatei.',
     restoreSummary:
-      '{{profiles}} Profile, {{periods}} Perioden und {{logs}} Tagesprotokolle wiederhergestellt. Öffne Flowra zum Aktualisieren erneut.',
+      '{{profiles}} Profile, {{periods}} Perioden und {{logs}} Tagesprotokolle wiederhergestellt.',
     invalidBackup: 'Diese Datei ist kein Flowra-Backup. Wähle eine .flowra-Datei.',
     incorrectBackupPassword:
       'Falsches Backup-Passwort. Deine bestehenden Daten wurden nicht verändert.',

@@ -115,7 +115,7 @@ export const TE_TRANSLATIONS = {
     backupFailed: 'బ్యాకప్ విఫలమైంది.',
     chooseBackup: 'ముందుగా .flowra బ్యాకప్ ఫైల్‌ను ఎంచుకోండి.',
     restoreSummary:
-      '{{profiles}} ప్రొఫైల్‌లు, {{periods}} రుతుస్రావాలు మరియు {{logs}} రోజువారీ నమోదులు పునరుద్ధరించబడ్డాయి. రిఫ్రెష్ కోసం Flowra మళ్లీ తెరవండి.',
+      '{{profiles}} ప్రొఫైల్‌లు, {{periods}} రుతుస్రావాలు మరియు {{logs}} రోజువారీ నమోదులు పునరుద్ధరించబడ్డాయి.',
     invalidBackup: 'ఇది Flowra బ్యాకప్ కాదు. .flowra ఫైల్‌ను ఎంచుకోండి.',
     incorrectBackupPassword: 'బ్యాకప్ పాస్‌వర్డ్ తప్పు. మీ ప్రస్తుత డేటా మార్చబడలేదు.',
   },

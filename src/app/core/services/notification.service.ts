@@ -1,13 +1,16 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
 import { LocalNotifications } from '@capacitor/local-notifications';
-import { CyclePrediction, NotificationSettings, Profile } from '../models/app.models';
+import { AppSnapshot, CyclePrediction, NotificationSettings, Profile } from '../models/app.models';
 import { addCalendarDays, parseCalendarDate } from '../utils/calendar-date';
+import { PredictionEngine } from '../cycle-engine/prediction-engine';
 
 @Injectable({ providedIn: 'root' })
 export class NotificationService {
+  private readonly predictionEngine = inject(PredictionEngine);
+
   async requestPermission(): Promise<boolean> {
-    if (!Capacitor.isNativePlatform()) return false;
+    if (!this.isAndroid()) return false;
     const current = await LocalNotifications.checkPermissions();
     if (current.display === 'granted') return true;
     return (await LocalNotifications.requestPermissions()).display === 'granted';
@@ -18,7 +21,7 @@ export class NotificationService {
     prediction: CyclePrediction | undefined,
     settings: NotificationSettings,
   ): Promise<void> {
-    if (!Capacitor.isNativePlatform()) return;
+    if (!this.isAndroid()) return;
     const id = this.notificationId(profile.id);
     await LocalNotifications.cancel({ notifications: [{ id }] });
     if (!settings.enabled || !prediction) return;
@@ -44,11 +47,62 @@ export class NotificationService {
         },
       ],
     });
+    const pending = await LocalNotifications.getPending();
+    if (!pending.notifications.some((notification) => notification.id === id))
+      throw new Error('Android did not retain the requested reminder schedule.');
+  }
+
+  async rescheduleSnapshot(snapshot: AppSnapshot): Promise<void> {
+    if (!this.isAndroid()) return;
+    for (const profile of snapshot.profiles) {
+      const prediction = this.predictionEngine.predict(
+        profile.id,
+        snapshot.periods,
+        profile.reproductiveStage,
+      ).prediction;
+      const settings = snapshot.notificationSettings.find(
+        (item) => item.profileId === profile.id,
+      ) ?? {
+        id: profile.id,
+        profileId: profile.id,
+        enabled: false,
+        daysBefore: 3,
+        privacyMode: true,
+      };
+      await this.reschedule(profile, prediction, settings);
+    }
+  }
+
+  async rebuildAfterRestore(
+    previousProfiles: readonly Profile[],
+    snapshot: AppSnapshot,
+  ): Promise<void> {
+    if (!this.isAndroid()) return;
+    try {
+      const profileIds = new Set([
+        ...previousProfiles.map((profile) => profile.id),
+        ...snapshot.profiles.map((profile) => profile.id),
+      ]);
+      if (profileIds.size) {
+        await LocalNotifications.cancel({
+          notifications: [...profileIds].map((profileId) => ({
+            id: this.notificationId(profileId),
+          })),
+        });
+      }
+      await this.rescheduleSnapshot(snapshot);
+    } catch {
+      // Restored health data remains valid if Android declines a scheduling operation.
+    }
   }
 
   private notificationId(profileId: string): number {
     let hash = 17;
     for (const character of profileId) hash = (hash * 31 + character.charCodeAt(0)) | 0;
     return Math.abs(hash % 2_000_000_000) + 1000;
+  }
+
+  private isAndroid(): boolean {
+    return Capacitor.isNativePlatform() && Capacitor.getPlatform() === 'android';
   }
 }

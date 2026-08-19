@@ -197,11 +197,16 @@
         <ion-icon name="download-outline" aria-hidden="true" />{{
           'settings.createBackup' | translate
         }}</button
-      ><label class="secondary-button file-button"
-        ><ion-icon name="cloud-upload-outline" aria-hidden="true" />{{
+      ><button
+        class="secondary-button file-button"
+        type="button"
+        [disabled]="busy()"
+        (click)="openRestoreBackupPrompt()"
+      >
+        <ion-icon name="cloud-upload-outline" aria-hidden="true" />{{
           'settings.restoreBackup' | translate
-        }}<input type="file" accept=".flowra" (change)="onRestoreFileChosen($event)"
-      /></label>
+        }}
+      </button>
     </div>
     @if (status()) {
       <p class="status" role="status">{{ status() }}</p>

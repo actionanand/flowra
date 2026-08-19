@@ -112,8 +112,7 @@ export const EN_TRANSLATIONS = {
     backupSaved: 'Encrypted backup saved: {{target}}',
     backupFailed: 'Backup failed.',
     chooseBackup: 'Choose a .flowra backup file first.',
-    restoreSummary:
-      'Restored {{profiles}} profiles, {{periods}} periods and {{logs}} daily logs. Reopen Flowra to refresh.',
+    restoreSummary: 'Restored {{profiles}} profiles, {{periods}} periods and {{logs}} daily logs.',
     invalidBackup: 'That file is not a Flowra backup. Choose a .flowra file.',
     incorrectBackupPassword: 'Incorrect backup password. Your existing data was not changed.',
   },

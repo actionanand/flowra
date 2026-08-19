@@ -10,6 +10,7 @@ import {
   displayDate,
   todayCalendarDate,
 } from '../../core/utils/calendar-date';
+import { SnackbarService } from '../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-home',
@@ -21,6 +22,7 @@ import {
 export class Home {
   protected readonly store = inject(AppStore);
   private readonly i18n = inject(I18nService);
+  private readonly snackbar = inject(SnackbarService);
   protected readonly today = todayCalendarDate();
   protected readonly cycleLengths = computed(() => {
     const periods = this.store.profilePeriods();
@@ -71,7 +73,10 @@ export class Home {
   protected displayDate = (value: string, pattern = 'd MMM yyyy') =>
     displayDate(value, pattern, this.i18n.language());
   protected async primaryPeriodAction(): Promise<void> {
-    if (this.store.activePeriod()) await this.store.endPeriod();
+    const endingPeriod = !!this.store.activePeriod();
+    if (endingPeriod) await this.store.endPeriod();
     else await this.store.startPeriod();
+    const action = this.i18n.text(endingPeriod ? 'home.endPeriod' : 'home.startPeriod');
+    this.snackbar.show(`${action} — ${this.i18n.text('log.saved')}`);
   }
 }

@@ -1,0 +1,221 @@
+.mobile-menu-button,
+.side-nav-close {
+  display: inline-grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 0.9rem;
+  color: var(--text);
+  background: var(--surface);
+}
+.side-nav-close ion-icon {
+  font-size: 1.4rem;
+}
+.mobile-menu-button {
+  width: 3rem;
+  height: 3rem;
+  border: 0;
+  background: transparent;
+}
+.mobile-menu-button img {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 1rem;
+  object-fit: contain;
+}
+.side-nav {
+  position: fixed;
+  z-index: 80;
+  inset: calc(env(safe-area-inset-top) + 0.65rem) auto max(0.65rem, env(safe-area-inset-bottom))
+    0.65rem;
+  display: flex;
+  width: min(19rem, calc(86vw - 0.65rem));
+  flex-direction: column;
+  padding: 0.8rem;
+  overflow-y: auto;
+  transform: translateX(-105%);
+  border: 1px solid var(--border);
+  border-radius: 1.35rem;
+  background: var(--surface);
+  box-shadow: 1rem 0 3rem rgb(45 24 35 / 24%);
+  transition: transform 180ms ease;
+}
+.side-nav.open {
+  transform: none;
+}
+.side-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.2rem 0.25rem 1.4rem;
+}
+.side-brand img {
+  border-radius: 1rem;
+}
+.side-brand div {
+  min-width: 0;
+}
+.side-brand strong,
+.side-brand span {
+  display: block;
+}
+.side-brand span {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+}
+.side-nav-close {
+  margin-left: auto;
+}
+.side-nav nav {
+  display: grid;
+  gap: 0.25rem;
+}
+.side-nav nav a {
+  display: flex;
+  min-height: 3rem;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.65rem 0.8rem;
+  border-radius: 1rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 650;
+}
+.side-nav nav a.active {
+  color: var(--primary);
+  background: var(--primary-soft);
+}
+.side-nav > p {
+  display: flex;
+  gap: 0.5rem;
+  margin: auto 0.4rem 0;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+.nav-scrim,
+.permission-backdrop {
+  position: fixed;
+  z-index: 70;
+  inset: 0;
+}
+.nav-scrim {
+  width: 100%;
+  border: 0;
+  background: rgb(45 24 35 / 48%);
+  backdrop-filter: blur(2px);
+}
+.app-snackbar {
+  position: fixed;
+  z-index: 1200;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  display: grid;
+  width: min(25rem, calc(100vw - 2rem));
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.8rem;
+  border: 1px solid color-mix(in srgb, #fff 22%, transparent);
+  border-radius: 1rem;
+  color: #fff;
+  background: #245842;
+  box-shadow: 0 1rem 2.5rem rgb(45 13 28 / 28%);
+}
+.app-snackbar.info {
+  background: #33586d;
+}
+.app-snackbar.warning {
+  background: #76501b;
+}
+.app-snackbar > ion-icon {
+  font-size: 1.35rem;
+}
+.app-snackbar button {
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: inherit;
+  background: rgb(255 255 255 / 14%);
+}
+.permission-backdrop {
+  z-index: 300;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgb(45 13 28 / 68%);
+  backdrop-filter: blur(10px);
+}
+.permission-dialog {
+  width: min(100%, 28rem);
+  padding: 1.35rem;
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  color: var(--text);
+  background: var(--surface);
+  box-shadow: 0 1.5rem 5rem rgb(0 0 0 / 28%);
+  text-align: center;
+}
+.permission-icon {
+  display: inline-grid;
+  width: 3.5rem;
+  height: 3.5rem;
+  place-items: center;
+  border-radius: 1.1rem;
+  color: var(--primary);
+  background: var(--primary-soft);
+}
+.permission-icon ion-icon {
+  font-size: 1.8rem;
+}
+.permission-dialog h2 {
+  margin: 0.85rem 0 0.45rem;
+}
+.permission-dialog p {
+  margin: 0 0 1.1rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.permission-dialog > div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+}
+@media (max-width: 420px) {
+  .private-badge {
+    display: none;
+  }
+}
+@media (max-width: 959px) {
+  .app-snackbar {
+    right: 0.75rem;
+    bottom: calc(5.35rem + env(safe-area-inset-bottom));
+    width: calc(100vw - 1.5rem);
+  }
+}
+@media (min-width: 960px) {
+  .mobile-menu-button,
+  .side-nav-close,
+  .nav-scrim {
+    display: none;
+  }
+  .side-nav {
+    z-index: 35;
+    inset: 0 auto 0 0;
+    width: 16rem;
+    padding: 1.4rem 1rem;
+    transform: none;
+    border-width: 0 1px 0 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .profile-switcher,
+  .private-badge {
+    grid-column: auto;
+  }
+}

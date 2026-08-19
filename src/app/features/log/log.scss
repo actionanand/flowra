@@ -1,7 +1,27 @@
 .log-layout,
+.log-main,
 .log-sections {
   display: grid;
   gap: 1rem;
+}
+.saved-entry-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--border));
+  border-radius: 1rem;
+  color: var(--primary-strong);
+  background: var(--primary-soft);
+  font-size: 0.86rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.saved-entry-banner ion-icon {
+  font-size: 1.25rem;
+}
+.log-sections[aria-disabled='true'] {
+  opacity: 0.82;
 }
 .date-card {
   display: flex;
@@ -158,9 +178,14 @@ textarea {
   width: 2.3rem;
   height: 2.3rem;
 }
-.save {
-  width: 100%;
+.form-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 0.7rem;
   margin-top: 0.25rem;
+}
+.form-actions button {
+  width: 100%;
 }
 @media (min-width: 800px) {
   .log-layout {
@@ -176,7 +201,7 @@ textarea {
   .date-card p {
     margin: 0;
   }
-  .save {
+  .form-actions {
     margin-top: 0.25rem;
   }
 }

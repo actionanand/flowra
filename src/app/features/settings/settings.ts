@@ -39,7 +39,7 @@ export class SettingsPage {
   protected readonly showPassword = signal(false);
   protected readonly showConfirmPassword = signal(false);
   protected readonly promptError = signal('');
-  private pendingRestoreFile: File | null = null;
+  private pendingRestoreContent: string | null = null;
   protected readonly newPin = new FormControl('', { nonNullable: true });
   protected readonly biometricPin = new FormControl('', { nonNullable: true });
   protected readonly status = signal('');
@@ -138,10 +138,17 @@ export class SettingsPage {
   protected async setReminderDays(value: string): Promise<void> {
     const profile = this.store.activeProfile();
     if (!profile) return;
-    await this.store.updateReminder({
-      ...this.store.reminderFor(profile.id),
-      daysBefore: Number(value),
-    });
+    try {
+      await this.store.updateReminder({
+        ...this.store.reminderFor(profile.id),
+        daysBefore: Number(value),
+      });
+      this.status.set(this.i18n.text('settings.scheduled', { name: profile.name }));
+    } catch (error) {
+      this.status.set(
+        error instanceof Error ? error.message : this.i18n.text('settings.notificationDenied'),
+      );
+    }
   }
   protected async toggleReminder(key: 'enabled' | 'privacyMode'): Promise<void> {
     const profile = this.store.activeProfile();
@@ -155,7 +162,14 @@ export class SettingsPage {
       this.status.set(this.i18n.text('settings.notificationDenied'));
       return;
     }
-    await this.store.updateReminder({ ...setting, [key]: !setting[key] });
+    try {
+      await this.store.updateReminder({ ...setting, [key]: !setting[key] });
+      this.status.set(this.i18n.text('settings.scheduled', { name: profile.name }));
+    } catch (error) {
+      this.status.set(
+        error instanceof Error ? error.message : this.i18n.text('settings.notificationDenied'),
+      );
+    }
   }
   protected openCreateBackupPrompt(): void {
     this.password.setValue('');
@@ -164,25 +178,30 @@ export class SettingsPage {
     this.showPassword.set(false);
     this.showConfirmPassword.set(false);
     this.status.set('');
-    this.pendingRestoreFile = null;
+    this.pendingRestoreContent = null;
     this.passwordPrompt.set('CREATE');
   }
-  protected onRestoreFileChosen(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    const file = input.files?.[0];
-    input.value = '';
-    if (!file) return;
-    this.pendingRestoreFile = file;
-    this.password.setValue('');
-    this.confirmPassword.setValue('');
-    this.promptError.set('');
-    this.showPassword.set(false);
+  protected async openRestoreBackupPrompt(): Promise<void> {
+    this.busy.set(true);
     this.status.set('');
-    this.passwordPrompt.set('RESTORE');
+    try {
+      this.pendingRestoreContent = await this.backup.choose();
+      this.password.setValue('');
+      this.confirmPassword.setValue('');
+      this.promptError.set('');
+      this.showPassword.set(false);
+      this.passwordPrompt.set('RESTORE');
+    } catch (error) {
+      this.status.set(
+        error instanceof Error ? error.message : this.i18n.text('settings.chooseBackup'),
+      );
+    } finally {
+      this.busy.set(false);
+    }
   }
   protected closePasswordPrompt(): void {
     this.passwordPrompt.set(null);
-    this.pendingRestoreFile = null;
+    this.pendingRestoreContent = null;
     this.password.setValue('');
     this.confirmPassword.setValue('');
     this.promptError.set('');
@@ -215,14 +234,15 @@ export class SettingsPage {
     }
   }
   private async restore(): Promise<void> {
-    const file = this.pendingRestoreFile;
-    if (!file) {
+    const content = this.pendingRestoreContent;
+    if (!content) {
       this.promptError.set(this.i18n.text('settings.chooseBackup'));
       return;
     }
     this.busy.set(true);
     try {
-      const summary = await this.backup.restore(await file.text(), this.password.value);
+      const summary = await this.backup.restore(content, this.password.value);
+      await this.store.refreshFromStorage();
       this.status.set(this.i18n.text('settings.restoreSummary', summary));
       this.closePasswordPrompt();
     } catch (error) {

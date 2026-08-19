@@ -111,8 +111,7 @@ export const ZH_HANS_TRANSLATIONS = {
     backupSaved: '加密备份已保存：{{target}}',
     backupFailed: '备份失败。',
     chooseBackup: '请先选择 .flowra 备份文件。',
-    restoreSummary:
-      '已恢复 {{profiles}} 个档案、{{periods}} 次经期和 {{logs}} 条每日记录。请重新打开 Flowra 刷新。',
+    restoreSummary: '已恢复 {{profiles}} 个档案、{{periods}} 次经期和 {{logs}} 条每日记录。',
     invalidBackup: '此文件不是 Flowra 备份，请选择 .flowra 文件。',
     incorrectBackupPassword: '备份密码错误，现有数据未被更改。',
   },
