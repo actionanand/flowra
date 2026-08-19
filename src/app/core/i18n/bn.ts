@@ -114,7 +114,7 @@ export const BN_TRANSLATIONS = {
     backupFailed: 'ব্যাকআপ ব্যর্থ হয়েছে।',
     chooseBackup: 'আগে একটি .flowra ব্যাকআপ ফাইল বেছে নিন।',
     restoreSummary:
-      '{{profiles}}টি প্রোফাইল, {{periods}}টি মাসিক ও {{logs}}টি দৈনিক লগ ফিরিয়ে আনা হয়েছে। রিফ্রেশ করতে Flowra আবার খুলুন।',
+      '{{profiles}}টি প্রোফাইল, {{periods}}টি মাসিক ও {{logs}}টি দৈনিক লগ ফিরিয়ে আনা হয়েছে।',
     invalidBackup: 'এটি Flowra ব্যাকআপ নয়। একটি .flowra ফাইল বেছে নিন।',
     incorrectBackupPassword: 'ব্যাকআপ পাসওয়ার্ড ভুল। আপনার বর্তমান ডেটা বদলানো হয়নি।',
   },

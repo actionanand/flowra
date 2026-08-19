@@ -116,7 +116,7 @@ export const SA_TRANSLATIONS = {
     backupFailed: 'प्रतिरक्षणं विफलम्।',
     chooseBackup: 'प्रथमं .flowra प्रतिरक्षणसञ्चिकां चिनोतु।',
     restoreSummary:
-      '{{profiles}} रूपरेखाः, {{periods}} ऋतुस्रावाः, {{logs}} दैनिकलेखाः च पुनःस्थापिताः। नवीकरणाय Flowra पुनः उद्घाटयतु।',
+      '{{profiles}} रूपरेखाः, {{periods}} ऋतुस्रावाः, {{logs}} दैनिकलेखाः च पुनःस्थापिताः।',
     invalidBackup: 'एषा Flowra प्रतिरक्षणसञ्चिका नास्ति। .flowra सञ्चिकां चिनोतु।',
     incorrectBackupPassword: 'प्रतिरक्षणगुप्तपदं दोषपूर्णम्। वर्तमानदत्तांशः न परिवर्तितः।',
   },

@@ -66,10 +66,11 @@ jobs:
       - name: Generate branded icons
         run: |
           sudo apt-get update && sudo apt-get install -y imagemagick
+          rm -rf android/app/src/main/res/mipmap-anydpi-v26
           declare -A SIZES=([mipmap-mdpi]=48 [mipmap-hdpi]=72 [mipmap-xhdpi]=96 [mipmap-xxhdpi]=144 [mipmap-xxxhdpi]=192)
-          for DIR in "${!SIZES[@]}"; do SIZE=${SIZES[$DIR]}; mkdir -p "android/app/src/main/res/$DIR"; convert public/flowra.png -background none -resize "${SIZE}x${SIZE}" -gravity center -extent "${SIZE}x${SIZE}" "android/app/src/main/res/$DIR/ic_launcher.png"; cp "android/app/src/main/res/$DIR/ic_launcher.png" "android/app/src/main/res/$DIR/ic_launcher_round.png"; cp "android/app/src/main/res/$DIR/ic_launcher.png" "android/app/src/main/res/$DIR/ic_launcher_foreground.png"; done
+          for DIR in "${!SIZES[@]}"; do SIZE=${SIZES[$DIR]}; SAFE=$((SIZE * 82 / 100)); mkdir -p "android/app/src/main/res/$DIR"; convert public/flowra.png -background none -resize "${SAFE}x${SAFE}" -gravity center -extent "${SIZE}x${SIZE}" "android/app/src/main/res/$DIR/ic_launcher.png"; cp "android/app/src/main/res/$DIR/ic_launcher.png" "android/app/src/main/res/$DIR/ic_launcher_round.png"; cp "android/app/src/main/res/$DIR/ic_launcher.png" "android/app/src/main/res/$DIR/ic_launcher_foreground.png"; done
           mkdir -p releases
-          convert public/flowra.png -background none -resize 512x512 -gravity center -extent 512x512 releases/playstore-icon.png
+          convert public/flowra.png -background none -resize 420x420 -gravity center -extent 512x512 releases/playstore-icon.png
       - name: Build release APK and AAB
         working-directory: android
         run: ./gradlew assembleRelease bundleRelease -PversionCode="$VERSION_CODE" -PversionName="$VERSION_NAME"

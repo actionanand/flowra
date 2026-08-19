@@ -11,153 +11,203 @@
   <div class="log-layout">
     <aside class="date-card card">
       <label for="log-date">{{ 'log.entryDate' | translate }}</label
-      ><input id="log-date" type="date" [formControl]="date" />
+      ><input
+        id="log-date"
+        type="date"
+        required
+        [max]="today"
+        [disabled]="editing()"
+        [attr.aria-invalid]="dateUnavailable()"
+        [formControl]="date"
+      />
       <p>{{ 'calendar.cycleDay' | translate: { count: store.currentCycleDay() ?? '—' } }}</p>
     </aside>
-    <div class="log-sections">
-      <section class="card" aria-labelledby="flow-heading">
-        <div class="section-heading">
-          <span class="section-icon flow"
-            ><ion-icon name="water-outline" aria-hidden="true"
-          /></span>
-          <div>
-            <h2 id="flow-heading">{{ 'log.flow' | translate }}</h2>
-            <p>{{ 'log.flowHelp' | translate }}</p>
-          </div>
-        </div>
-        <app-select-picker
-          [value]="flow()"
-          [options]="flowOptions"
-          [sheetTitle]="'log.flowToday' | translate"
-          (valueChange)="setFlow($event)"
-        />
-        <div class="chips products" [attr.aria-label]="'log.products' | translate">
-          @for (product of productOptions; track product) {
-            <button
-              type="button"
-              [class.selected]="products().includes(product)"
-              [attr.aria-pressed]="products().includes(product)"
-              (click)="toggle('products', product)"
-            >
-              {{ logLabel('product', product) | translate }}
-            </button>
-          }
-        </div>
-      </section>
-      <section class="card" aria-labelledby="mood-heading">
-        <div class="section-heading">
-          <span class="section-icon mood"
-            ><ion-icon name="happy-outline" aria-hidden="true"
-          /></span>
-          <div>
-            <h2 id="mood-heading">{{ 'log.mood' | translate }}</h2>
-            <p>{{ 'log.moodHelp' | translate }}</p>
-          </div>
-        </div>
-        <div class="mood-scale" [attr.aria-label]="'log.moodScale' | translate">
-          @for (value of [1, 2, 3, 4, 5]; track value) {
-            <button
-              type="button"
-              [class.selected]="overallMood() === value"
-              [attr.aria-pressed]="overallMood() === value"
-              (click)="overallMood.set($any(value))"
-            >
-              <ion-icon
-                [name]="
-                  value < 3
-                    ? 'sad-outline'
-                    : value === 3
-                      ? 'remove-circle-outline'
-                      : 'happy-outline'
-                "
-                aria-hidden="true"
-              /><span>{{ value }}</span>
-            </button>
-          }
-        </div>
-        <div class="chips">
-          @for (mood of moodOptions; track mood) {
-            <button
-              type="button"
-              [class.selected]="moods().includes(mood)"
-              [attr.aria-pressed]="moods().includes(mood)"
-              (click)="toggle('moods', mood)"
-            >
-              {{ logLabel('mood', mood) | translate }}
-            </button>
-          }
-        </div>
-      </section>
-      <section class="card symptoms" aria-labelledby="symptoms-heading">
-        <div class="section-heading">
-          <span class="section-icon symptom"
-            ><ion-icon name="pulse-outline" aria-hidden="true"
-          /></span>
-          <div>
-            <h2 id="symptoms-heading">{{ 'log.symptoms' | translate }}</h2>
-            <p>{{ 'log.symptomsHelp' | translate }}</p>
-          </div>
-        </div>
-        <fieldset class="severity">
-          <legend>{{ 'log.severity' | translate }}</legend>
-          @for (level of ['MILD', 'MODERATE', 'SEVERE']; track level) {
-            <button
-              type="button"
-              [class.selected]="severity() === level"
-              (click)="severity.set($any(level))"
-            >
-              {{ 'log.' + level.toLowerCase() | translate }}
-            </button>
-          }
-        </fieldset>
-        @for (group of symptomGroups; track group.name) {
-          <div class="symptom-group">
-            <h3>{{ logLabel('symptomGroup', group.name) | translate }}</h3>
-            <div class="chips">
-              @for (symptom of group.items; track symptom) {
-                <button
-                  type="button"
-                  [class.selected]="symptoms().includes(symptom)"
-                  [attr.aria-pressed]="symptoms().includes(symptom)"
-                  (click)="toggle('symptoms', symptom)"
-                >
-                  {{ logLabel('symptom', symptom) | translate }}
-                </button>
-              }
+    <div class="log-main">
+      @if (formLocked()) {
+        <aside class="saved-entry-banner" role="status">
+          <ion-icon name="lock-closed-outline" aria-hidden="true" />
+          <span>{{ 'interaction.lockedHint' | translate }}</span>
+        </aside>
+      }
+      <div
+        #entryFields
+        class="log-sections"
+        tabindex="-1"
+        [attr.inert]="formLocked() ? '' : null"
+        [attr.aria-disabled]="formLocked()"
+      >
+        <section class="card" aria-labelledby="flow-heading">
+          <div class="section-heading">
+            <span class="section-icon flow"
+              ><ion-icon name="water-outline" aria-hidden="true"
+            /></span>
+            <div>
+              <h2 id="flow-heading">{{ 'log.flow' | translate }}</h2>
+              <p>{{ 'log.flowHelp' | translate }}</p>
             </div>
           </div>
-        }
-        <div class="custom">
-          <label for="custom-symptom">{{ 'log.customSymptom' | translate }}</label>
-          <div>
-            <input
-              id="custom-symptom"
-              type="text"
-              [formControl]="customSymptom"
-              [placeholder]="'log.addOwn' | translate"
-            /><button class="quiet-button" type="button" (click)="addCustomSymptom()">
-              {{ 'log.add' | translate }}
-            </button>
+          <app-select-picker
+            [value]="flow()"
+            [options]="flowOptions"
+            [sheetTitle]="'log.flowToday' | translate"
+            (valueChange)="setFlow($event)"
+          />
+          <div class="chips products" [attr.aria-label]="'log.products' | translate">
+            @for (product of productOptions; track product) {
+              <button
+                type="button"
+                [class.selected]="products().includes(product)"
+                [attr.aria-pressed]="products().includes(product)"
+                (click)="toggle('products', product)"
+              >
+                {{ logLabel('product', product) | translate }}
+              </button>
+            }
           </div>
-        </div>
-      </section>
-      <section class="card notes">
-        <label for="notes"
-          ><span class="section-icon"
-            ><ion-icon name="document-text-outline" aria-hidden="true" /></span
-          ><strong>{{ 'log.privateNotes' | translate }}</strong></label
-        ><textarea
-          id="notes"
-          rows="4"
-          [formControl]="notes"
-          [placeholder]="'log.notesPlaceholder' | translate"
-        ></textarea>
-      </section>
-      <button class="save primary-button" type="button" (click)="save()">
-        <ion-icon name="checkmark-circle-outline" aria-hidden="true" />{{
-          saved() ? ('log.saved' | translate) : ('log.save' | translate)
-        }}
-      </button>
+        </section>
+        <section class="card" aria-labelledby="mood-heading">
+          <div class="section-heading">
+            <span class="section-icon mood"
+              ><ion-icon name="happy-outline" aria-hidden="true"
+            /></span>
+            <div>
+              <h2 id="mood-heading">{{ 'log.mood' | translate }}</h2>
+              <p>{{ 'log.moodHelp' | translate }}</p>
+            </div>
+          </div>
+          <div class="mood-scale" [attr.aria-label]="'log.moodScale' | translate">
+            @for (value of [1, 2, 3, 4, 5]; track value) {
+              <button
+                type="button"
+                [class.selected]="overallMood() === value"
+                [attr.aria-pressed]="overallMood() === value"
+                (click)="overallMood.set($any(value))"
+              >
+                <ion-icon
+                  [name]="
+                    value < 3
+                      ? 'sad-outline'
+                      : value === 3
+                        ? 'remove-circle-outline'
+                        : 'happy-outline'
+                  "
+                  aria-hidden="true"
+                /><span>{{ value }}</span>
+              </button>
+            }
+          </div>
+          <div class="chips">
+            @for (mood of moodOptions; track mood) {
+              <button
+                type="button"
+                [class.selected]="moods().includes(mood)"
+                [attr.aria-pressed]="moods().includes(mood)"
+                (click)="toggle('moods', mood)"
+              >
+                {{ logLabel('mood', mood) | translate }}
+              </button>
+            }
+          </div>
+        </section>
+        <section class="card symptoms" aria-labelledby="symptoms-heading">
+          <div class="section-heading">
+            <span class="section-icon symptom"
+              ><ion-icon name="pulse-outline" aria-hidden="true"
+            /></span>
+            <div>
+              <h2 id="symptoms-heading">{{ 'log.symptoms' | translate }}</h2>
+              <p>{{ 'log.symptomsHelp' | translate }}</p>
+            </div>
+          </div>
+          <fieldset class="severity">
+            <legend>{{ 'log.severity' | translate }}</legend>
+            @for (level of ['MILD', 'MODERATE', 'SEVERE']; track level) {
+              <button
+                type="button"
+                [class.selected]="severity() === level"
+                (click)="severity.set($any(level))"
+              >
+                {{ 'log.' + level.toLowerCase() | translate }}
+              </button>
+            }
+          </fieldset>
+          @for (group of symptomGroups; track group.name) {
+            <div class="symptom-group">
+              <h3>{{ logLabel('symptomGroup', group.name) | translate }}</h3>
+              <div class="chips">
+                @for (symptom of group.items; track symptom) {
+                  <button
+                    type="button"
+                    [class.selected]="symptoms().includes(symptom)"
+                    [attr.aria-pressed]="symptoms().includes(symptom)"
+                    (click)="toggle('symptoms', symptom)"
+                  >
+                    {{ logLabel('symptom', symptom) | translate }}
+                  </button>
+                }
+              </div>
+            </div>
+          }
+          <div class="custom">
+            <label for="custom-symptom">{{ 'log.customSymptom' | translate }}</label>
+            <div>
+              <input
+                id="custom-symptom"
+                type="text"
+                [formControl]="customSymptom"
+                [placeholder]="'log.addOwn' | translate"
+              /><button class="quiet-button" type="button" (click)="addCustomSymptom()">
+                {{ 'log.add' | translate }}
+              </button>
+            </div>
+          </div>
+        </section>
+        <section class="card notes">
+          <label for="notes"
+            ><span class="section-icon"
+              ><ion-icon name="document-text-outline" aria-hidden="true" /></span
+            ><strong>{{ 'log.privateNotes' | translate }}</strong></label
+          ><textarea
+            id="notes"
+            rows="4"
+            [formControl]="notes"
+            [placeholder]="'log.notesPlaceholder' | translate"
+          ></textarea>
+        </section>
+      </div>
+      <div class="form-actions">
+        <button class="secondary-button" type="button" (click)="cancel()">
+          <ion-icon name="close-circle-outline" aria-hidden="true" />
+          {{ 'common.cancel' | translate }}
+        </button>
+        @if (formLocked()) {
+          <button #editButton class="primary-button" type="button" (click)="requestEdit()">
+            <ion-icon name="create-outline" aria-hidden="true" />
+            {{ 'home.editLog' | translate }}
+          </button>
+        } @else {
+          <button
+            class="save primary-button"
+            type="button"
+            [disabled]="dateUnavailable() || !store.activeProfile()"
+            (click)="save()"
+          >
+            <ion-icon name="checkmark-circle-outline" aria-hidden="true" />{{
+              saved() ? ('log.saved' | translate) : ('log.save' | translate)
+            }}
+          </button>
+        }
+      </div>
     </div>
   </div>
 </section>
+@if (editConfirmationOpen()) {
+  <app-confirmation-dialog
+    [title]="'home.editLog' | translate"
+    [message]="'interaction.editWarning' | translate: { date: dateLabel() }"
+    [confirmLabel]="'home.editLog' | translate"
+    [cancelLabel]="'common.cancel' | translate"
+    (confirmed)="confirmEdit()"
+    (cancelled)="cancelEditConfirmation()"
+  />
+}

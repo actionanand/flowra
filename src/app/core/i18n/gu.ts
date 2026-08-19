@@ -115,7 +115,7 @@ export const GU_TRANSLATIONS = {
     backupFailed: 'બૅકઅપ નિષ્ફળ ગયો.',
     chooseBackup: 'પહેલાં .flowra બૅકઅપ ફાઇલ પસંદ કરો.',
     restoreSummary:
-      '{{profiles}} પ્રોફાઇલ, {{periods}} માસિક નોંધો અને {{logs}} દૈનિક નોંધો પુનઃસ્થાપિત થઈ. તાજું કરવા Flowra ફરી ખોલો.',
+      '{{profiles}} પ્રોફાઇલ, {{periods}} માસિક નોંધો અને {{logs}} દૈનિક નોંધો પુનઃસ્થાપિત થઈ.',
     invalidBackup: 'આ Flowra બૅકઅપ નથી. .flowra ફાઇલ પસંદ કરો.',
     incorrectBackupPassword: 'બૅકઅપ પાસવર્ડ ખોટો છે. તમારો હાલનો ડેટા બદલાયો નથી.',
   },

@@ -1,4 +1,8 @@
-<section class="page">
+<section
+  class="page"
+  [attr.aria-hidden]="periodConfirmationOpen() ? 'true' : null"
+  [attr.inert]="periodConfirmationOpen() ? '' : null"
+>
   @if (store.activeProfile(); as profile) {
     <header class="page-heading">
       <div>
@@ -60,7 +64,12 @@
           </p>
         }
       </div>
-      <button class="period-action" type="button" (click)="primaryPeriodAction()">
+      <button
+        #periodActionButton
+        class="period-action"
+        type="button"
+        (click)="requestPeriodAction()"
+      >
         <ion-icon
           [name]="store.activePeriod() ? 'checkmark-circle-outline' : 'water-outline'"
           aria-hidden="true"
@@ -191,3 +200,22 @@
     </aside>
   }
 </section>
+@if (periodConfirmationOpen()) {
+  <app-confirmation-dialog
+    [title]="
+      store.activePeriod() ? ('home.endPeriod' | translate) : ('home.startPeriod' | translate)
+    "
+    [message]="
+      store.activePeriod()
+        ? ('periodConfirmation.endWarning' | translate)
+        : ('periodConfirmation.startWarning' | translate)
+    "
+    [confirmLabel]="
+      store.activePeriod() ? ('home.endPeriod' | translate) : ('home.startPeriod' | translate)
+    "
+    [cancelLabel]="'common.cancel' | translate"
+    [iconName]="store.activePeriod() ? 'checkmark-circle-outline' : 'water-outline'"
+    (confirmed)="primaryPeriodAction()"
+    (cancelled)="cancelPeriodAction()"
+  />
+}

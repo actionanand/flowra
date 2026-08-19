@@ -99,8 +99,7 @@ export const AR_TRANSLATIONS = {
     backupSaved: 'تم حفظ النسخة المشفرة: {{target}}',
     backupFailed: 'فشل النسخ الاحتياطي.',
     chooseBackup: 'اختاري ملف .flowra أولًا.',
-    restoreSummary:
-      'تمت استعادة {{profiles}} ملفات و{{periods}} دورات و{{logs}} سجلات يومية. أعيدي فتح Flowra للتحديث.',
+    restoreSummary: 'تمت استعادة {{profiles}} ملفات و{{periods}} دورات و{{logs}} سجلات يومية.',
     invalidBackup: 'هذا ليس ملف Flowra احتياطيًا. اختاري ملف .flowra.',
     incorrectBackupPassword: 'كلمة مرور النسخة غير صحيحة. لم تتغير بياناتك الحالية.',
   },

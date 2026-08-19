@@ -5,6 +5,7 @@ import { AppStore } from '../../core/services/app-store.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { calendarDaysBetween, displayDate } from '../../core/utils/calendar-date';
 import { environment } from '../../../environments/environment';
+import { FileExportService } from '../../core/services/file-export.service';
 
 @Component({
   selector: 'app-insights',
@@ -15,6 +16,7 @@ import { environment } from '../../../environments/environment';
 })
 export class InsightsPage {
   protected readonly store = inject(AppStore);
+  private readonly fileExport = inject(FileExportService);
   protected readonly development = !environment.production;
   protected readonly cycleLengths = computed(() => {
     const periods = this.store.profilePeriods();
@@ -55,7 +57,7 @@ export class InsightsPage {
       )
       .slice(-6),
   );
-  protected exportCsv(): void {
+  protected async exportCsv(): Promise<void> {
     const rows = ['Start,End,Duration,Cycle,Excluded'];
     const periods = this.store.profilePeriods();
     periods.forEach((period, index) =>
@@ -71,15 +73,42 @@ export class InsightsPage {
         ].join(','),
       ),
     );
-    const url = URL.createObjectURL(new Blob([rows.join('\n')], { type: 'text/csv' }));
-    const anchor = document.createElement('a');
-    anchor.href = url;
-    anchor.download = `flowra-period-history-${new Date().toISOString().slice(0, 10)}.csv`;
-    anchor.click();
-    URL.revokeObjectURL(url);
+    await this.fileExport.exportCsv(
+      `flowra-period-history-${new Date().toISOString().slice(0, 10)}.csv`,
+      rows.join('\n'),
+      'Flowra period history',
+    );
   }
-  protected exportPdf(): void {
-    globalThis.print();
+  protected async exportPdf(): Promise<void> {
+    const periods = this.store.profilePeriods();
+    const rows = periods.map((period, index) => ({
+      start: period.startDate,
+      end: period.endDate ?? '',
+      duration: period.endDate
+        ? String(calendarDaysBetween(period.startDate, period.endDate) + 1)
+        : '',
+      cycle: periods[index + 1]
+        ? String(calendarDaysBetween(period.startDate, periods[index + 1].startDate))
+        : '',
+      excluded: period.excludedFromPrediction ? 'Yes' : 'No',
+    }));
+    const title = 'Flowra period history';
+    const profile = this.store.activeProfile()?.name ?? '';
+    const escaped = (value: string): string =>
+      value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+    const tableRows = rows
+      .map(
+        (row) =>
+          `<tr><td>${escaped(row.start)}</td><td>${escaped(row.end)}</td><td>${row.duration}</td><td>${row.cycle}</td><td>${row.excluded}</td></tr>`,
+      )
+      .join('');
+    const html = `<!doctype html><html><head><title>${title}</title><style>body{font:14px system-ui;padding:24px;color:#2d1823}h1{color:#c72f68}table{width:100%;border-collapse:collapse}th,td{padding:8px;border:1px solid #ead9e1;text-align:left}</style></head><body><h1>${title}</h1><p>${escaped(profile)}</p><table><thead><tr><th>Start</th><th>End</th><th>Duration</th><th>Cycle</th><th>Excluded</th></tr></thead><tbody>${tableRows}</tbody></table></body></html>`;
+    await this.fileExport.exportPdf(
+      `flowra-period-history-${new Date().toISOString().slice(0, 10)}.pdf`,
+      JSON.stringify({ title, profile, generatedAt: new Date().toISOString(), rows }),
+      html,
+      title,
+    );
   }
   protected displayDate = displayDate;
 }

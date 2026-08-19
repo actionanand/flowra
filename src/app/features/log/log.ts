@@ -1,5 +1,16 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Component, computed, inject, signal } from '@angular/core';
+import {
+  CUSTOM_ELEMENTS_SCHEMA,
+  Component,
+  ElementRef,
+  computed,
+  effect,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { DailyLog, FlowLevel, Severity } from '../../core/models/app.models';
 import { AppStore } from '../../core/services/app-store.service';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -9,10 +20,12 @@ import {
   SelectPicker,
   SelectPickerOption,
 } from '../../shared/components/select-picker/select-picker';
+import { SnackbarService } from '../../core/services/snackbar.service';
+import { ConfirmationDialog } from '../../shared/components/confirmation-dialog/confirmation-dialog';
 
 @Component({
   selector: 'app-log',
-  imports: [ReactiveFormsModule, SelectPicker, TranslatePipe],
+  imports: [ReactiveFormsModule, SelectPicker, ConfirmationDialog, TranslatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './log.html',
   styleUrl: './log.scss',
@@ -20,7 +33,13 @@ import {
 export class LogPage {
   protected readonly store = inject(AppStore);
   private readonly i18n = inject(I18nService);
+  private readonly router = inject(Router);
+  private readonly snackbar = inject(SnackbarService);
+  protected readonly today = todayCalendarDate();
   protected readonly date = new FormControl(todayCalendarDate(), { nonNullable: true });
+  private readonly selectedDate = toSignal(this.date.valueChanges, {
+    initialValue: this.date.value,
+  });
   protected readonly notes = new FormControl('', { nonNullable: true });
   protected readonly customSymptom = new FormControl('', { nonNullable: true });
   protected readonly flow = signal<FlowLevel | ''>('');
@@ -30,6 +49,20 @@ export class LogPage {
   protected readonly products = signal<readonly string[]>([]);
   protected readonly overallMood = signal<1 | 2 | 3 | 4 | 5 | undefined>(undefined);
   protected readonly saved = signal(false);
+  protected readonly editing = signal(false);
+  protected readonly editConfirmationOpen = signal(false);
+  protected readonly dateUnavailable = computed(() => {
+    const date = this.selectedDate();
+    return !/^\d{4}-\d{2}-\d{2}$/.test(date) || date > this.today;
+  });
+  protected readonly selectedLog = computed(() => {
+    const profileId = this.store.activeProfileId();
+    const date = this.selectedDate();
+    return this.store.dailyLogs().find((log) => log.profileId === profileId && log.date === date);
+  });
+  protected readonly formLocked = computed(() => !!this.selectedLog() && !this.editing());
+  private readonly editButton = viewChild<ElementRef<HTMLButtonElement>>('editButton');
+  private readonly entryFields = viewChild<ElementRef<HTMLFieldSetElement>>('entryFields');
   protected readonly flowOptions: readonly SelectPickerOption[] = [
     { value: '', label: 'i18n.log.noFlow' },
     { value: 'SPOTTING', label: 'i18n.log.spotting' },
@@ -103,8 +136,18 @@ export class LogPage {
     'Other',
   ];
   protected readonly dateLabel = computed(() =>
-    displayDate(this.date.value, 'EEEE, d MMMM', this.i18n.language()),
+    displayDate(this.selectedDate() || this.today, 'EEEE, d MMMM', this.i18n.language()),
   );
+  constructor() {
+    let loadedVersion = '';
+    effect(() => {
+      const log = this.selectedLog();
+      const version = `${this.store.activeProfileId()}:${this.selectedDate()}:${log?.updatedAt ?? ''}`;
+      if (version === loadedVersion) return;
+      loadedVersion = version;
+      this.load(log);
+    });
+  }
   protected logLabel(kind: 'mood' | 'product' | 'symptom' | 'symptomGroup', value: string): string {
     const key = value.toLowerCase().replaceAll(' ', '').replaceAll('&', 'and');
     return `logLabels.${kind}.${key}`;
@@ -132,10 +175,8 @@ export class LogPage {
   }
   protected async save(): Promise<void> {
     const profile = this.store.activeProfile();
-    if (!profile) return;
-    const existing = this.store
-      .dailyLogs()
-      .find((log) => log.profileId === profile.id && log.date === this.date.value);
+    if (!profile || this.dateUnavailable()) return;
+    const existing = this.selectedLog();
     const log: DailyLog = {
       id: existing?.id ?? crypto.randomUUID(),
       profileId: profile.id,
@@ -149,8 +190,44 @@ export class LogPage {
       updatedAt: new Date().toISOString(),
     };
     await this.store.saveDailyLog(log);
+    this.editing.set(false);
     this.saved.set(true);
+    this.snackbar.show(this.i18n.text('log.saved'));
     globalThis.setTimeout(() => this.saved.set(false), 2200);
+  }
+  protected cancel(): void {
+    const storedLog = this.selectedLog();
+    if (this.editing() && storedLog) {
+      this.load(storedLog);
+      this.editing.set(false);
+      queueMicrotask(() => this.editButton()?.nativeElement.focus());
+      return;
+    }
+    void this.router.navigate(['/home']);
+  }
+  protected requestEdit(): void {
+    if (this.selectedLog()) this.editConfirmationOpen.set(true);
+  }
+  protected confirmEdit(): void {
+    this.editConfirmationOpen.set(false);
+    this.editing.set(true);
+    queueMicrotask(() => this.entryFields()?.nativeElement.focus());
+  }
+  protected cancelEditConfirmation(): void {
+    this.editConfirmationOpen.set(false);
+    queueMicrotask(() => this.editButton()?.nativeElement.focus());
+  }
+  private load(log: DailyLog | undefined): void {
+    this.flow.set(log?.flow ?? '');
+    this.products.set(log?.products ?? []);
+    this.symptoms.set(log?.symptoms.map((symptom) => symptom.name) ?? []);
+    this.moods.set(log?.moods ?? []);
+    this.overallMood.set(log?.overallMood);
+    this.severity.set(log?.symptoms[0]?.severity ?? 'MILD');
+    this.notes.setValue(log?.notes ?? '');
+    this.customSymptom.setValue('');
+    this.saved.set(false);
+    this.editing.set(false);
   }
   protected displayDate = displayDate;
 }

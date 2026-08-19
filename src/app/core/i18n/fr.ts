@@ -116,7 +116,7 @@ export const FR_TRANSLATIONS = {
     backupFailed: 'Échec de la sauvegarde.',
     chooseBackup: "Choisissez d'abord un fichier .flowra.",
     restoreSummary:
-      '{{profiles}} profils, {{periods}} règles et {{logs}} journaux quotidiens restaurés. Rouvrez Flowra pour actualiser.',
+      '{{profiles}} profils, {{periods}} règles et {{logs}} journaux quotidiens restaurés.',
     invalidBackup: "Ce fichier n'est pas une sauvegarde Flowra. Choisissez un fichier .flowra.",
     incorrectBackupPassword:
       "Mot de passe incorrect. Vos données existantes n'ont pas été modifiées.",

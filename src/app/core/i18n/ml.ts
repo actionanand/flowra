@@ -115,7 +115,7 @@ export const ML_TRANSLATIONS = {
     backupFailed: 'ബാക്കപ്പ് പരാജയപ്പെട്ടു.',
     chooseBackup: 'ആദ്യം ഒരു .flowra ബാക്കപ്പ് ഫയൽ തിരഞ്ഞെടുക്കുക.',
     restoreSummary:
-      '{{profiles}} പ്രൊഫൈലുകളും {{periods}} ആർത്തവ രേഖകളും {{logs}} ദൈനംദിന രേഖകളും പുനഃസ്ഥാപിച്ചു. പുതുക്കാൻ Flowra വീണ്ടും തുറക്കുക.',
+      '{{profiles}} പ്രൊഫൈലുകളും {{periods}} ആർത്തവ രേഖകളും {{logs}} ദൈനംദിന രേഖകളും പുനഃസ്ഥാപിച്ചു.',
     invalidBackup: 'ഇത് Flowra ബാക്കപ്പ് അല്ല. ഒരു .flowra ഫയൽ തിരഞ്ഞെടുക്കുക.',
     incorrectBackupPassword: 'ബാക്കപ്പ് പാസ്‌വേഡ് തെറ്റാണ്. നിലവിലെ ഡാറ്റ മാറ്റിയിട്ടില്ല.',
   },

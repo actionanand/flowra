@@ -104,7 +104,7 @@ export const ES_TRANSLATIONS = {
     backupFailed: 'La copia ha fallado.',
     chooseBackup: 'Elige primero un archivo .flowra.',
     restoreSummary:
-      'Se restauraron {{profiles}} perfiles, {{periods}} periodos y {{logs}} registros diarios. Vuelve a abrir Flowra.',
+      'Se restauraron {{profiles}} perfiles, {{periods}} periodos y {{logs}} registros diarios.',
     invalidBackup: 'El archivo no es una copia de Flowra. Elige un archivo .flowra.',
     incorrectBackupPassword: 'Contraseña incorrecta. Tus datos existentes no se han modificado.',
   },

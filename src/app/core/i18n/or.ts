@@ -113,7 +113,7 @@ export const OR_TRANSLATIONS = {
     backupFailed: 'ବ୍ୟାକଅପ୍ ବିଫଳ।',
     chooseBackup: 'ପ୍ରଥମେ .flowra ବ୍ୟାକଅପ୍ ଫାଇଲ୍ ବାଛନ୍ତୁ।',
     restoreSummary:
-      '{{profiles}} ପ୍ରୋଫାଇଲ୍, {{periods}} ଋତୁସ୍ରାବ ଏବଂ {{logs}} ଦୈନିକ ଲଗ୍ ପୁନଃସ୍ଥାପିତ। ରିଫ୍ରେଶ ପାଇଁ Flowra ପୁଣି ଖୋଲନ୍ତୁ।',
+      '{{profiles}} ପ୍ରୋଫାଇଲ୍, {{periods}} ଋତୁସ୍ରାବ ଏବଂ {{logs}} ଦୈନିକ ଲଗ୍ ପୁନଃସ୍ଥାପିତ।',
     invalidBackup: 'ଏହା Flowra ବ୍ୟାକଅପ୍ ନୁହେଁ। .flowra ଫାଇଲ୍ ବାଛନ୍ତୁ।',
     incorrectBackupPassword: 'ବ୍ୟାକଅପ୍ ପାସୱାର୍ଡ ଭୁଲ। ବର୍ତ୍ତମାନ ଡାଟା ବଦଳିନାହିଁ।',
   },

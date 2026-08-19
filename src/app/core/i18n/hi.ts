@@ -113,8 +113,7 @@ export const HI_TRANSLATIONS = {
     backupSaved: 'एन्क्रिप्टेड बैकअप सेव हुआ: {{target}}',
     backupFailed: 'बैकअप विफल हुआ।',
     chooseBackup: 'पहले एक .flowra बैकअप फ़ाइल चुनें।',
-    restoreSummary:
-      '{{profiles}} प्रोफ़ाइल, {{periods}} पीरियड और {{logs}} दैनिक लॉग रीस्टोर हुए। ताज़ा करने के लिए Flowra फिर खोलें।',
+    restoreSummary: '{{profiles}} प्रोफ़ाइल, {{periods}} पीरियड और {{logs}} दैनिक लॉग रीस्टोर हुए।',
     invalidBackup: 'यह Flowra बैकअप फ़ाइल नहीं है। एक .flowra फ़ाइल चुनें।',
     incorrectBackupPassword: 'बैकअप पासवर्ड गलत है। आपका मौजूदा डेटा नहीं बदला गया।',
   },

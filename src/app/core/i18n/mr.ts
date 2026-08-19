@@ -114,7 +114,7 @@ export const MR_TRANSLATIONS = {
     backupFailed: 'बॅकअप अयशस्वी.',
     chooseBackup: 'आधी .flowra बॅकअप फाइल निवडा.',
     restoreSummary:
-      '{{profiles}} प्रोफाइल, {{periods}} मासिक पाळीच्या नोंदी आणि {{logs}} दैनिक नोंदी पुनर्संचयित झाल्या. ताज्या माहितीसाठी Flowra पुन्हा उघडा.',
+      '{{profiles}} प्रोफाइल, {{periods}} मासिक पाळीच्या नोंदी आणि {{logs}} दैनिक नोंदी पुनर्संचयित झाल्या.',
     invalidBackup: 'ही Flowra बॅकअप फाइल नाही. .flowra फाइल निवडा.',
     incorrectBackupPassword: 'बॅकअप पासवर्ड चुकीचा आहे. तुमचा विद्यमान डेटा बदललेला नाही.',
   },

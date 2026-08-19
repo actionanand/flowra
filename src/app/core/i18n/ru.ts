@@ -114,7 +114,7 @@ export const RU_TRANSLATIONS = {
     backupFailed: 'Не удалось создать копию.',
     chooseBackup: 'Сначала выберите файл .flowra.',
     restoreSummary:
-      'Восстановлено профилей: {{profiles}}, менструаций: {{periods}}, дневных записей: {{logs}}. Перезапустите Flowra.',
+      'Восстановлено профилей: {{profiles}}, менструаций: {{periods}}, дневных записей: {{logs}}.',
     invalidBackup: 'Это не резервная копия Flowra. Выберите файл .flowra.',
     incorrectBackupPassword: 'Неверный пароль копии. Существующие данные не изменены.',
   },

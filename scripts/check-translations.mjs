@@ -103,6 +103,8 @@ const SANSKRIT_VISARGA_KEYS = [
   'home.noMood',
   'home.notEnoughHistory',
   'home.noRecordedPeriod',
+  'periodConfirmation.startWarning',
+  'periodConfirmation.endWarning',
   'calendar.previous',
   'calendar.next',
   'calendar.spotting',

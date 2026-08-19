@@ -114,7 +114,7 @@ export const UR_TRANSLATIONS = {
     backupFailed: 'بیک اپ ناکام ہوا۔',
     chooseBackup: 'پہلے .flowra بیک اپ فائل منتخب کریں۔',
     restoreSummary:
-      '{{profiles}} پروفائلز، {{periods}} ماہواری کے ریکارڈ اور {{logs}} روزانہ اندراجات بحال ہوئے۔ تازہ کرنے کے لیے Flowra دوبارہ کھولیں۔',
+      '{{profiles}} پروفائلز، {{periods}} ماہواری کے ریکارڈ اور {{logs}} روزانہ اندراجات بحال ہوئے۔',
     invalidBackup: 'یہ Flowra بیک اپ نہیں۔ .flowra فائل منتخب کریں۔',
     incorrectBackupPassword: 'بیک اپ پاس ورڈ غلط ہے۔ موجودہ ڈیٹا تبدیل نہیں ہوا۔',
   },

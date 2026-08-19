@@ -2,6 +2,9 @@ import { DOCUMENT } from '@angular/common';
 import { inject, Injectable } from '@angular/core';
 
 interface FlowraNativeBridge {
+  hideSplash(): void;
+  saveBackup(fileName: string, base64Data: string): void;
+  openBackup(): void;
   setScreenshotProtection(enabled: boolean): void;
   isBiometricAvailable(): boolean;
   enableBiometric(secret: string): void;
@@ -19,6 +22,26 @@ export class NativeIntegrationService {
 
   isAndroid(): boolean {
     return Boolean(this.bridge());
+  }
+  hideSplash(): void {
+    this.bridge()?.hideSplash();
+  }
+  saveBackup(fileName: string, content: string): Promise<void> {
+    const bridge = this.bridge();
+    if (!bridge) return Promise.reject(new Error('Android file saving is unavailable.'));
+    const encoded = this.toBase64(new TextEncoder().encode(content));
+    return this.waitForResult(
+      'backup-saved',
+      () => bridge.saveBackup(fileName, encoded),
+      300_000,
+    ).then(() => undefined);
+  }
+  openBackup(): Promise<string> {
+    const bridge = this.bridge();
+    if (!bridge) return Promise.reject(new Error('Android file selection is unavailable.'));
+    return this.waitForResult('backup-opened', () => bridge.openBackup(), 300_000).then((value) =>
+      new TextDecoder().decode(this.fromBase64(value)),
+    );
   }
   biometricAvailable(): boolean {
     return this.bridge()?.isBiometricAvailable() ?? false;
@@ -49,7 +72,7 @@ export class NativeIntegrationService {
     return (this.document.defaultView as NativeWindow | null)?.FlowraNative;
   }
 
-  private waitForResult(action: string, start: () => void): Promise<string> {
+  private waitForResult(action: string, start: () => void, timeoutMs = 60_000): Promise<string> {
     const nativeWindow = this.document.defaultView;
     if (!nativeWindow) return Promise.reject(new Error('The Android bridge is unavailable.'));
     return new Promise<string>((resolve, reject) => {
@@ -74,7 +97,7 @@ export class NativeIntegrationService {
       nativeWindow.addEventListener('flowra-native-result', handleResult);
       const timeout = globalThis.setTimeout(
         () => finish(false, '', 'Biometric authentication timed out.'),
-        60_000,
+        timeoutMs,
       );
       try {
         start();
@@ -86,5 +109,14 @@ export class NativeIntegrationService {
         );
       }
     });
+  }
+  private toBase64(value: Uint8Array): string {
+    let binary = '';
+    for (let offset = 0; offset < value.length; offset += 0x8000)
+      binary += String.fromCharCode(...value.subarray(offset, offset + 0x8000));
+    return btoa(binary);
+  }
+  private fromBase64(value: string): Uint8Array {
+    return Uint8Array.from(atob(value), (character) => character.charCodeAt(0));
   }
 }
