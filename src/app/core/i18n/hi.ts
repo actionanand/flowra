@@ -306,7 +306,7 @@ export const HI_TRANSLATIONS = {
     cycleGlance: 'आपका चक्र एक नज़र में',
     private: 'निजी',
     day: 'दिन',
-    cycleDay: 'CD',
+    cycleDay: 'चक्र का दिन',
     currentPeriod: 'वर्तमान पीरियड',
     currentCycle: 'वर्तमान चक्र',
     periodProgress: 'पीरियड जारी है',
