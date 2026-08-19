@@ -9,7 +9,6 @@ import {
   startOfWeek,
   subMonths,
 } from 'date-fns';
-import { enUS, hi, ta } from 'date-fns/locale';
 import { AppStore } from '../../core/services/app-store.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { I18nService } from '../../core/i18n/i18n.service';
@@ -18,6 +17,7 @@ import { DailyLog } from '../../core/models/app.models';
 import {
   calendarDaysBetween,
   displayDate,
+  formatDisplayDate,
   todayCalendarDate,
 } from '../../core/utils/calendar-date';
 
@@ -47,9 +47,7 @@ export class CalendarPage {
   protected readonly viewMonth = signal(startOfMonth(new Date()));
   protected readonly selectedDate = signal(todayCalendarDate());
   protected readonly monthLabel = computed(() =>
-    format(this.viewMonth(), 'MMMM yyyy', {
-      locale: this.i18n.language() === 'ta' ? ta : this.i18n.language() === 'hi' ? hi : enUS,
-    }),
+    formatDisplayDate(this.viewMonth(), 'MMMM yyyy', this.i18n.language()),
   );
   protected readonly days = computed<readonly CalendarDay[]>(() => {
     const month = this.viewMonth();

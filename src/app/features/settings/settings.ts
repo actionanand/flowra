@@ -10,7 +10,7 @@ import {
 } from '../../shared/components/select-picker/select-picker';
 import { SecurityService } from '../../core/services/security.service';
 import { NativeIntegrationService } from '../../core/services/native-integration.service';
-import { AppLanguage, I18nService } from '../../core/i18n/i18n.service';
+import { I18nService, isAppLanguage, LANGUAGE_OPTIONS } from '../../core/i18n/i18n.service';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -27,11 +27,9 @@ export class SettingsPage {
   private readonly security = inject(SecurityService);
   protected readonly native = inject(NativeIntegrationService);
   protected readonly i18n = inject(I18nService);
-  protected readonly languageOptions: readonly SelectPickerOption[] = [
-    { value: 'en', label: 'English' },
-    { value: 'hi', label: 'हिन्दी' },
-    { value: 'ta', label: 'தமிழ்' },
-  ];
+  protected readonly languageOptions: readonly SelectPickerOption[] = LANGUAGE_OPTIONS.map(
+    ({ code, nativeName }) => ({ value: code, label: nativeName }),
+  );
   protected readonly password = new FormControl('', { nonNullable: true });
   protected readonly confirmPassword = new FormControl('', { nonNullable: true });
   protected readonly passwordPrompt = signal<'CREATE' | 'RESTORE' | null>(null);
@@ -63,7 +61,9 @@ export class SettingsPage {
     void this.store.updateSettings({ ...this.store.settings(), theme: value as ThemePreference });
   }
   protected setLanguage(value: string): void {
-    this.i18n.setLanguage(value as AppLanguage);
+    if (!isAppLanguage(value)) return;
+    this.i18n.setLanguage(value);
+    void this.store.updateSettings({ ...this.store.settings(), language: value });
   }
   protected async configurePin(): Promise<void> {
     try {
@@ -76,15 +76,17 @@ export class SettingsPage {
           pinSalt: undefined,
           pinVerifier: undefined,
         });
-        this.status.set('App PIN and biometric unlock disabled.');
+        this.status.set(this.i18n.text('settings.pinAndBiometricDisabled'));
         return;
       }
       const result = await this.security.createPin(this.newPin.value);
       await this.store.updateSettings({ ...this.store.settings(), pinEnabled: true, ...result });
       this.newPin.setValue('');
-      this.status.set('App PIN enabled.');
+      this.status.set(this.i18n.text('settings.pinEnabledStatus'));
     } catch (error) {
-      this.status.set(error instanceof Error ? error.message : 'Could not configure PIN.');
+      this.status.set(
+        error instanceof Error ? error.message : this.i18n.text('settings.pinConfigureFailed'),
+      );
     }
   }
   protected async configureBiometric(): Promise<void> {
@@ -92,7 +94,7 @@ export class SettingsPage {
     if (settings.biometricEnabled) {
       this.native.disableBiometric();
       await this.store.updateSettings({ ...settings, biometricEnabled: false });
-      this.status.set('Biometric unlock disabled.');
+      this.status.set(this.i18n.text('settings.biometricDisabledStatus'));
       return;
     }
     if (
@@ -102,7 +104,7 @@ export class SettingsPage {
         settings.pinVerifier,
       ))
     ) {
-      this.status.set('Enter the current app PIN to enable biometric unlock.');
+      this.status.set(this.i18n.text('settings.biometricPinRequired'));
       return;
     }
     this.busy.set(true);
@@ -110,9 +112,11 @@ export class SettingsPage {
       await this.native.enableBiometric(this.biometricPin.value);
       await this.store.updateSettings({ ...settings, biometricEnabled: true });
       this.biometricPin.setValue('');
-      this.status.set('Biometric unlock enabled on this Android device.');
+      this.status.set(this.i18n.text('settings.biometricEnabledStatus'));
     } catch (error) {
-      this.status.set(error instanceof Error ? error.message : 'Biometric setup failed.');
+      this.status.set(
+        error instanceof Error ? error.message : this.i18n.text('settings.biometricSetupFailed'),
+      );
     } finally {
       this.busy.set(false);
     }
@@ -145,7 +149,7 @@ export class SettingsPage {
       !setting.enabled &&
       !(await this.notificationService.requestPermission())
     ) {
-      this.status.set('Notification permission was not granted.');
+      this.status.set(this.i18n.text('settings.notificationDenied'));
       return;
     }
     await this.store.updateReminder({ ...setting, [key]: !setting[key] });
@@ -182,11 +186,11 @@ export class SettingsPage {
   }
   protected async submitPasswordPrompt(): Promise<void> {
     if (this.password.value.length < 8) {
-      this.promptError.set('Use at least 8 characters.');
+      this.promptError.set(this.i18n.text('settings.passwordMinimum'));
       return;
     }
     if (this.passwordPrompt() === 'CREATE' && this.password.value !== this.confirmPassword.value) {
-      this.promptError.set('Passwords do not match.');
+      this.promptError.set(this.i18n.text('settings.passwordsMismatch'));
       return;
     }
     this.promptError.set('');
@@ -197,10 +201,12 @@ export class SettingsPage {
     this.busy.set(true);
     try {
       const target = await this.backup.save(await this.backup.create(this.password.value));
-      this.status.set(`Encrypted backup saved: ${target}`);
+      this.status.set(this.i18n.text('settings.backupSaved', { target }));
       this.closePasswordPrompt();
     } catch (error) {
-      this.promptError.set(error instanceof Error ? error.message : 'Backup failed.');
+      this.promptError.set(
+        error instanceof Error ? error.message : this.i18n.text('settings.backupFailed'),
+      );
     } finally {
       this.busy.set(false);
     }
@@ -208,15 +214,13 @@ export class SettingsPage {
   private async restore(): Promise<void> {
     const file = this.pendingRestoreFile;
     if (!file) {
-      this.promptError.set('Choose a .flowra backup file first.');
+      this.promptError.set(this.i18n.text('settings.chooseBackup'));
       return;
     }
     this.busy.set(true);
     try {
       const summary = await this.backup.restore(await file.text(), this.password.value);
-      this.status.set(
-        `Restored ${summary.profiles} profiles, ${summary.periods} periods and ${summary.logs} daily logs. Reopen Flowra to refresh.`,
-      );
+      this.status.set(this.i18n.text('settings.restoreSummary', summary));
       this.closePasswordPrompt();
     } catch (error) {
       this.promptError.set(this.restoreErrorMessage(error));
@@ -226,10 +230,9 @@ export class SettingsPage {
   }
   /** Web Crypto reports a wrong password as a generic decrypt failure. */
   private restoreErrorMessage(error: unknown): string {
-    if (error instanceof SyntaxError)
-      return 'That file is not a Flowra backup. Choose a .flowra file.';
+    if (error instanceof SyntaxError) return this.i18n.text('settings.invalidBackup');
     if (error instanceof Error && !(error instanceof DOMException) && error.message)
       return error.message;
-    return 'Incorrect backup password. Your existing data was not changed.';
+    return this.i18n.text('settings.incorrectBackupPassword');
   }
 }
