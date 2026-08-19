@@ -8,6 +8,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { SecurityService } from './core/services/security.service';
 import { NativeIntegrationService } from './core/services/native-integration.service';
 import { I18nService } from './core/i18n/i18n.service';
+import { isAppLanguage, LANGUAGE_OPTIONS } from './core/i18n/i18n.service';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -32,12 +33,10 @@ export class App {
   private readonly security = inject(SecurityService);
   protected readonly native = inject(NativeIntegrationService);
   protected readonly i18n = inject(I18nService);
-  protected readonly languageOptions: readonly SelectPickerOption[] = [
-    { value: 'en', label: 'English' },
-    { value: 'hi', label: 'हिन्दी' },
-    { value: 'ta', label: 'தமிழ்' },
-  ];
-  protected readonly languageSetupOpen = signal(!this.i18n.hasStoredLanguage());
+  protected readonly languageOptions: readonly SelectPickerOption[] = LANGUAGE_OPTIONS.map(
+    ({ code, nativeName }) => ({ value: code, label: nativeName }),
+  );
+  protected readonly languageSetupOpen = signal(false);
   protected readonly onboardingOpen = signal(true);
   protected readonly locked = signal(false);
   protected readonly unlockError = signal('');
@@ -65,6 +64,8 @@ export class App {
   private async initialize(): Promise<void> {
     await this.store.initialize();
     const settings = this.store.settings();
+    this.i18n.setLanguage(settings.language ?? 'en');
+    this.languageSetupOpen.set(!(settings.languageConfirmed ?? false));
     this.locked.set(settings.pinEnabled);
     this.native.setScreenshotProtection(settings.screenshotBlocking || settings.hideRecentPreview);
   }
@@ -76,19 +77,19 @@ export class App {
       this.locked.set(false);
       this.unlockError.set('');
       this.unlockPin.setValue('');
-    } else this.unlockError.set('That PIN did not match.');
+    } else this.unlockError.set(this.i18n.text('app.pinMismatch'));
   }
   protected async unlockWithBiometric(): Promise<void> {
     try {
       const pin = await this.native.authenticateBiometric();
       const settings = this.store.settings();
       if (!(await this.security.verifyPin(pin, settings.pinSalt, settings.pinVerifier)))
-        throw new Error('The saved biometric credential no longer matches this PIN.');
+        throw new Error(this.i18n.text('app.biometricMismatch'));
       this.locked.set(false);
       this.unlockError.set('');
     } catch (error) {
       this.unlockError.set(
-        error instanceof Error ? error.message : 'Biometric unlock failed. Use your PIN instead.',
+        error instanceof Error ? error.message : this.i18n.text('app.biometricFailed'),
       );
     }
   }
@@ -109,10 +110,16 @@ export class App {
       );
   }
   protected chooseLanguage(value: string): void {
-    this.i18n.setLanguage(value as 'en' | 'hi' | 'ta');
+    if (!isAppLanguage(value)) return;
+    this.i18n.setLanguage(value);
+    void this.store.updateSettings({ ...this.store.settings(), language: value });
   }
-  protected confirmLanguage(): void {
-    this.i18n.confirmLanguage();
+  protected async confirmLanguage(): Promise<void> {
+    await this.store.updateSettings({
+      ...this.store.settings(),
+      language: this.i18n.language(),
+      languageConfirmed: true,
+    });
     this.languageSetupOpen.set(false);
   }
 }

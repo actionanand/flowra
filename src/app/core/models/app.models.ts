@@ -17,6 +17,33 @@ export type ReproductiveStage =
   | 'UNKNOWN';
 export type PredictionEpoch = 'PRE_PREGNANCY' | 'POSTPARTUM_1' | 'POSTPARTUM_2' | 'NORMAL';
 export type ThemePreference = 'LIGHT' | 'DARK' | 'AUTOMATIC';
+export type AppLanguage =
+  | 'en'
+  | 'hi'
+  | 'ta'
+  | 'kn'
+  | 'te'
+  | 'mr'
+  | 'ml'
+  | 'gu'
+  | 'bn'
+  | 'ur'
+  | 'or'
+  | 'pa'
+  | 'si'
+  | 'zh-Hans'
+  | 'zh-Hant'
+  | 'fr'
+  | 'es'
+  | 'ar'
+  | 'cs'
+  | 'pt'
+  | 'de'
+  | 'ru'
+  | 'id'
+  | 'ja'
+  | 'ko'
+  | 'sa';
 
 export interface Profile {
   readonly id: string;
@@ -161,6 +188,8 @@ export interface AppSettings {
   readonly lockWhenBackgrounded: boolean;
   readonly screenshotBlocking: boolean;
   readonly hideRecentPreview: boolean;
+  readonly language: AppLanguage;
+  readonly languageConfirmed: boolean;
 }
 
 export type RecordKind =
@@ -191,4 +220,6 @@ export const DEFAULT_APP_SETTINGS: AppSettings = {
   lockWhenBackgrounded: true,
   screenshotBlocking: false,
   hideRecentPreview: true,
+  language: 'en',
+  languageConfirmed: false,
 };

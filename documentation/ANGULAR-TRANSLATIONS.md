@@ -11,6 +11,29 @@ Each language has its own file:
 - `src/app/core/i18n/en.ts`
 - `src/app/core/i18n/hi.ts`
 - `src/app/core/i18n/ta.ts`
+- `src/app/core/i18n/kn.ts`
+- `src/app/core/i18n/te.ts`
+- `src/app/core/i18n/mr.ts`
+- `src/app/core/i18n/ml.ts`
+- `src/app/core/i18n/gu.ts`
+- `src/app/core/i18n/bn.ts`
+- `src/app/core/i18n/ur.ts`
+- `src/app/core/i18n/or.ts`
+- `src/app/core/i18n/pa.ts`
+- `src/app/core/i18n/si.ts`
+- `src/app/core/i18n/zh-hans.ts`
+- `src/app/core/i18n/zh-hant.ts`
+- `src/app/core/i18n/fr.ts`
+- `src/app/core/i18n/es.ts`
+- `src/app/core/i18n/ar.ts`
+- `src/app/core/i18n/cs.ts`
+- `src/app/core/i18n/pt.ts`
+- `src/app/core/i18n/de.ts`
+- `src/app/core/i18n/ru.ts`
+- `src/app/core/i18n/id.ts`
+- `src/app/core/i18n/ja.ts`
+- `src/app/core/i18n/ko.ts`
+- `src/app/core/i18n/sa.ts`
 
 The registry at `src/app/core/i18n/translations.ts` imports the dictionaries and exposes them to `I18nService`.
 
@@ -18,48 +41,48 @@ The language service is responsible for:
 
 - registering dictionaries with ngx-translate
 - selecting the active language
-- persisting the selection in `localStorage` under `flowra-language`
-- restoring the previous language on startup
+- applying the language stored in the IndexedDB/SQLite-backed `AppSettings` record
+- keeping the first-run language confirmation alongside the rest of the app settings
+- updating the document language and switching to right-to-left layout for Urdu and Arabic
 
 ## Add a New Language
 
-Assume the new language is Telugu with the code `te`.
+Assume the new language uses the code `xx`.
 
-1. Create `src/app/core/i18n/te.ts`.
+1. Create `src/app/core/i18n/xx.ts`.
 2. Copy the structure from `en.ts`.
 3. Translate every key while keeping the key names unchanged.
-4. Export the dictionary as `TE_TRANSLATIONS`.
+4. Export the dictionary as `XX_TRANSLATIONS`.
 5. Import and register it in `translations.ts`.
-6. Add `te` to the `AppLanguage` union in `i18n.service.ts`.
-7. Register the dictionary in the `I18nService` constructor.
-8. Add the language to the language picker in `app.ts` and `settings.ts`.
+6. Add `xx` to the `AppLanguage` union in `app.models.ts`.
+7. Add its code and native name to `LANGUAGE_OPTIONS` in `i18n.service.ts`.
+8. The shared options automatically update both language pickers and dictionary registration.
 9. Add the language name to each dictionary's `app` section if it should be displayed in the user's current language.
 
 Example registry change:
 
 ```ts
-import { TE_TRANSLATIONS } from './te';
+import { XX_TRANSLATIONS } from './xx';
 
 export const TRANSLATIONS = {
   en: EN_TRANSLATIONS,
   hi: HI_TRANSLATIONS,
   ta: TA_TRANSLATIONS,
-  te: TE_TRANSLATIONS,
+  xx: XX_TRANSLATIONS,
 } as const;
 ```
 
-Example service changes:
+Example model change:
 
 ```ts
-export type AppLanguage = 'en' | 'hi' | 'ta' | 'te';
-
-translate.setTranslation('te', TRANSLATIONS.te);
+export type AppLanguage =
+  'en' | 'hi' | 'ta' | 'kn' | 'te' | 'mr' | 'ml' | 'gu' | 'bn' | 'ur' | 'or' | 'xx';
 ```
 
-Also update `readLanguage()` so the new value is accepted when it is already stored:
+Add the matching native-language picker label:
 
 ```ts
-return value === 'hi' || value === 'ta' || value === 'te' ? value : 'en';
+{ code: 'xx', nativeName: 'Language name' }
 ```
 
 ## Use a Translation in a Template
@@ -107,9 +130,7 @@ The shared select picker removes the marker and resolves the remainder through n
 
 ## Date Formatting
 
-Calendar labels are formatted with `date-fns`. When adding a language, check whether `date-fns/locale` provides a matching locale. Add it to the date formatting helper and calendar component so month names, weekdays, and formatted dates use the selected language.
-
-If a date-fns locale does not exist, keep the numeric date format and add translated surrounding labels rather than manually translating date strings.
+Calendar arithmetic uses `date-fns`, while visible dates use the browser's `Intl.DateTimeFormat`. Add the language's BCP 47 locale tag to `LANGUAGE_TAGS` in `calendar-date.ts`; this localizes month and weekday names without adding another package.
 
 ## Translation Rules
 
@@ -132,6 +153,8 @@ The following product-specific decisions are recorded so later language edits re
 - Severity values are translated through dictionary keys (`mild`, `moderate`, `severe`) rather than rendering the stored enum names directly.
 - Health-data enum values and profile values remain stable in storage; only their display labels are translated.
 - When a translated label wraps on mobile, icons remain separate flex items so the icon does not move into the text line.
+- Sanskrit preserves visarga (`ः`) on grammatically applicable forms such as masculine nominative singular nouns (`लयः`, `ऋतुस्रावः`, `इतिहासः`) and the indeclinable `सद्यः`. Do not append visarga to neuter forms ending in `म्` (`चक्रम्`, `मित्रम्`), feminine forms (`वेदना`, `रूपरेखा`), or imperative verbs.
+- `npm run i18n:check` includes a Sanskrit-specific visarga regression check in addition to key and interpolation parity.
 
 ## Verification Checklist
 

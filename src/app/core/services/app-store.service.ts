@@ -71,7 +71,7 @@ export class AppStore {
     this.healthEvents.set(events);
     this.savedPredictions.set(predictions);
     this.notificationSettings.set(reminderSettings);
-    this.settings.set(settings[0] ?? DEFAULT_APP_SETTINGS);
+    this.settings.set({ ...DEFAULT_APP_SETTINGS, ...(settings[0] ?? {}) });
     this.themeService.setPreference(this.settings().theme);
     this.activeProfileId.set(profiles[0]?.id ?? '');
     this.ready.set(true);

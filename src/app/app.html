@@ -1,4 +1,4 @@
-<a class="skip-link" href="#main-content">Skip to main content</a>
+<a class="skip-link" href="#main-content">{{ 'app.skipToContent' | translate }}</a>
 <div class="app-shell">
   <header class="app-header">
     <a class="brand" routerLink="/home" [attr.aria-label]="'app.home' | translate"
@@ -122,7 +122,8 @@
         <button class="primary-button" type="submit">{{ 'app.unlock' | translate }}</button>
         @if (store.settings().biometricEnabled && native.biometricAvailable()) {
           <button class="secondary-button" type="button" (click)="unlockWithBiometric()">
-            <ion-icon name="finger-print-outline" aria-hidden="true" /> Unlock with biometrics
+            <ion-icon name="finger-print-outline" aria-hidden="true" />
+            {{ 'app.unlockBiometric' | translate }}
           </button>
         }
       </form>
