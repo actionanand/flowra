@@ -61,6 +61,8 @@ jobs:
           echo "VERSION_CODE=$VERSION_CODE" >> "$GITHUB_ENV"
           echo "VERSION_NAME=$VERSION_NAME" >> "$GITHUB_ENV"
           echo "RELEASE_FILE=${RELEASE_BASENAME}-${VERSION_NAME//./-}" >> "$GITHUB_ENV"
+      - name: Clear previous release files
+        run: find releases -mindepth 1 -maxdepth 1 -type f -delete
       - name: Generate branded icons
         run: |
           sudo apt-get update && sudo apt-get install -y imagemagick
@@ -83,27 +85,24 @@ jobs:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
-          if [[ -n "$KEYSTORE_BASE64" && -n "$KEYSTORE_PASSWORD" && -n "$KEY_ALIAS" && -n "$KEY_PASSWORD" ]]; then printf '%s' "$KEYSTORE_BASE64" | base64 --decode > android/app/release-keystore.jks && echo "available=true" >> "$GITHUB_OUTPUT"; else echo "available=false" >> "$GITHUB_OUTPUT"; fi
+          if [[ -n "$KEYSTORE_BASE64" && -n "$KEYSTORE_PASSWORD" && -n "$KEY_ALIAS" ]]; then printf '%s' "$KEYSTORE_BASE64" | base64 --decode > android/app/release-keystore.jks && echo "available=true" >> "$GITHUB_OUTPUT"; else echo "available=false" >> "$GITHUB_OUTPUT"; fi
       - name: Sign APK and AAB
         id: sign
         if: steps.keystore.outputs.available == 'true'
-        continue-on-error: true
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
           BUILD_TOOLS="${ANDROID_HOME}/build-tools/$(ls "${ANDROID_HOME}/build-tools" | sort -V | tail -1)"
           "$BUILD_TOOLS/zipalign" -v 4 "releases/${RELEASE_FILE}-unsigned.apk" "releases/${RELEASE_FILE}.apk"
-          "$BUILD_TOOLS/apksigner" sign --ks android/app/release-keystore.jks --ks-pass env:KEYSTORE_PASSWORD --ks-key-alias "$KEY_ALIAS" --key-pass env:KEY_PASSWORD "releases/${RELEASE_FILE}.apk"
-          jarsigner -keystore android/app/release-keystore.jks -storepass "$KEYSTORE_PASSWORD" -keypass "$KEY_PASSWORD" -signedjar "releases/${RELEASE_FILE}.aab" "releases/${RELEASE_FILE}-unsigned.aab" "$KEY_ALIAS"
+          "$BUILD_TOOLS/apksigner" sign --ks android/app/release-keystore.jks --ks-pass env:KEYSTORE_PASSWORD --ks-key-alias "$KEY_ALIAS" --key-pass env:KEYSTORE_PASSWORD "releases/${RELEASE_FILE}.apk"
+          jarsigner -keystore android/app/release-keystore.jks -storepass "$KEYSTORE_PASSWORD" -keypass "$KEYSTORE_PASSWORD" -signedjar "releases/${RELEASE_FILE}.aab" "releases/${RELEASE_FILE}-unsigned.aab" "$KEY_ALIAS"
           rm releases/${RELEASE_FILE}-unsigned.apk releases/${RELEASE_FILE}-unsigned.aab
       - name: Verify artifact set
         run: |
-          test -s "$(find releases -maxdepth 1 -name '*.apk' | head -1)"
-          test -s "$(find releases -maxdepth 1 -name '*.aab' | head -1)"
+          test -s "releases/${RELEASE_FILE}.apk"
+          test -s "releases/${RELEASE_FILE}.aab"
           test -s "releases/${RELEASE_FILE}-mapping.txt"
       - name: Commit release files
         if: github.ref == 'refs/heads/main-android'
