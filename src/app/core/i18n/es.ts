@@ -60,7 +60,7 @@ export const ES_TRANSLATIONS = {
     security: 'Seguridad de la aplicación',
     securityText: 'Bloqueo con PIN y controles de privacidad de Android.',
     newPin: 'Nuevo PIN',
-    digits: '4–8 dígitos',
+    digits: '4-8 dígitos',
     enablePin: 'Activar PIN',
     disablePin: 'Desactivar PIN',
     currentPin: 'PIN actual',

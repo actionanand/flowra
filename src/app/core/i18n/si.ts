@@ -60,7 +60,7 @@ export const SI_TRANSLATIONS = {
     security: 'යෙදුම් ආරක්ෂාව',
     securityText: 'PIN අගුල සහ Android පෞද්ගලිකත්ව පාලන.',
     newPin: 'නව PIN',
-    digits: 'ඉලක්කම් 4–8',
+    digits: 'ඉලක්කම් 4-8',
     enablePin: 'යෙදුම් PIN සක්‍රිය කරන්න',
     disablePin: 'යෙදුම් PIN අක්‍රිය කරන්න',
     currentPin: 'වත්මන් PIN',

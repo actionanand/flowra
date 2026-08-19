@@ -60,7 +60,7 @@ export const ID_TRANSLATIONS = {
     security: 'Keamanan aplikasi',
     securityText: 'Kunci PIN dan kontrol privasi Android.',
     newPin: 'PIN baru',
-    digits: '4–8 angka',
+    digits: '4-8 angka',
     enablePin: 'Aktifkan PIN',
     disablePin: 'Nonaktifkan PIN',
     currentPin: 'PIN saat ini',

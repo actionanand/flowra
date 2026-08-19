@@ -7,6 +7,8 @@
 /android
 release-keystore.jks
 keystore.b64.txt
+flowra-key.pem
+flowra-cert.pem
 /bazel-out
 
 # Node

@@ -60,7 +60,7 @@ export const PA_TRANSLATIONS = {
     security: 'ਐਪ ਸੁਰੱਖਿਆ',
     securityText: 'PIN ਲੌਕ ਅਤੇ Android ਪਰਦੇਦਾਰੀ ਕੰਟਰੋਲ।',
     newPin: 'ਨਵਾਂ PIN',
-    digits: '4–8 ਅੰਕ',
+    digits: '4-8 ਅੰਕ',
     enablePin: 'ਐਪ PIN ਚਾਲੂ ਕਰੋ',
     disablePin: 'ਐਪ PIN ਬੰਦ ਕਰੋ',
     currentPin: 'ਮੌਜੂਦਾ PIN',

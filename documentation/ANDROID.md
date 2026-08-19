@@ -28,16 +28,13 @@ This also updates `package-lock.json`, which must be committed so GitHub Actions
 
 From WSL2:
 
-```bash
-npm run android:add
-npm run android:sync
-```
+````
 
 `android:sync` rebuilds Angular, synchronizes Capacitor, and reapplies the native patch. Then open from an environment with Android Studio:
 
 ```bash
 npm run android:open
-```
+````
 
 The generated shell uses minimum SDK 24, target SDK 36, Java 21, R8 optimization, and resource shrinking in CI.
 
@@ -62,6 +59,32 @@ Every workflow run creates a release APK, AAB, R8 `mapping.txt`, and 512×512 Pl
 
 ## Signing secrets
 
+For this project, use:
+
+```text
+KEY_ALIAS=flowra
+```
+
+Generate the release keystore from WSL2 with a strong password:
+
+```bash
+npm run generate-keystore -- --password 'YOUR_STRONG_PASSWORD'
+```
+
+The password is passed only to the local generation process and is never printed by the script.
+Because command-line arguments can be visible in shell history or process listings, use the
+environment variable when you do not want the password in command history:
+
+```bash
+export KEYSTORE_PASSWORD='YOUR_STRONG_PASSWORD'
+npm run generate-keystore
+unset KEYSTORE_PASSWORD
+```
+
+The command creates `release-keystore.jks` in the repository root with alias `flowra` and PKCS12
+format. Keep the keystore and password outside the repository. The script also supports a hidden
+interactive prompt when neither `--password` nor `KEYSTORE_PASSWORD` is provided.
+
 Add these under **Repository Settings → Secrets and variables → Actions**:
 
 | Secret              | Purpose                                      |
@@ -71,10 +94,15 @@ Add these under **Repository Settings → Secrets and variables → Actions**:
 | `KEY_ALIAS`         | Release signing alias                        |
 | `KEY_PASSWORD`      | Private-key password                         |
 
+For this project, use:
+
+```text
+KEY_ALIAS=flowra
+```
+
 Example on a trusted WSL/Linux machine:
 
 ```bash
-keytool -genkeypair -v -keystore release-keystore.jks -storetype PKCS12 -alias flowra -keyalg RSA -keysize 4096 -validity 10000
 base64 -w 0 release-keystore.jks > keystore.b64.txt
 ```
 

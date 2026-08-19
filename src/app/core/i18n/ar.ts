@@ -59,7 +59,7 @@ export const AR_TRANSLATIONS = {
     security: 'أمان التطبيق',
     securityText: 'قفل PIN وعناصر خصوصية Android.',
     newPin: 'PIN جديد',
-    digits: '4–8 أرقام',
+    digits: '4-8 أرقام',
     enablePin: 'تفعيل PIN',
     disablePin: 'تعطيل PIN',
     currentPin: 'PIN الحالي',
