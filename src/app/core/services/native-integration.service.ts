@@ -10,6 +10,9 @@ interface FlowraNativeBridge {
   enableBiometric(secret: string): void;
   authenticateBiometric(): void;
   disableBiometric(): void;
+  notificationPermissionGranted(): boolean;
+  requestNotificationPermission(): void;
+  ensureNotificationChannel(): void;
 }
 
 interface NativeWindow extends Window {
@@ -68,6 +71,22 @@ export class NativeIntegrationService {
     this.bridge()?.disableBiometric();
   }
 
+  notificationPermissionGranted(): boolean {
+    return this.bridge()?.notificationPermissionGranted() ?? false;
+  }
+
+  requestNotificationPermission(): Promise<boolean> {
+    const bridge = this.bridge();
+    if (!bridge) return Promise.reject(new Error('Notifications are available only on Android.'));
+    return this.waitForResult('notification-permission', () =>
+      bridge.requestNotificationPermission(),
+    ).then((value) => value === 'granted');
+  }
+
+  ensureNotificationChannel(): void {
+    this.bridge()?.ensureNotificationChannel();
+  }
+
   private bridge(): FlowraNativeBridge | undefined {
     return (this.document.defaultView as NativeWindow | null)?.FlowraNative;
   }
@@ -80,7 +99,7 @@ export class NativeIntegrationService {
         globalThis.clearTimeout(timeout);
         nativeWindow.removeEventListener('flowra-native-result', handleResult);
         if (success) resolve(data);
-        else reject(new Error(message || 'Biometric authentication failed.'));
+        else reject(new Error(message || 'The Android request failed.'));
       };
       const handleResult = (event: Event): void => {
         const detail = (
@@ -96,7 +115,7 @@ export class NativeIntegrationService {
       };
       nativeWindow.addEventListener('flowra-native-result', handleResult);
       const timeout = globalThis.setTimeout(
-        () => finish(false, '', 'Biometric authentication timed out.'),
+        () => finish(false, '', 'The Android request timed out.'),
         timeoutMs,
       );
       try {
@@ -105,7 +124,7 @@ export class NativeIntegrationService {
         finish(
           false,
           '',
-          error instanceof Error ? error.message : 'Biometric authentication could not start.',
+          error instanceof Error ? error.message : 'The Android request could not start.',
         );
       }
     });

@@ -22,7 +22,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { NotificationService } from './core/services/notification.service';
 import { SnackbarService } from './core/services/snackbar.service';
 
-const NOTIFICATION_PROMPT_KEY = 'flowra.notification-permission-v1';
+const NOTIFICATION_PROMPT_KEY = 'flowra.notification-permission-v2';
 
 @Component({
   selector: 'app-root',
@@ -163,7 +163,17 @@ export class App {
     this.notificationPermissionBusy.set(true);
     try {
       const granted = await this.notifications.requestPermission();
-      if (granted) await this.store.rescheduleAllReminders();
+      if (granted) {
+        await this.store.rescheduleAllReminders();
+        const profile = this.store.activeProfile();
+        this.snackbar.show(
+          profile
+            ? this.i18n.text('settings.scheduled', { name: profile.name })
+            : this.i18n.text('settings.periodReminder'),
+        );
+      } else {
+        this.snackbar.show(this.i18n.text('settings.notificationDenied'), 'WARNING');
+      }
     } finally {
       this.notificationPermissionBusy.set(false);
     }

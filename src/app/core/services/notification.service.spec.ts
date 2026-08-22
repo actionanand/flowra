@@ -3,6 +3,7 @@ import { Capacitor } from '@capacitor/core';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { CyclePrediction, NotificationSettings, Profile } from '../models/app.models';
 import { NotificationService } from './notification.service';
+import { NativeIntegrationService } from './native-integration.service';
 
 describe('NotificationService', () => {
   const profile: Profile = {
@@ -46,11 +47,35 @@ describe('NotificationService', () => {
     TestBed.configureTestingModule({});
     vi.spyOn(Capacitor, 'isNativePlatform').mockReturnValue(true);
     vi.spyOn(Capacitor, 'getPlatform').mockReturnValue('android');
-    vi.spyOn(LocalNotifications, 'checkPermissions').mockResolvedValue({ display: 'granted' });
+    const native = TestBed.inject(NativeIntegrationService);
+    vi.spyOn(native, 'notificationPermissionGranted').mockReturnValue(true);
+    vi.spyOn(native, 'ensureNotificationChannel').mockReturnValue(undefined);
     vi.spyOn(LocalNotifications, 'cancel').mockResolvedValue(undefined);
   });
 
   afterEach(() => vi.restoreAllMocks());
+
+  it('uses the guarded native Android permission bridge', async () => {
+    const native = TestBed.inject(NativeIntegrationService);
+    vi.mocked(native.notificationPermissionGranted).mockReturnValue(false);
+    const request = vi.spyOn(native, 'requestNotificationPermission').mockResolvedValue(true);
+    const pluginRequest = vi.spyOn(LocalNotifications, 'requestPermissions');
+
+    await expect(TestBed.inject(NotificationService).requestPermission()).resolves.toBe(true);
+
+    expect(request).toHaveBeenCalledOnce();
+    expect(pluginRequest).not.toHaveBeenCalled();
+  });
+
+  it('returns denied instead of propagating native permission errors', async () => {
+    const native = TestBed.inject(NativeIntegrationService);
+    vi.mocked(native.notificationPermissionGranted).mockReturnValue(false);
+    vi.spyOn(native, 'requestNotificationPermission').mockRejectedValue(
+      new Error('OEM permission activity failed'),
+    );
+
+    await expect(TestBed.inject(NotificationService).requestPermission()).resolves.toBe(false);
+  });
 
   it('schedules the selected number of days before the prediction at 9 AM', async () => {
     let pendingId = 0;
@@ -75,6 +100,7 @@ describe('NotificationService', () => {
     expect(at?.getHours()).toBe(9);
     expect(notification.title).toBe('Flowra');
     expect(notification.body).toBe('Upcoming health reminder');
+    expect(TestBed.inject(NativeIntegrationService).ensureNotificationChannel).toHaveBeenCalled();
   });
 
   it('cancels the stable profile notification when reminders are disabled', async () => {
