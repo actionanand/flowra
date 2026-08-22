@@ -16,6 +16,7 @@ const TABLES: readonly RecordKind[] = [
 @Injectable({ providedIn: 'root' })
 export class SqliteService implements LocalRecordRepository {
   private databasePromise?: Promise<SQLiteDBConnection>;
+  private writeQueue: Promise<void> = Promise.resolve();
 
   async list<T>(kind: RecordKind): Promise<readonly T[]> {
     const database = await this.database();
@@ -24,31 +25,42 @@ export class SqliteService implements LocalRecordRepository {
   }
 
   async put<T extends { readonly id: string }>(kind: RecordKind, value: T): Promise<void> {
-    const database = await this.database();
-    await database.run(
-      `INSERT OR REPLACE INTO ${kind} (id, payload, updated_at) VALUES (?, ?, ?)`,
-      [value.id, JSON.stringify(value), new Date().toISOString()],
-    );
+    await this.enqueueWrite(async (database) => {
+      await database.run(
+        `INSERT OR REPLACE INTO ${kind} (id, payload, updated_at) VALUES (?, ?, ?)`,
+        [value.id, JSON.stringify(value), new Date().toISOString()],
+      );
+    });
   }
 
   async remove(kind: RecordKind, id: string): Promise<void> {
-    await (await this.database()).run(`DELETE FROM ${kind} WHERE id = ?`, [id]);
+    await this.enqueueWrite(async (database) => {
+      await database.run(`DELETE FROM ${kind} WHERE id = ?`, [id]);
+    });
   }
 
   async replaceAll<T extends { readonly id: string }>(
     kind: RecordKind,
     values: readonly T[],
   ): Promise<void> {
-    const database = await this.database();
-    await database.beginTransaction();
-    try {
-      await database.run(`DELETE FROM ${kind}`);
-      for (const value of values) await this.put(kind, value);
-      await database.commitTransaction();
-    } catch (error) {
-      await database.rollbackTransaction();
-      throw error;
-    }
+    await this.enqueueWrite(async (database) => {
+      const transaction = await database.isTransactionActive();
+      if (transaction.result) await database.rollbackTransaction();
+      const updatedAt = new Date().toISOString();
+      await database.executeTransaction([
+        { statement: `DELETE FROM ${kind}` },
+        ...values.map((value) => ({
+          statement: `INSERT INTO ${kind} (id, payload, updated_at) VALUES (?, ?, ?)`,
+          values: [value.id, JSON.stringify(value), updatedAt],
+        })),
+      ]);
+    });
+  }
+
+  private enqueueWrite(operation: (database: SQLiteDBConnection) => Promise<void>): Promise<void> {
+    const pending = this.writeQueue.then(async () => operation(await this.database()));
+    this.writeQueue = pending.catch(() => undefined);
+    return pending;
   }
 
   private database(): Promise<SQLiteDBConnection> {
