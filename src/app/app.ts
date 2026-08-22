@@ -83,6 +83,7 @@ export class App {
     { path: '/profiles', label: 'nav.profiles', icon: 'people-outline' },
     { path: '/settings', label: 'nav.settings', icon: 'settings-outline' },
   ];
+  protected readonly mobileNav = [this.nav[0], this.nav[1], this.nav[2], this.nav[3], this.nav[5]];
   private readonly notificationPermissionButton = viewChild<ElementRef<HTMLButtonElement>>(
     'notificationPermissionButton',
   );
@@ -108,7 +109,8 @@ export class App {
     this.i18n.setLanguage(settings.language ?? 'en');
     this.languageSetupOpen.set(!(settings.languageConfirmed ?? false));
     this.locked.set(settings.pinEnabled);
-    this.native.setScreenshotProtection(settings.screenshotBlocking || settings.hideRecentPreview);
+    this.native.setScreenshotProtection(settings.screenshotBlocking);
+    this.native.setRecentPreviewProtection(settings.hideRecentPreview);
     this.native.hideSplash();
   }
   protected async unlock(): Promise<void> {
@@ -164,8 +166,15 @@ export class App {
     try {
       const granted = await this.notifications.requestPermission();
       if (granted) {
-        await this.store.rescheduleAllReminders();
         const profile = this.store.activeProfile();
+        if (profile) {
+          await this.store.updateReminder({
+            ...this.store.reminderFor(profile.id),
+            enabled: true,
+          });
+        } else {
+          await this.store.rescheduleAllReminders();
+        }
         this.snackbar.show(
           profile
             ? this.i18n.text('settings.scheduled', { name: profile.name })

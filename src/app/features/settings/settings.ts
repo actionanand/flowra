@@ -12,10 +12,11 @@ import { SecurityService } from '../../core/services/security.service';
 import { NativeIntegrationService } from '../../core/services/native-integration.service';
 import { I18nService, isAppLanguage, LANGUAGE_OPTIONS } from '../../core/i18n/i18n.service';
 import { TranslatePipe } from '@ngx-translate/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-settings',
-  imports: [ReactiveFormsModule, SelectPicker, TranslatePipe],
+  imports: [ReactiveFormsModule, RouterLink, SelectPicker, TranslatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './settings.html',
   styleUrls: ['./settings.scss', './settings.fields.scss'],
@@ -132,8 +133,10 @@ export class SettingsPage {
   ): Promise<void> {
     const updated = { ...this.store.settings(), [key]: !this.store.settings()[key] };
     await this.store.updateSettings(updated);
-    if (key === 'screenshotBlocking' || key === 'hideRecentPreview')
-      this.native.setScreenshotProtection(updated.screenshotBlocking || updated.hideRecentPreview);
+    if (key === 'screenshotBlocking')
+      this.native.setScreenshotProtection(updated.screenshotBlocking);
+    if (key === 'hideRecentPreview')
+      this.native.setRecentPreviewProtection(updated.hideRecentPreview);
   }
   protected async setReminderDays(value: string): Promise<void> {
     const profile = this.store.activeProfile();

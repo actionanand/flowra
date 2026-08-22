@@ -5,6 +5,14 @@
       <p>{{ 'settings.subtitle' | translate }}</p>
     </div>
   </header>
+  <a class="card mobile-profile-link" routerLink="/profiles">
+    <span><ion-icon name="people-outline" aria-hidden="true" /></span>
+    <span>
+      <strong>{{ 'nav.profiles' | translate }}</strong>
+      <small>{{ 'pages.profilesText' | translate }}</small>
+    </span>
+    <ion-icon name="chevron-forward-outline" aria-hidden="true" />
+  </a>
   <section class="card settings-group">
     <div class="group-title">
       <span><ion-icon name="color-palette-outline" aria-hidden="true" /></span>
