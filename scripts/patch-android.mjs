@@ -171,10 +171,13 @@ for (const styleFile of [
 
 const java = `package ${appId};
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
@@ -212,6 +215,8 @@ import javax.crypto.spec.GCMParameterSpec;
 public class MainActivity extends BridgeActivity {
   private static final int CREATE_BACKUP_REQUEST = 4101;
   private static final int OPEN_BACKUP_REQUEST = 4102;
+  private static final int NOTIFICATION_PERMISSION_REQUEST = 4103;
+  private static final String NOTIFICATION_CHANNEL = "flowra-cycle-reminders";
   private static final String BIOMETRIC_KEY_ALIAS = "flowra_biometric_key";
   private static final String SECURITY_PREFERENCES = "flowra_security";
   private BiometricPrompt biometricPrompt;
@@ -224,14 +229,16 @@ public class MainActivity extends BridgeActivity {
     showLaunchOverlay();
     getBridge().getWebView().setBackgroundColor(Color.parseColor("#FFF7FB"));
     getBridge().getWebView().addJavascriptInterface(new FlowraNativeBridge(), "FlowraNative");
-    createReminderChannel();
+    if (hasNotificationPermission()) ensureReminderNotificationChannel();
   }
-  private void createReminderChannel() {
+  private void ensureReminderNotificationChannel() {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return;
-    NotificationChannel channel = new NotificationChannel("flowra-cycle-reminders", "Cycle reminders", NotificationManager.IMPORTANCE_DEFAULT);
+    NotificationManager manager = getSystemService(NotificationManager.class);
+    if (manager == null) return;
+    NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL, "Cycle reminders", NotificationManager.IMPORTANCE_DEFAULT);
     channel.setDescription("Private, on-device period prediction reminders");
-    channel.setLockscreenVisibility(android.app.Notification.VISIBILITY_PRIVATE);
-    getSystemService(NotificationManager.class).createNotificationChannel(channel);
+    channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+    manager.createNotificationChannel(channel);
   }
   public class FlowraNativeBridge {
     @JavascriptInterface public void hideSplash() {
@@ -331,6 +338,65 @@ public class MainActivity extends BridgeActivity {
     }
 
     @JavascriptInterface public void disableBiometric() { clearBiometricState(); }
+
+    @JavascriptInterface public boolean notificationPermissionGranted() {
+      return hasNotificationPermission();
+    }
+
+    @JavascriptInterface public void requestNotificationPermission() {
+      runOnUiThread(() -> {
+        try {
+          if (hasNotificationPermission()) {
+            ensureReminderNotificationChannel();
+            dispatchNativeResult("notification-permission", true, "granted", "");
+            return;
+          }
+          requestPermissions(
+            new String[] { Manifest.permission.POST_NOTIFICATIONS },
+            NOTIFICATION_PERMISSION_REQUEST
+          );
+        } catch (Exception error) {
+          dispatchNativeResult(
+            "notification-permission",
+            false,
+            "",
+            error.getMessage() == null
+              ? "Notification permission could not be requested."
+              : error.getMessage()
+          );
+        }
+      });
+    }
+
+    @JavascriptInterface public void ensureNotificationChannel() {
+      ensureReminderNotificationChannel();
+    }
+  }
+
+  private boolean hasNotificationPermission() {
+    return Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU
+      || checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)
+        == PackageManager.PERMISSION_GRANTED;
+  }
+
+  @Override public void onRequestPermissionsResult(
+    int requestCode,
+    String[] permissions,
+    int[] grantResults
+  ) {
+    if (requestCode == NOTIFICATION_PERMISSION_REQUEST) {
+      boolean granted =
+        grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
+      if (granted) ensureReminderNotificationChannel();
+      dispatchNativeResult(
+        "notification-permission",
+        true,
+        granted ? "granted" : "denied",
+        ""
+      );
+      return;
+    }
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
   }
 
   @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {

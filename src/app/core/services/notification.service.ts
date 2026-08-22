@@ -4,16 +4,21 @@ import { LocalNotifications } from '@capacitor/local-notifications';
 import { AppSnapshot, CyclePrediction, NotificationSettings, Profile } from '../models/app.models';
 import { addCalendarDays, parseCalendarDate } from '../utils/calendar-date';
 import { PredictionEngine } from '../cycle-engine/prediction-engine';
+import { NativeIntegrationService } from './native-integration.service';
 
 @Injectable({ providedIn: 'root' })
 export class NotificationService {
   private readonly predictionEngine = inject(PredictionEngine);
+  private readonly native = inject(NativeIntegrationService);
 
   async requestPermission(): Promise<boolean> {
     if (!this.isAndroid()) return false;
-    const current = await LocalNotifications.checkPermissions();
-    if (current.display === 'granted') return true;
-    return (await LocalNotifications.requestPermissions()).display === 'granted';
+    try {
+      if (this.native.notificationPermissionGranted()) return true;
+      return await this.native.requestNotificationPermission();
+    } catch {
+      return false;
+    }
   }
 
   async reschedule(
@@ -25,7 +30,8 @@ export class NotificationService {
     const id = this.notificationId(profile.id);
     await LocalNotifications.cancel({ notifications: [{ id }] });
     if (!settings.enabled || !prediction) return;
-    if ((await LocalNotifications.checkPermissions()).display !== 'granted') return;
+    if (!this.native.notificationPermissionGranted()) return;
+    this.native.ensureNotificationChannel();
     const date = addCalendarDays(prediction.mostLikelyDate, -settings.daysBefore);
     const schedule = parseCalendarDate(date);
     schedule.setHours(9, 0, 0, 0);
