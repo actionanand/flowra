@@ -3,8 +3,8 @@
 # min_api: 24
 # common_typos_disable
 # {"id":"com.android.tools.r8.mapping","version":"2.2"}
-# pg_map_id: 478c60bc365016df551eb365e94b83dd567557caf1ed0f4cd69c325706a3ad55
-# pg_map_hash: SHA-256 478c60bc365016df551eb365e94b83dd567557caf1ed0f4cd69c325706a3ad55
+# pg_map_id: 6ee43326dcccdb231eda9669d032a0065132449a7825ed31921d980536378701
+# pg_map_hash: SHA-256 6ee43326dcccdb231eda9669d032a0065132449a7825ed31921d980536378701
 _COROUTINE.ArtificialStackFrames -> R8$$REMOVED$$CLASS$$0:
 # {"id":"sourceFile","fileName":"CoroutineDebugging.kt"}
 _COROUTINE.CoroutineDebuggingKt -> R8$$REMOVED$$CLASS$$1:
@@ -1564,21 +1564,21 @@ androidx.activity.ComponentActivity$$ExternalSyntheticLambda9 -> androidx.activi
     215:218:void androidx.core.splashscreen.SplashScreen$Impl.dispatchOnExitAnimation$lambda$3(androidx.core.splashscreen.SplashScreenViewProvider,androidx.core.splashscreen.SplashScreen$OnExitAnimationListener):374:374 -> run
     215:218:void run():0 -> run
     219:226:void run():0:0 -> run
-    227:236:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$5(java.lang.String):113:113 -> run
+    227:236:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$7(java.lang.String):153:153 -> run
     227:236:void run():0 -> run
-    237:239:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$5(java.lang.String):115:115 -> run
+    237:239:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$7(java.lang.String):155:155 -> run
     237:239:void run():0 -> run
-    240:245:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$5(java.lang.String):116:116 -> run
+    240:245:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$7(java.lang.String):156:156 -> run
     240:245:void run():0 -> run
-    246:253:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$5(java.lang.String):117:117 -> run
+    246:253:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$7(java.lang.String):157:157 -> run
     246:253:void run():0 -> run
-    254:267:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$5(java.lang.String):118:118 -> run
+    254:267:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$7(java.lang.String):158:158 -> run
     254:267:void run():0 -> run
-    268:270:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$5(java.lang.String):134:134 -> run
+    268:270:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$7(java.lang.String):174:174 -> run
     268:270:void run():0 -> run
-    271:273:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$5(java.lang.String):135:135 -> run
+    271:273:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$7(java.lang.String):175:175 -> run
     271:273:void run():0 -> run
-    274:283:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$5(java.lang.String):136:136 -> run
+    274:283:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$7(java.lang.String):176:176 -> run
     274:283:void run():0 -> run
     284:287:void run():0:0 -> run
     288:293:void androidx.fragment.app.DefaultSpecialEffectsController$AnimationEffect$onCommit$1.onAnimationEnd$lambda$0(android.view.ViewGroup,android.view.View,androidx.fragment.app.DefaultSpecialEffectsController$AnimationEffect):0:0 -> run
@@ -2240,6 +2240,8 @@ androidx.activity.ComponentDialog$$ExternalSyntheticApiModelOutline0 -> androidx
     1:7:void m(android.window.OnBackInvokedDispatcher,androidx.activity.OnBackPressedDispatcher$Api33Impl$$ExternalSyntheticLambda0):0:0 -> j
       # {"id":"com.android.tools.r8.synthesized"}
       # {"id":"com.android.tools.r8.residualsignature","signature":"(Landroid/window/OnBackInvokedDispatcher;Landroidx/activity/z;)V"}
+    1:4:void m(com.actionanand.flowra.app.MainActivity,boolean):0:0 -> k
+      # {"id":"com.android.tools.r8.synthesized"}
 androidx.activity.FullyDrawnReporter -> androidx.activity.u:
 # {"id":"sourceFile","fileName":"FullyDrawnReporter.kt"}
     java.lang.Object lock -> a
@@ -34518,14 +34520,18 @@ androidx.core.graphics.TypefaceCompat -> y.f:
     26:29:android.graphics.fonts.Font guessPrimaryFont(android.graphics.Typeface):169:169 -> d
     30:37:android.graphics.fonts.Font guessPrimaryFont(android.graphics.Typeface):176:176 -> d
     38:42:android.graphics.fonts.Font guessPrimaryFont(android.graphics.Typeface):179:179 -> d
-androidx.core.graphics.TypefaceCompat$$ExternalSyntheticApiModelOutline3 -> y.e:
+androidx.core.graphics.TypefaceCompat$$ExternalSyntheticApiModelOutline1 -> y.e:
 # {"id":"sourceFile","fileName":"R8$$SyntheticClass"}
 # {"id":"com.android.tools.r8.synthesized"}
-    1:5:android.graphics.Typeface y.TypefaceCompat$$ExternalSyntheticApiModelOutline3.m(android.graphics.Typeface$CustomFallbackBuilder):0:0 -> a
+    1:5:android.graphics.Typeface y.TypefaceCompat$$ExternalSyntheticApiModelOutline1.m(android.graphics.Typeface$CustomFallbackBuilder):0:0 -> a
       # {"id":"com.android.tools.r8.synthesized"}
-    1:5:android.graphics.fonts.FontFamily y.TypefaceCompat$$ExternalSyntheticApiModelOutline3.m(android.graphics.fonts.FontFamily$Builder):0:0 -> b
+    1:5:android.graphics.fonts.Font$Builder y.TypefaceCompat$$ExternalSyntheticApiModelOutline1.m(android.graphics.fonts.Font$Builder,java.lang.String):0:0 -> b
       # {"id":"com.android.tools.r8.synthesized"}
-    1:4:void y.TypefaceCompat$$ExternalSyntheticApiModelOutline3.m(android.graphics.Typeface$CustomFallbackBuilder,android.graphics.fonts.FontFamily):0:0 -> c
+    1:5:android.graphics.fonts.Font y.TypefaceCompat$$ExternalSyntheticApiModelOutline1.m(android.graphics.fonts.Font$Builder):0:0 -> c
+      # {"id":"com.android.tools.r8.synthesized"}
+    1:5:android.graphics.fonts.FontFamily y.TypefaceCompat$$ExternalSyntheticApiModelOutline1.m(android.graphics.fonts.FontFamily$Builder):0:0 -> d
+      # {"id":"com.android.tools.r8.synthesized"}
+    1:4:void y.TypefaceCompat$$ExternalSyntheticApiModelOutline1.m(android.graphics.Typeface$CustomFallbackBuilder,android.graphics.fonts.FontFamily):0:0 -> e
       # {"id":"com.android.tools.r8.synthesized"}
 androidx.core.graphics.TypefaceCompatApi21Impl -> y.g:
 # {"id":"sourceFile","fileName":"TypefaceCompatApi21Impl.java"}
@@ -44839,52 +44845,52 @@ androidx.emoji2.text.EmojiCompatInitializer$BackgroundDefaultLoader$$ExternalSyn
     135:144:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showWithAndroid12API$2(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings):156:156 -> run
     135:144:void run():0 -> run
     145:156:void run():0:0 -> run
-    157:170:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$6(javax.crypto.Cipher,java.lang.String):155:155 -> run
-    157:170:void run():0 -> run
-    171:177:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$6(javax.crypto.Cipher,java.lang.String):156:156 -> run
-    171:177:void run():0 -> run
-    178:180:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$6(javax.crypto.Cipher,java.lang.String):157:157 -> run
-    178:180:void run():0 -> run
-    181:187:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$6(javax.crypto.Cipher,java.lang.String):158:158 -> run
-    181:187:void run():0 -> run
-    188:197:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$6(javax.crypto.Cipher,java.lang.String):160:160 -> run
-    188:197:void run():0 -> run
-    198:209:void run():0:0 -> run
-    210:219:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$4(javax.crypto.Cipher,byte[]):120:120 -> run
-    210:219:void run():0 -> run
-    220:232:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$4(javax.crypto.Cipher,byte[]):121:121 -> run
-    220:232:void run():0 -> run
-    233:242:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$4(javax.crypto.Cipher,byte[]):122:122 -> run
-    233:242:void run():0 -> run
-    243:254:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$4(javax.crypto.Cipher,byte[]):123:123 -> run
-    243:254:void run():0 -> run
-    255:257:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$4(javax.crypto.Cipher,byte[]):124:124 -> run
-    255:257:void run():0 -> run
-    258:260:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$4(javax.crypto.Cipher,byte[]):125:125 -> run
-    258:260:void run():0 -> run
-    261:267:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$4(javax.crypto.Cipher,byte[]):126:126 -> run
-    261:267:void run():0 -> run
-    268:270:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$4(javax.crypto.Cipher,byte[]):128:128 -> run
-    268:270:void run():0 -> run
-    271:273:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$4(javax.crypto.Cipher,byte[]):129:129 -> run
-    271:273:void run():0 -> run
-    274:281:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$4(javax.crypto.Cipher,byte[]):130:130 -> run
-    274:281:void run():0 -> run
-    282:293:void run():0:0 -> run
-    294:301:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$saveBackup$1(java.lang.String,java.lang.String):80:80 -> run
-    294:301:void run():0 -> run
-    302:308:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$saveBackup$1(java.lang.String,java.lang.String):81:81 -> run
-    302:308:void run():0 -> run
-    309:313:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$saveBackup$1(java.lang.String,java.lang.String):82:82 -> run
-    309:313:void run():0 -> run
-    314:318:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$saveBackup$1(java.lang.String,java.lang.String):83:83 -> run
-    314:318:void run():0 -> run
-    319:325:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$saveBackup$1(java.lang.String,java.lang.String):84:84 -> run
-    319:325:void run():0 -> run
-    326:330:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$saveBackup$1(java.lang.String,java.lang.String):85:85 -> run
-    326:330:void run():0 -> run
-    331:344:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$saveBackup$1(java.lang.String,java.lang.String):87:87 -> run
-    331:344:void run():0 -> run
+    157:164:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$saveBackup$1(java.lang.String,java.lang.String):106:106 -> run
+    157:164:void run():0 -> run
+    165:171:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$saveBackup$1(java.lang.String,java.lang.String):107:107 -> run
+    165:171:void run():0 -> run
+    172:176:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$saveBackup$1(java.lang.String,java.lang.String):108:108 -> run
+    172:176:void run():0 -> run
+    177:181:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$saveBackup$1(java.lang.String,java.lang.String):109:109 -> run
+    177:181:void run():0 -> run
+    182:188:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$saveBackup$1(java.lang.String,java.lang.String):110:110 -> run
+    182:188:void run():0 -> run
+    189:193:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$saveBackup$1(java.lang.String,java.lang.String):111:111 -> run
+    189:193:void run():0 -> run
+    194:207:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$saveBackup$1(java.lang.String,java.lang.String):113:113 -> run
+    194:207:void run():0 -> run
+    208:219:void run():0:0 -> run
+    220:233:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$8(javax.crypto.Cipher,java.lang.String):195:195 -> run
+    220:233:void run():0 -> run
+    234:240:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$8(javax.crypto.Cipher,java.lang.String):196:196 -> run
+    234:240:void run():0 -> run
+    241:243:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$8(javax.crypto.Cipher,java.lang.String):197:197 -> run
+    241:243:void run():0 -> run
+    244:250:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$8(javax.crypto.Cipher,java.lang.String):198:198 -> run
+    244:250:void run():0 -> run
+    251:260:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$8(javax.crypto.Cipher,java.lang.String):200:200 -> run
+    251:260:void run():0 -> run
+    261:272:void run():0:0 -> run
+    273:282:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$6(javax.crypto.Cipher,byte[]):160:160 -> run
+    273:282:void run():0 -> run
+    283:295:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$6(javax.crypto.Cipher,byte[]):161:161 -> run
+    283:295:void run():0 -> run
+    296:305:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$6(javax.crypto.Cipher,byte[]):162:162 -> run
+    296:305:void run():0 -> run
+    306:317:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$6(javax.crypto.Cipher,byte[]):163:163 -> run
+    306:317:void run():0 -> run
+    318:320:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$6(javax.crypto.Cipher,byte[]):164:164 -> run
+    318:320:void run():0 -> run
+    321:323:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$6(javax.crypto.Cipher,byte[]):165:165 -> run
+    321:323:void run():0 -> run
+    324:330:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$6(javax.crypto.Cipher,byte[]):166:166 -> run
+    324:330:void run():0 -> run
+    331:333:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$6(javax.crypto.Cipher,byte[]):168:168 -> run
+    331:333:void run():0 -> run
+    334:336:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$6(javax.crypto.Cipher,byte[]):169:169 -> run
+    334:336:void run():0 -> run
+    337:344:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$enableBiometric$6(javax.crypto.Cipher,byte[]):170:170 -> run
+    337:344:void run():0 -> run
     345:356:void run():0:0 -> run
     357:364:void androidx.emoji2.text.EmojiCompatInitializer$BackgroundDefaultLoader.doLoad(androidx.emoji2.text.EmojiCompat$MetadataRepoLoaderCallback,java.util.concurrent.ThreadPoolExecutor):174:174 -> run
     357:364:void androidx.emoji2.text.EmojiCompatInitializer$BackgroundDefaultLoader.lambda$load$0(androidx.emoji2.text.EmojiCompat$MetadataRepoLoaderCallback,java.util.concurrent.ThreadPoolExecutor):167 -> run
@@ -53534,42 +53540,42 @@ androidx.lifecycle.ReportFragment$LifecycleCallbacks$Companion$$ExternalSyntheti
       # {"id":"com.android.tools.r8.synthesized"}
     1:6:android.graphics.Typeface$CustomFallbackBuilder m(android.graphics.fonts.FontFamily):0:0 -> c
       # {"id":"com.android.tools.r8.synthesized"}
-    1:5:android.graphics.fonts.Font$Builder m(android.graphics.fonts.Font$Builder,java.lang.String):0:0 -> d
+    1:6:android.graphics.fonts.FontFamily$Builder m(android.graphics.fonts.Font):0:0 -> d
       # {"id":"com.android.tools.r8.synthesized"}
-    1:5:android.graphics.fonts.Font m(android.graphics.fonts.Font$Builder):0:0 -> e
+    1:5:android.text.TextDirectionHeuristic m(android.widget.TextView):0:0 -> e
       # {"id":"com.android.tools.r8.synthesized"}
-    1:6:android.graphics.fonts.FontFamily$Builder m(android.graphics.fonts.Font):0:0 -> f
+    1:6:android.view.WindowInsets$Builder m():0:0 -> f
       # {"id":"com.android.tools.r8.synthesized"}
-    1:5:android.text.TextDirectionHeuristic m(android.widget.TextView):0:0 -> g
+    1:6:android.view.WindowInsets$Builder m(android.view.WindowInsets):0:0 -> g
       # {"id":"com.android.tools.r8.synthesized"}
-    1:6:android.view.WindowInsets$Builder m():0:0 -> h
+    1:5:android.view.WindowInsets m(android.view.WindowInsets$Builder):0:0 -> h
       # {"id":"com.android.tools.r8.synthesized"}
-    1:6:android.view.WindowInsets$Builder m(android.view.WindowInsets):0:0 -> i
+    1:5:android.view.WindowInsets m(android.view.WindowInsets,int,int,int,int):0:0 -> i
       # {"id":"com.android.tools.r8.synthesized"}
-    1:5:android.view.WindowInsets m(android.view.WindowInsets$Builder):0:0 -> j
+    1:3:android.view.accessibility.AccessibilityNodeInfo$AccessibilityAction m():0:0 -> j
       # {"id":"com.android.tools.r8.synthesized"}
-    1:5:android.view.WindowInsets m(android.view.WindowInsets,int,int,int,int):0:0 -> k
+    1:3:void m():0:0 -> k
       # {"id":"com.android.tools.r8.synthesized"}
-    1:3:android.view.accessibility.AccessibilityNodeInfo$AccessibilityAction m():0:0 -> l
-      # {"id":"com.android.tools.r8.synthesized"}
-    1:3:void m():0:0 -> m
-      # {"id":"com.android.tools.r8.synthesized"}
-    1:4:void m(android.app.Activity,androidx.lifecycle.ReportFragment$LifecycleCallbacks):0:0 -> n
+    1:4:void m(android.app.Activity,androidx.lifecycle.ReportFragment$LifecycleCallbacks):0:0 -> l
       # {"id":"com.android.tools.r8.synthesized"}
       # {"id":"com.android.tools.r8.residualsignature","signature":"(Landroid/app/Activity;Landroidx/lifecycle/h0$a;)V"}
-    1:4:void m(android.graphics.Typeface$CustomFallbackBuilder,java.lang.String):0:0 -> o
+    1:4:void m(android.graphics.Typeface$CustomFallbackBuilder,java.lang.String):0:0 -> m
       # {"id":"com.android.tools.r8.synthesized"}
-    1:4:void m(android.view.WindowInsets$Builder,android.graphics.Insets):0:0 -> p
+    1:5:void m(android.view.Window):0:0 -> n
       # {"id":"com.android.tools.r8.synthesized"}
-    1:5:boolean m(android.widget.TextView):0:0 -> q
+    1:4:void m(android.view.WindowInsets$Builder,android.graphics.Insets):0:0 -> o
       # {"id":"com.android.tools.r8.synthesized"}
-    1:3:int m$1(android.graphics.Insets):0:0 -> r
+    1:5:boolean m(android.widget.TextView):0:0 -> p
       # {"id":"com.android.tools.r8.synthesized"}
-    1:5:android.graphics.Insets m$1(android.view.WindowInsets):0:0 -> s
+    1:3:int m$1(android.graphics.Insets):0:0 -> q
       # {"id":"com.android.tools.r8.synthesized"}
-    1:3:android.view.accessibility.AccessibilityNodeInfo$AccessibilityAction m$1():0:0 -> t
+    1:5:android.graphics.Insets m$1(android.view.WindowInsets):0:0 -> r
       # {"id":"com.android.tools.r8.synthesized"}
-    1:3:void m$1():0:0 -> u
+    1:3:android.view.accessibility.AccessibilityNodeInfo$AccessibilityAction m$1():0:0 -> s
+      # {"id":"com.android.tools.r8.synthesized"}
+    1:3:void m$1():0:0 -> t
+      # {"id":"com.android.tools.r8.synthesized"}
+    1:5:void m$1(android.view.Window):0:0 -> u
       # {"id":"com.android.tools.r8.synthesized"}
     1:4:void m$1(android.view.WindowInsets$Builder,android.graphics.Insets):0:0 -> v
       # {"id":"com.android.tools.r8.synthesized"}
@@ -59205,220 +59211,301 @@ com.actionanand.flowra.app.MainActivity -> com.actionanand.flowra.app.MainActivi
     byte[] pendingBackup -> G
     android.view.View launchOverlay -> H
       # {"id":"com.android.tools.r8.residualsignature","signature":"Landroid/widget/FrameLayout;"}
-    int $r8$clinit -> I
+    android.view.View recentPreviewOverlay -> I
+      # {"id":"com.android.tools.r8.residualsignature","signature":"Landroid/widget/FrameLayout;"}
+    boolean darkMode -> J
+    boolean hideRecentPreview -> K
+    int $r8$clinit -> L
       # {"id":"com.android.tools.r8.synthesized"}
     1:3:void androidx.appcompat.app.AppCompatActivity.<init>():92:92 -> <init>
     1:3:void com.getcapacitor.BridgeActivity.<init>():11 -> <init>
-    1:3:void <init>():44 -> <init>
+    1:3:void <init>():47 -> <init>
     4:5:androidx.savedstate.SavedStateRegistry androidx.activity.ComponentActivity.getSavedStateRegistry():646:646 -> <init>
     4:5:void androidx.appcompat.app.AppCompatActivity.initDelegate():114 -> <init>
     4:5:void androidx.appcompat.app.AppCompatActivity.<init>():93 -> <init>
     4:5:void com.getcapacitor.BridgeActivity.<init>():11 -> <init>
-    4:5:void <init>():44 -> <init>
+    4:5:void <init>():47 -> <init>
     6:7:androidx.savedstate.SavedStateRegistry androidx.savedstate.SavedStateRegistryController.getSavedStateRegistry():33:33 -> <init>
     6:7:androidx.savedstate.SavedStateRegistry androidx.activity.ComponentActivity.getSavedStateRegistry():646 -> <init>
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     6:7:void androidx.appcompat.app.AppCompatActivity.initDelegate():114 -> <init>
     6:7:void androidx.appcompat.app.AppCompatActivity.<init>():93 -> <init>
     6:7:void com.getcapacitor.BridgeActivity.<init>():11 -> <init>
-    6:7:void <init>():44 -> <init>
+    6:7:void <init>():47 -> <init>
     8:17:void androidx.appcompat.app.AppCompatActivity.initDelegate():114:114 -> <init>
     8:17:void androidx.appcompat.app.AppCompatActivity.<init>():93 -> <init>
     8:17:void com.getcapacitor.BridgeActivity.<init>():11 -> <init>
-    8:17:void <init>():44 -> <init>
+    8:17:void <init>():47 -> <init>
     18:26:void androidx.appcompat.app.AppCompatActivity.initDelegate():124:124 -> <init>
     18:26:void androidx.appcompat.app.AppCompatActivity.<init>():93 -> <init>
     18:26:void com.getcapacitor.BridgeActivity.<init>():11 -> <init>
-    18:26:void <init>():44 -> <init>
+    18:26:void <init>():47 -> <init>
     27:28:void com.getcapacitor.BridgeActivity.<init>():17:17 -> <init>
-    27:28:void <init>():44 -> <init>
+    27:28:void <init>():47 -> <init>
     29:35:void com.getcapacitor.BridgeActivity.<init>():18:18 -> <init>
-    29:35:void <init>():44 -> <init>
+    29:35:void <init>():47 -> <init>
     36:43:void com.getcapacitor.BridgeActivity.<init>():19:19 -> <init>
-    36:43:void <init>():44 -> <init>
-    1:3:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):23:23 -> A
-    4:9:com.getcapacitor.Bridge$Builder com.getcapacitor.Bridge$Builder.setInstanceState(android.os.Bundle):1519:1519 -> A
-    4:9:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):24 -> A
+    36:43:void <init>():47 -> <init>
+    1:5:void com.getcapacitor.BridgeActivity.onActivityResult(int,int,android.content.Intent):188:188 -> A
+    6:11:boolean com.getcapacitor.Bridge.onActivityResult(int,int,android.content.Intent):1270:1270 -> A
+    6:11:void com.getcapacitor.BridgeActivity.onActivityResult(int,int,android.content.Intent):192 -> A
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    10:19:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):25:25 -> A
-    20:25:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):26:26 -> A
-    26:28:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):28:28 -> A
-    29:39:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):34:34 -> A
-    40:43:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):37:37 -> A
-    44:58:com.getcapacitor.Bridge$Builder com.getcapacitor.Bridge$Builder.addPlugins(java.util.List):1539:1539 -> A
-    44:58:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):37 -> A
-    59:64:com.getcapacitor.Bridge$Builder com.getcapacitor.Bridge$Builder.addPlugin(java.lang.Class):1534:1534 -> A
-    59:64:com.getcapacitor.Bridge$Builder com.getcapacitor.Bridge$Builder.addPlugins(java.util.List):1540 -> A
-    59:64:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):37 -> A
-    65:69:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):39:39 -> A
-    70:74:void com.getcapacitor.BridgeActivity.load():46:46 -> A
-    70:74:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    75:90:com.getcapacitor.Bridge$Builder com.getcapacitor.Bridge$Builder.addPlugins(java.util.List):1539:1539 -> A
-    75:90:void com.getcapacitor.BridgeActivity.load():48 -> A
-    75:90:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    91:94:com.getcapacitor.Bridge$Builder com.getcapacitor.Bridge$Builder.addPlugin(java.lang.Class):1534:1534 -> A
-    91:94:com.getcapacitor.Bridge$Builder com.getcapacitor.Bridge$Builder.addPlugins(java.util.List):1540 -> A
-    91:94:void com.getcapacitor.BridgeActivity.load():48 -> A
-    91:94:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    95:99:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1581:1581 -> A
-    95:99:void com.getcapacitor.BridgeActivity.load():48 -> A
-    95:99:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    100:108:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1582:1582 -> A
-    100:108:void com.getcapacitor.BridgeActivity.load():48 -> A
-    100:108:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    109:113:org.apache.cordova.CordovaPreferences org.apache.cordova.ConfigXmlParser.getPreferences():45:45 -> A
-    109:113:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1583 -> A
-    109:113:void com.getcapacitor.BridgeActivity.load():48 -> A
-    109:113:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    114:123:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1584:1584 -> A
-    114:123:void com.getcapacitor.BridgeActivity.load():48 -> A
-    114:123:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    124:128:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1587:1587 -> A
-    124:128:void com.getcapacitor.BridgeActivity.load():48 -> A
-    124:128:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    129:132:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1588:1588 -> A
-    129:132:void com.getcapacitor.BridgeActivity.load():48 -> A
-    129:132:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    133:138:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1589:1589 -> A
-    133:138:void com.getcapacitor.BridgeActivity.load():48 -> A
-    133:138:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    139:145:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1592:1592 -> A
-    139:145:void com.getcapacitor.BridgeActivity.load():48 -> A
-    139:145:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    146:154:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1593:1593 -> A
-    146:154:void com.getcapacitor.BridgeActivity.load():48 -> A
-    146:154:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    155:159:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1594:1594 -> A
-    155:159:void com.getcapacitor.BridgeActivity.load():48 -> A
-    155:159:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    160:163:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1595:1595 -> A
-    160:163:void com.getcapacitor.BridgeActivity.load():48 -> A
-    160:163:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    164:166:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1596:1596 -> A
-    164:166:void com.getcapacitor.BridgeActivity.load():48 -> A
-    164:166:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    167:175:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1599:1599 -> A
-    167:175:void com.getcapacitor.BridgeActivity.load():48 -> A
-    167:175:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    176:181:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1612:1612 -> A
-    176:181:void com.getcapacitor.BridgeActivity.load():48 -> A
-    176:181:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    182:184:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1613:1613 -> A
-    182:184:void com.getcapacitor.BridgeActivity.load():48 -> A
-    182:184:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    185:186:void com.getcapacitor.Bridge.setCordovaWebView(org.apache.cordova.CordovaWebView):478:478 -> A
-    185:186:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1616 -> A
-    185:186:void com.getcapacitor.BridgeActivity.load():48 -> A
-    185:186:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    187:188:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1617:1617 -> A
-    187:188:void com.getcapacitor.BridgeActivity.load():48 -> A
-    187:188:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    189:190:void com.getcapacitor.Bridge.setWebViewListeners(java.util.List):1466:1466 -> A
-    189:190:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1617 -> A
-    189:190:void com.getcapacitor.BridgeActivity.load():48 -> A
-    189:190:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    191:194:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1620:1620 -> A
-    191:194:void com.getcapacitor.BridgeActivity.load():48 -> A
-    191:194:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    195:200:void com.getcapacitor.Bridge.restoreInstanceState(android.os.Bundle):1053:1053 -> A
-    195:200:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1621 -> A
-    195:200:void com.getcapacitor.BridgeActivity.load():48 -> A
-    195:200:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    201:206:void com.getcapacitor.Bridge.restoreInstanceState(android.os.Bundle):1054:1054 -> A
-    201:206:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1621 -> A
-    201:206:void com.getcapacitor.BridgeActivity.load():48 -> A
-    201:206:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    207:216:void com.getcapacitor.Bridge.restoreInstanceState(android.os.Bundle):1055:1055 -> A
-    207:216:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1621 -> A
-    207:216:void com.getcapacitor.BridgeActivity.load():48 -> A
-    207:216:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    217:218:void com.getcapacitor.Bridge.restoreInstanceState(android.os.Bundle):1061:1061 -> A
-    217:218:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1621 -> A
-    217:218:void com.getcapacitor.BridgeActivity.load():48 -> A
-    217:218:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    219:221:void com.getcapacitor.JSObject.<init>(java.lang.String):22:22 -> A
-    219:221:void com.getcapacitor.Bridge.restoreInstanceState(android.os.Bundle):1061 -> A
-    219:221:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1621 -> A
-    219:221:void com.getcapacitor.BridgeActivity.load():48 -> A
-    219:221:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    222:234:void com.getcapacitor.Bridge.restoreInstanceState(android.os.Bundle):1063:1063 -> A
-    222:234:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1621 -> A
-    222:234:void com.getcapacitor.BridgeActivity.load():48 -> A
-    222:234:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    235:239:void com.getcapacitor.Bridge.restoreInstanceState(android.os.Bundle):1071:1071 -> A
-    235:239:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1621 -> A
-    235:239:void com.getcapacitor.BridgeActivity.load():48 -> A
-    235:239:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    240:245:void com.getcapacitor.Bridge.restoreInstanceState(android.os.Bundle):1076:1076 -> A
-    240:245:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1621 -> A
-    240:245:void com.getcapacitor.BridgeActivity.load():48 -> A
-    240:245:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    246:257:com.getcapacitor.PluginHandle com.getcapacitor.Bridge.getPlugin(java.lang.String):763:763 -> A
-    246:257:void com.getcapacitor.Bridge.restoreInstanceState(android.os.Bundle):1077 -> A
-    246:257:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1621 -> A
-    246:257:void com.getcapacitor.BridgeActivity.load():48 -> A
-    246:257:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    258:259:com.getcapacitor.Plugin com.getcapacitor.PluginHandle.getInstance():91:91 -> A
-    258:259:void com.getcapacitor.Bridge.restoreInstanceState(android.os.Bundle):1079 -> A
-    258:259:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1621 -> A
-    258:259:void com.getcapacitor.BridgeActivity.load():48 -> A
-    258:259:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    260:263:void com.getcapacitor.Bridge.restoreInstanceState(android.os.Bundle):1079:1079 -> A
-    260:263:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1621 -> A
-    260:263:void com.getcapacitor.BridgeActivity.load():48 -> A
-    260:263:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    264:268:void com.getcapacitor.Bridge.restoreInstanceState(android.os.Bundle):1081:1081 -> A
-    264:268:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1621 -> A
-    264:268:void com.getcapacitor.BridgeActivity.load():48 -> A
-    264:268:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    269:270:void com.getcapacitor.BridgeActivity.load():48:48 -> A
-    269:270:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    271:278:boolean com.getcapacitor.Bridge.shouldKeepRunning():458:458 -> A
-    271:278:void com.getcapacitor.BridgeActivity.load():50 -> A
-    271:278:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    279:289:void com.getcapacitor.BridgeActivity.load():51:51 -> A
-    279:289:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> A
-    290:293:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):30:30 -> A
-    1:5:void com.getcapacitor.BridgeActivity.onRequestPermissionsResult(int,java.lang.String[],int[]):161:161 -> B
-    6:11:boolean com.getcapacitor.Bridge.onRequestPermissionsResult(int,java.lang.String[],int[]):1130:1130 -> B
-    6:11:void com.getcapacitor.BridgeActivity.onRequestPermissionsResult(int,java.lang.String[],int[]):165 -> B
+    12:16:com.getcapacitor.Plugin com.getcapacitor.PluginHandle.getInstance():91:91 -> A
+    12:16:boolean com.getcapacitor.Bridge.onActivityResult(int,int,android.content.Intent):1272 -> A
+    12:16:void com.getcapacitor.BridgeActivity.onActivityResult(int,int,android.content.Intent):192 -> A
+    17:22:boolean com.getcapacitor.Bridge.onActivityResult(int,int,android.content.Intent):1278:1278 -> A
+    17:22:void com.getcapacitor.BridgeActivity.onActivityResult(int,int,android.content.Intent):192 -> A
+    23:26:boolean com.getcapacitor.Bridge.onActivityResult(int,int,android.content.Intent):1284:1284 -> A
+    23:26:void com.getcapacitor.BridgeActivity.onActivityResult(int,int,android.content.Intent):192 -> A
+    27:28:com.getcapacitor.Plugin com.getcapacitor.PluginHandle.getInstance():91:91 -> A
+    27:28:boolean com.getcapacitor.Bridge.onActivityResult(int,int,android.content.Intent):1285 -> A
+    27:28:void com.getcapacitor.BridgeActivity.onActivityResult(int,int,android.content.Intent):192 -> A
+    29:31:boolean com.getcapacitor.Bridge.onActivityResult(int,int,android.content.Intent):1285:1285 -> A
+    29:31:void com.getcapacitor.BridgeActivity.onActivityResult(int,int,android.content.Intent):192 -> A
+    32:33:com.getcapacitor.Plugin com.getcapacitor.PluginHandle.getInstance():91:91 -> A
+    32:33:boolean com.getcapacitor.Bridge.onActivityResult(int,int,android.content.Intent):1288 -> A
+    32:33:void com.getcapacitor.BridgeActivity.onActivityResult(int,int,android.content.Intent):192 -> A
+    34:37:boolean com.getcapacitor.Bridge.onActivityResult(int,int,android.content.Intent):1288:1288 -> A
+    34:37:void com.getcapacitor.BridgeActivity.onActivityResult(int,int,android.content.Intent):192 -> A
+    38:41:boolean com.getcapacitor.Bridge.onActivityResult(int,int,android.content.Intent):1291:1291 -> A
+    38:41:void com.getcapacitor.BridgeActivity.onActivityResult(int,int,android.content.Intent):192 -> A
+    42:58:boolean com.getcapacitor.Bridge.onActivityResult(int,int,android.content.Intent):1273:1273 -> A
+    42:58:void com.getcapacitor.BridgeActivity.onActivityResult(int,int,android.content.Intent):192 -> A
+    59:66:boolean com.getcapacitor.Bridge.onActivityResult(int,int,android.content.Intent):1274:1274 -> A
+    59:66:void com.getcapacitor.BridgeActivity.onActivityResult(int,int,android.content.Intent):192 -> A
+    67:70:void com.getcapacitor.BridgeActivity.onActivityResult(int,int,android.content.Intent):193:193 -> A
+    1:3:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):23:23 -> B
+    4:9:com.getcapacitor.Bridge$Builder com.getcapacitor.Bridge$Builder.setInstanceState(android.os.Bundle):1519:1519 -> B
+    4:9:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):24 -> B
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    12:28:boolean com.getcapacitor.Bridge.onRequestPermissionsResult(int,java.lang.String[],int[]):1134:1134 -> B
-    12:28:void com.getcapacitor.BridgeActivity.onRequestPermissionsResult(int,java.lang.String[],int[]):165 -> B
-    29:36:boolean com.getcapacitor.Bridge.onRequestPermissionsResult(int,java.lang.String[],int[]):1136:1136 -> B
-    29:36:void com.getcapacitor.BridgeActivity.onRequestPermissionsResult(int,java.lang.String[],int[]):165 -> B
-    37:59:boolean com.getcapacitor.Bridge.onRequestPermissionsResult(int,java.lang.String[],int[]):1138:1138 -> B
-    37:59:void com.getcapacitor.BridgeActivity.onRequestPermissionsResult(int,java.lang.String[],int[]):165 -> B
-    60:61:com.getcapacitor.Plugin com.getcapacitor.PluginHandle.getInstance():91:91 -> B
-    60:61:boolean com.getcapacitor.Bridge.onRequestPermissionsResult(int,java.lang.String[],int[]):1145 -> B
-    60:61:void com.getcapacitor.BridgeActivity.onRequestPermissionsResult(int,java.lang.String[],int[]):165 -> B
-    62:67:boolean com.getcapacitor.Bridge.onRequestPermissionsResult(int,java.lang.String[],int[]):1145:1145 -> B
-    62:67:void com.getcapacitor.BridgeActivity.onRequestPermissionsResult(int,java.lang.String[],int[]):165 -> B
-    68:71:void com.getcapacitor.BridgeActivity.onRequestPermissionsResult(int,java.lang.String[],int[]):166:166 -> B
-    1:14:void onActivityResult(int,int,android.content.Intent):232:232 -> onActivityResult
-    15:22:void onActivityResult(int,int,android.content.Intent):234:234 -> onActivityResult
-    23:36:void onActivityResult(int,int,android.content.Intent):235:235 -> onActivityResult
-    37:41:void onActivityResult(int,int,android.content.Intent):240:240 -> onActivityResult
-    42:45:void onActivityResult(int,int,android.content.Intent):242:242 -> onActivityResult
-    46:55:void onActivityResult(int,int,android.content.Intent):243:243 -> onActivityResult
-    56:60:void onActivityResult(int,int,android.content.Intent):245:245 -> onActivityResult
-    61:63:void onActivityResult(int,int,android.content.Intent):246:246 -> onActivityResult
-    64:65:void onActivityResult(int,int,android.content.Intent):247:247 -> onActivityResult
-    66:73:void onActivityResult(int,int,android.content.Intent):248:248 -> onActivityResult
-    74:81:void onActivityResult(int,int,android.content.Intent):244:244 -> onActivityResult
-    82:90:void onActivityResult(int,int,android.content.Intent):243:243 -> onActivityResult
-    91:95:void onActivityResult(int,int,android.content.Intent):251:251 -> onActivityResult
-    96:107:void onActivityResult(int,int,android.content.Intent):252:252 -> onActivityResult
-    108:109:void onActivityResult(int,int,android.content.Intent):254:254 -> onActivityResult
-    110:121:void onActivityResult(int,int,android.content.Intent):256:256 -> onActivityResult
-    122:124:void onActivityResult(int,int,android.content.Intent):257:257 -> onActivityResult
-    125:137:void onActivityResult(int,int,android.content.Intent):258:258 -> onActivityResult
-    138:145:void onActivityResult(int,int,android.content.Intent):253:253 -> onActivityResult
-    146:154:void onActivityResult(int,int,android.content.Intent):252:252 -> onActivityResult
-    155:156:void onActivityResult(int,int,android.content.Intent):260:260 -> onActivityResult
-    157:164:void onActivityResult(int,int,android.content.Intent):261:261 -> onActivityResult
-    165:166:void onActivityResult(int,int,android.content.Intent):236:236 -> onActivityResult
-    167:172:void onActivityResult(int,int,android.content.Intent):237:237 -> onActivityResult
+    10:19:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):25:25 -> B
+    20:25:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):26:26 -> B
+    26:28:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):28:28 -> B
+    29:39:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):34:34 -> B
+    40:43:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):37:37 -> B
+    44:58:com.getcapacitor.Bridge$Builder com.getcapacitor.Bridge$Builder.addPlugins(java.util.List):1539:1539 -> B
+    44:58:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):37 -> B
+    59:64:com.getcapacitor.Bridge$Builder com.getcapacitor.Bridge$Builder.addPlugin(java.lang.Class):1534:1534 -> B
+    59:64:com.getcapacitor.Bridge$Builder com.getcapacitor.Bridge$Builder.addPlugins(java.util.List):1540 -> B
+    59:64:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):37 -> B
+    65:69:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):39:39 -> B
+    70:74:void com.getcapacitor.BridgeActivity.load():46:46 -> B
+    70:74:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    75:90:com.getcapacitor.Bridge$Builder com.getcapacitor.Bridge$Builder.addPlugins(java.util.List):1539:1539 -> B
+    75:90:void com.getcapacitor.BridgeActivity.load():48 -> B
+    75:90:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    91:94:com.getcapacitor.Bridge$Builder com.getcapacitor.Bridge$Builder.addPlugin(java.lang.Class):1534:1534 -> B
+    91:94:com.getcapacitor.Bridge$Builder com.getcapacitor.Bridge$Builder.addPlugins(java.util.List):1540 -> B
+    91:94:void com.getcapacitor.BridgeActivity.load():48 -> B
+    91:94:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    95:99:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1581:1581 -> B
+    95:99:void com.getcapacitor.BridgeActivity.load():48 -> B
+    95:99:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    100:108:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1582:1582 -> B
+    100:108:void com.getcapacitor.BridgeActivity.load():48 -> B
+    100:108:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    109:113:org.apache.cordova.CordovaPreferences org.apache.cordova.ConfigXmlParser.getPreferences():45:45 -> B
+    109:113:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1583 -> B
+    109:113:void com.getcapacitor.BridgeActivity.load():48 -> B
+    109:113:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    114:123:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1584:1584 -> B
+    114:123:void com.getcapacitor.BridgeActivity.load():48 -> B
+    114:123:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    124:128:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1587:1587 -> B
+    124:128:void com.getcapacitor.BridgeActivity.load():48 -> B
+    124:128:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    129:132:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1588:1588 -> B
+    129:132:void com.getcapacitor.BridgeActivity.load():48 -> B
+    129:132:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    133:138:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1589:1589 -> B
+    133:138:void com.getcapacitor.BridgeActivity.load():48 -> B
+    133:138:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    139:145:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1592:1592 -> B
+    139:145:void com.getcapacitor.BridgeActivity.load():48 -> B
+    139:145:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    146:154:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1593:1593 -> B
+    146:154:void com.getcapacitor.BridgeActivity.load():48 -> B
+    146:154:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    155:159:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1594:1594 -> B
+    155:159:void com.getcapacitor.BridgeActivity.load():48 -> B
+    155:159:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    160:163:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1595:1595 -> B
+    160:163:void com.getcapacitor.BridgeActivity.load():48 -> B
+    160:163:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    164:166:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1596:1596 -> B
+    164:166:void com.getcapacitor.BridgeActivity.load():48 -> B
+    164:166:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    167:175:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1599:1599 -> B
+    167:175:void com.getcapacitor.BridgeActivity.load():48 -> B
+    167:175:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    176:181:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1612:1612 -> B
+    176:181:void com.getcapacitor.BridgeActivity.load():48 -> B
+    176:181:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    182:184:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1613:1613 -> B
+    182:184:void com.getcapacitor.BridgeActivity.load():48 -> B
+    182:184:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    185:186:void com.getcapacitor.Bridge.setCordovaWebView(org.apache.cordova.CordovaWebView):478:478 -> B
+    185:186:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1616 -> B
+    185:186:void com.getcapacitor.BridgeActivity.load():48 -> B
+    185:186:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    187:188:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1617:1617 -> B
+    187:188:void com.getcapacitor.BridgeActivity.load():48 -> B
+    187:188:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    189:190:void com.getcapacitor.Bridge.setWebViewListeners(java.util.List):1466:1466 -> B
+    189:190:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1617 -> B
+    189:190:void com.getcapacitor.BridgeActivity.load():48 -> B
+    189:190:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    191:194:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1620:1620 -> B
+    191:194:void com.getcapacitor.BridgeActivity.load():48 -> B
+    191:194:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    195:200:void com.getcapacitor.Bridge.restoreInstanceState(android.os.Bundle):1053:1053 -> B
+    195:200:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1621 -> B
+    195:200:void com.getcapacitor.BridgeActivity.load():48 -> B
+    195:200:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    201:206:void com.getcapacitor.Bridge.restoreInstanceState(android.os.Bundle):1054:1054 -> B
+    201:206:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1621 -> B
+    201:206:void com.getcapacitor.BridgeActivity.load():48 -> B
+    201:206:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    207:216:void com.getcapacitor.Bridge.restoreInstanceState(android.os.Bundle):1055:1055 -> B
+    207:216:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1621 -> B
+    207:216:void com.getcapacitor.BridgeActivity.load():48 -> B
+    207:216:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    217:218:void com.getcapacitor.Bridge.restoreInstanceState(android.os.Bundle):1061:1061 -> B
+    217:218:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1621 -> B
+    217:218:void com.getcapacitor.BridgeActivity.load():48 -> B
+    217:218:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    219:221:void com.getcapacitor.JSObject.<init>(java.lang.String):22:22 -> B
+    219:221:void com.getcapacitor.Bridge.restoreInstanceState(android.os.Bundle):1061 -> B
+    219:221:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1621 -> B
+    219:221:void com.getcapacitor.BridgeActivity.load():48 -> B
+    219:221:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    222:234:void com.getcapacitor.Bridge.restoreInstanceState(android.os.Bundle):1063:1063 -> B
+    222:234:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1621 -> B
+    222:234:void com.getcapacitor.BridgeActivity.load():48 -> B
+    222:234:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    235:239:void com.getcapacitor.Bridge.restoreInstanceState(android.os.Bundle):1071:1071 -> B
+    235:239:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1621 -> B
+    235:239:void com.getcapacitor.BridgeActivity.load():48 -> B
+    235:239:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    240:245:void com.getcapacitor.Bridge.restoreInstanceState(android.os.Bundle):1076:1076 -> B
+    240:245:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1621 -> B
+    240:245:void com.getcapacitor.BridgeActivity.load():48 -> B
+    240:245:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    246:257:com.getcapacitor.PluginHandle com.getcapacitor.Bridge.getPlugin(java.lang.String):763:763 -> B
+    246:257:void com.getcapacitor.Bridge.restoreInstanceState(android.os.Bundle):1077 -> B
+    246:257:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1621 -> B
+    246:257:void com.getcapacitor.BridgeActivity.load():48 -> B
+    246:257:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    258:259:com.getcapacitor.Plugin com.getcapacitor.PluginHandle.getInstance():91:91 -> B
+    258:259:void com.getcapacitor.Bridge.restoreInstanceState(android.os.Bundle):1079 -> B
+    258:259:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1621 -> B
+    258:259:void com.getcapacitor.BridgeActivity.load():48 -> B
+    258:259:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    260:263:void com.getcapacitor.Bridge.restoreInstanceState(android.os.Bundle):1079:1079 -> B
+    260:263:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1621 -> B
+    260:263:void com.getcapacitor.BridgeActivity.load():48 -> B
+    260:263:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    264:268:void com.getcapacitor.Bridge.restoreInstanceState(android.os.Bundle):1081:1081 -> B
+    264:268:com.getcapacitor.Bridge com.getcapacitor.Bridge$Builder.create():1621 -> B
+    264:268:void com.getcapacitor.BridgeActivity.load():48 -> B
+    264:268:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    269:270:void com.getcapacitor.BridgeActivity.load():48:48 -> B
+    269:270:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    271:278:boolean com.getcapacitor.Bridge.shouldKeepRunning():458:458 -> B
+    271:278:void com.getcapacitor.BridgeActivity.load():50 -> B
+    271:278:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    279:289:void com.getcapacitor.BridgeActivity.load():51:51 -> B
+    279:289:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):42 -> B
+    290:293:void com.getcapacitor.BridgeActivity.onCreate(android.os.Bundle):30:30 -> B
+    1:3:void com.getcapacitor.BridgeActivity.onPause():105:105 -> C
+    4:7:void com.getcapacitor.BridgeActivity.onPause():106:106 -> C
+    8:9:void com.getcapacitor.Bridge.onPause():1359:1359 -> C
+    8:9:void com.getcapacitor.BridgeActivity.onPause():107 -> C
+      # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
+    10:29:void com.getcapacitor.Bridge.onPause():1359:1359 -> C
+    10:29:void com.getcapacitor.BridgeActivity.onPause():107 -> C
+    30:31:com.getcapacitor.Plugin com.getcapacitor.PluginHandle.getInstance():91:91 -> C
+    30:31:void com.getcapacitor.Bridge.onPause():1360 -> C
+      # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
+    30:31:void com.getcapacitor.BridgeActivity.onPause():107 -> C
+    32:35:void com.getcapacitor.Bridge.onPause():1360:1360 -> C
+    32:35:void com.getcapacitor.BridgeActivity.onPause():107 -> C
+    36:39:void com.getcapacitor.Bridge.onPause():1363:1363 -> C
+    36:39:void com.getcapacitor.BridgeActivity.onPause():107 -> C
+    40:50:boolean com.getcapacitor.Bridge.shouldKeepRunning():458:458 -> C
+    40:50:void com.getcapacitor.Bridge.onPause():1364 -> C
+    40:50:void com.getcapacitor.BridgeActivity.onPause():107 -> C
+    51:60:void com.getcapacitor.Bridge.onPause():1364:1364 -> C
+    51:60:void com.getcapacitor.BridgeActivity.onPause():107 -> C
+    61:65:void com.getcapacitor.Bridge.onPause():1365:1365 -> C
+    61:65:void com.getcapacitor.BridgeActivity.onPause():107 -> C
+    66:71:void com.getcapacitor.BridgeActivity.onPause():108:108 -> C
+    1:5:void com.getcapacitor.BridgeActivity.onRequestPermissionsResult(int,java.lang.String[],int[]):161:161 -> D
+    6:11:boolean com.getcapacitor.Bridge.onRequestPermissionsResult(int,java.lang.String[],int[]):1130:1130 -> D
+    6:11:void com.getcapacitor.BridgeActivity.onRequestPermissionsResult(int,java.lang.String[],int[]):165 -> D
+      # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
+    12:28:boolean com.getcapacitor.Bridge.onRequestPermissionsResult(int,java.lang.String[],int[]):1134:1134 -> D
+    12:28:void com.getcapacitor.BridgeActivity.onRequestPermissionsResult(int,java.lang.String[],int[]):165 -> D
+    29:36:boolean com.getcapacitor.Bridge.onRequestPermissionsResult(int,java.lang.String[],int[]):1136:1136 -> D
+    29:36:void com.getcapacitor.BridgeActivity.onRequestPermissionsResult(int,java.lang.String[],int[]):165 -> D
+    37:59:boolean com.getcapacitor.Bridge.onRequestPermissionsResult(int,java.lang.String[],int[]):1138:1138 -> D
+    37:59:void com.getcapacitor.BridgeActivity.onRequestPermissionsResult(int,java.lang.String[],int[]):165 -> D
+    60:61:com.getcapacitor.Plugin com.getcapacitor.PluginHandle.getInstance():91:91 -> D
+    60:61:boolean com.getcapacitor.Bridge.onRequestPermissionsResult(int,java.lang.String[],int[]):1145 -> D
+    60:61:void com.getcapacitor.BridgeActivity.onRequestPermissionsResult(int,java.lang.String[],int[]):165 -> D
+    62:67:boolean com.getcapacitor.Bridge.onRequestPermissionsResult(int,java.lang.String[],int[]):1145:1145 -> D
+    62:67:void com.getcapacitor.BridgeActivity.onRequestPermissionsResult(int,java.lang.String[],int[]):165 -> D
+    68:71:void com.getcapacitor.BridgeActivity.onRequestPermissionsResult(int,java.lang.String[],int[]):166:166 -> D
+    1:3:void com.getcapacitor.BridgeActivity.onResume():95:95 -> E
+    4:7:void com.getcapacitor.BridgeActivity.onResume():96:96 -> E
+    8:9:com.getcapacitor.App com.getcapacitor.Bridge.getApp():258:258 -> E
+    8:9:void com.getcapacitor.BridgeActivity.onResume():97 -> E
+      # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
+    10:12:void com.getcapacitor.BridgeActivity.onResume():97:97 -> E
+    13:14:void com.getcapacitor.BridgeActivity.onResume():98:98 -> E
+    15:16:void com.getcapacitor.Bridge.onResume():1346:1346 -> E
+    15:16:void com.getcapacitor.BridgeActivity.onResume():98 -> E
+      # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
+    17:36:void com.getcapacitor.Bridge.onResume():1346:1346 -> E
+    17:36:void com.getcapacitor.BridgeActivity.onResume():98 -> E
+    37:38:com.getcapacitor.Plugin com.getcapacitor.PluginHandle.getInstance():91:91 -> E
+    37:38:void com.getcapacitor.Bridge.onResume():1347 -> E
+      # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
+    37:38:void com.getcapacitor.BridgeActivity.onResume():98 -> E
+    39:42:void com.getcapacitor.Bridge.onResume():1347:1347 -> E
+    39:42:void com.getcapacitor.BridgeActivity.onResume():98 -> E
+    43:46:void com.getcapacitor.Bridge.onResume():1350:1350 -> E
+    43:46:void com.getcapacitor.BridgeActivity.onResume():98 -> E
+    47:55:boolean com.getcapacitor.Bridge.shouldKeepRunning():458:458 -> E
+    47:55:void com.getcapacitor.Bridge.onResume():1351 -> E
+    47:55:void com.getcapacitor.BridgeActivity.onResume():98 -> E
+    56:58:void com.getcapacitor.Bridge.onResume():1351:1351 -> E
+    56:58:void com.getcapacitor.BridgeActivity.onResume():98 -> E
+    59:64:void com.getcapacitor.BridgeActivity.onResume():99:99 -> E
+    1:14:void onActivityResult(int,int,android.content.Intent):272:272 -> onActivityResult
+    15:22:void onActivityResult(int,int,android.content.Intent):274:274 -> onActivityResult
+    23:36:void onActivityResult(int,int,android.content.Intent):275:275 -> onActivityResult
+    37:41:void onActivityResult(int,int,android.content.Intent):280:280 -> onActivityResult
+    42:45:void onActivityResult(int,int,android.content.Intent):282:282 -> onActivityResult
+    46:55:void onActivityResult(int,int,android.content.Intent):283:283 -> onActivityResult
+    56:60:void onActivityResult(int,int,android.content.Intent):285:285 -> onActivityResult
+    61:63:void onActivityResult(int,int,android.content.Intent):286:286 -> onActivityResult
+    64:65:void onActivityResult(int,int,android.content.Intent):287:287 -> onActivityResult
+    66:73:void onActivityResult(int,int,android.content.Intent):288:288 -> onActivityResult
+    74:81:void onActivityResult(int,int,android.content.Intent):284:284 -> onActivityResult
+    82:90:void onActivityResult(int,int,android.content.Intent):283:283 -> onActivityResult
+    91:95:void onActivityResult(int,int,android.content.Intent):291:291 -> onActivityResult
+    96:107:void onActivityResult(int,int,android.content.Intent):292:292 -> onActivityResult
+    108:109:void onActivityResult(int,int,android.content.Intent):294:294 -> onActivityResult
+    110:121:void onActivityResult(int,int,android.content.Intent):296:296 -> onActivityResult
+    122:124:void onActivityResult(int,int,android.content.Intent):297:297 -> onActivityResult
+    125:137:void onActivityResult(int,int,android.content.Intent):298:298 -> onActivityResult
+    138:145:void onActivityResult(int,int,android.content.Intent):293:293 -> onActivityResult
+    146:154:void onActivityResult(int,int,android.content.Intent):292:292 -> onActivityResult
+    155:156:void onActivityResult(int,int,android.content.Intent):300:300 -> onActivityResult
+    157:164:void onActivityResult(int,int,android.content.Intent):301:301 -> onActivityResult
+    165:166:void onActivityResult(int,int,android.content.Intent):276:276 -> onActivityResult
+    167:172:void onActivityResult(int,int,android.content.Intent):277:277 -> onActivityResult
     1:3:void com.getcapacitor.BridgeActivity.onConfigurationChanged(android.content.res.Configuration):210:210 -> onConfigurationChanged
     4:8:void com.getcapacitor.BridgeActivity.onConfigurationChanged(android.content.res.Configuration):212:212 -> onConfigurationChanged
     9:10:void com.getcapacitor.Bridge.onConfigurationChanged(android.content.res.Configuration):1315:1315 -> onConfigurationChanged
@@ -59433,64 +59520,66 @@ com.actionanand.flowra.app.MainActivity -> com.actionanand.flowra.app.MainActivi
     33:37:void com.getcapacitor.Bridge.onConfigurationChanged(android.content.res.Configuration):1316:1316 -> onConfigurationChanged
     33:37:void com.getcapacitor.BridgeActivity.onConfigurationChanged(android.content.res.Configuration):216 -> onConfigurationChanged
     1:2:void com.getcapacitor.BridgeActivity.registerPlugin(java.lang.Class):55:55 -> onCreate
-    1:2:void onCreate(android.os.Bundle):56 -> onCreate
+    1:2:void onCreate(android.os.Bundle):62 -> onCreate
     3:4:com.getcapacitor.Bridge$Builder com.getcapacitor.Bridge$Builder.addPlugin(java.lang.Class):1534:1534 -> onCreate
     3:4:void com.getcapacitor.BridgeActivity.registerPlugin(java.lang.Class):55 -> onCreate
-    3:4:void onCreate(android.os.Bundle):56 -> onCreate
+    3:4:void onCreate(android.os.Bundle):62 -> onCreate
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(2)"]}
     5:9:com.getcapacitor.Bridge$Builder com.getcapacitor.Bridge$Builder.addPlugin(java.lang.Class):1534:1534 -> onCreate
     5:9:void com.getcapacitor.BridgeActivity.registerPlugin(java.lang.Class):55 -> onCreate
-    5:9:void onCreate(android.os.Bundle):56 -> onCreate
-    10:12:void onCreate(android.os.Bundle):57:57 -> onCreate
-    13:17:void showLaunchOverlay():266:266 -> onCreate
-    13:17:void onCreate(android.os.Bundle):58 -> onCreate
-    18:27:void showLaunchOverlay():267:267 -> onCreate
-    18:27:void onCreate(android.os.Bundle):58 -> onCreate
-    28:30:void showLaunchOverlay():268:268 -> onCreate
-    28:30:void onCreate(android.os.Bundle):58 -> onCreate
-    31:38:void showLaunchOverlay():269:269 -> onCreate
-    31:38:void onCreate(android.os.Bundle):58 -> onCreate
-    39:41:void showLaunchOverlay():270:270 -> onCreate
-    39:41:void onCreate(android.os.Bundle):58 -> onCreate
-    42:48:void showLaunchOverlay():271:271 -> onCreate
-    42:48:void onCreate(android.os.Bundle):58 -> onCreate
-    49:52:void showLaunchOverlay():272:272 -> onCreate
-    49:52:void onCreate(android.os.Bundle):58 -> onCreate
-    53:55:void showLaunchOverlay():273:273 -> onCreate
-    53:55:void onCreate(android.os.Bundle):58 -> onCreate
-    56:60:void showLaunchOverlay():274:274 -> onCreate
-    56:60:void onCreate(android.os.Bundle):58 -> onCreate
-    61:63:void showLaunchOverlay():275:275 -> onCreate
-    61:63:void onCreate(android.os.Bundle):58 -> onCreate
-    64:72:void showLaunchOverlay():276:276 -> onCreate
-    64:72:void onCreate(android.os.Bundle):58 -> onCreate
-    73:76:void showLaunchOverlay():277:277 -> onCreate
-    73:76:void onCreate(android.os.Bundle):58 -> onCreate
-    77:84:void showLaunchOverlay():278:278 -> onCreate
-    77:84:void onCreate(android.os.Bundle):58 -> onCreate
-    85:101:void showLaunchOverlay():279:279 -> onCreate
-    85:101:void onCreate(android.os.Bundle):58 -> onCreate
-    102:103:void showLaunchOverlay():280:280 -> onCreate
-    102:103:void onCreate(android.os.Bundle):58 -> onCreate
-    104:106:void showLaunchOverlay():281:281 -> onCreate
-    104:106:void onCreate(android.os.Bundle):58 -> onCreate
-    107:115:void showLaunchOverlay():282:282 -> onCreate
-    107:115:void onCreate(android.os.Bundle):58 -> onCreate
-    116:117:void showLaunchOverlay():286:286 -> onCreate
-    116:117:void onCreate(android.os.Bundle):58 -> onCreate
-    118:119:com.getcapacitor.Bridge com.getcapacitor.BridgeActivity.getBridge():63:63 -> onCreate
-    118:119:void onCreate(android.os.Bundle):59 -> onCreate
-    120:121:android.webkit.WebView com.getcapacitor.Bridge.getWebView():512:512 -> onCreate
-    120:121:void onCreate(android.os.Bundle):59 -> onCreate
+    5:9:void onCreate(android.os.Bundle):62 -> onCreate
+    10:12:void onCreate(android.os.Bundle):63:63 -> onCreate
+    13:34:void onCreate(android.os.Bundle):64:64 -> onCreate
+    35:39:void showLaunchOverlay():306:306 -> onCreate
+    35:39:void onCreate(android.os.Bundle):66 -> onCreate
+    40:48:void showLaunchOverlay():307:307 -> onCreate
+    40:48:void onCreate(android.os.Bundle):66 -> onCreate
+    49:51:void showLaunchOverlay():308:308 -> onCreate
+    49:51:void onCreate(android.os.Bundle):66 -> onCreate
+    52:59:void showLaunchOverlay():309:309 -> onCreate
+    52:59:void onCreate(android.os.Bundle):66 -> onCreate
+    60:62:void showLaunchOverlay():310:310 -> onCreate
+    60:62:void onCreate(android.os.Bundle):66 -> onCreate
+    63:69:void showLaunchOverlay():311:311 -> onCreate
+    63:69:void onCreate(android.os.Bundle):66 -> onCreate
+    70:73:void showLaunchOverlay():312:312 -> onCreate
+    70:73:void onCreate(android.os.Bundle):66 -> onCreate
+    74:76:void showLaunchOverlay():313:313 -> onCreate
+    74:76:void onCreate(android.os.Bundle):66 -> onCreate
+    77:81:void showLaunchOverlay():314:314 -> onCreate
+    77:81:void onCreate(android.os.Bundle):66 -> onCreate
+    82:84:void showLaunchOverlay():315:315 -> onCreate
+    82:84:void onCreate(android.os.Bundle):66 -> onCreate
+    85:93:void showLaunchOverlay():316:316 -> onCreate
+    85:93:void onCreate(android.os.Bundle):66 -> onCreate
+    94:97:void showLaunchOverlay():317:317 -> onCreate
+    94:97:void onCreate(android.os.Bundle):66 -> onCreate
+    98:105:void showLaunchOverlay():318:318 -> onCreate
+    98:105:void onCreate(android.os.Bundle):66 -> onCreate
+    106:122:void showLaunchOverlay():319:319 -> onCreate
+    106:122:void onCreate(android.os.Bundle):66 -> onCreate
+    123:124:void showLaunchOverlay():320:320 -> onCreate
+    123:124:void onCreate(android.os.Bundle):66 -> onCreate
+    125:127:void showLaunchOverlay():321:321 -> onCreate
+    125:127:void onCreate(android.os.Bundle):66 -> onCreate
+    128:136:void showLaunchOverlay():322:322 -> onCreate
+    128:136:void onCreate(android.os.Bundle):66 -> onCreate
+    137:138:void showLaunchOverlay():326:326 -> onCreate
+    137:138:void onCreate(android.os.Bundle):66 -> onCreate
+    139:140:com.getcapacitor.Bridge com.getcapacitor.BridgeActivity.getBridge():63:63 -> onCreate
+    139:140:void onCreate(android.os.Bundle):67 -> onCreate
+    141:142:android.webkit.WebView com.getcapacitor.Bridge.getWebView():512:512 -> onCreate
+    141:142:void onCreate(android.os.Bundle):67 -> onCreate
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    122:128:void onCreate(android.os.Bundle):59:59 -> onCreate
-    129:130:com.getcapacitor.Bridge com.getcapacitor.BridgeActivity.getBridge():63:63 -> onCreate
-    129:130:void onCreate(android.os.Bundle):60 -> onCreate
-    131:132:android.webkit.WebView com.getcapacitor.Bridge.getWebView():512:512 -> onCreate
-    131:132:void onCreate(android.os.Bundle):60 -> onCreate
+    143:158:void onCreate(android.os.Bundle):67:67 -> onCreate
+    159:160:com.getcapacitor.Bridge com.getcapacitor.BridgeActivity.getBridge():63:63 -> onCreate
+    159:160:void onCreate(android.os.Bundle):68 -> onCreate
+    161:162:android.webkit.WebView com.getcapacitor.Bridge.getWebView():512:512 -> onCreate
+    161:162:void onCreate(android.os.Bundle):68 -> onCreate
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    133:142:void onCreate(android.os.Bundle):60:60 -> onCreate
-    143:152:void onCreate(android.os.Bundle):61:61 -> onCreate
+    163:172:void onCreate(android.os.Bundle):68:68 -> onCreate
+    173:177:void onCreate(android.os.Bundle):69:69 -> onCreate
+    178:187:void onCreate(android.os.Bundle):70:70 -> onCreate
     1:3:void com.getcapacitor.BridgeActivity.onDestroy():128:128 -> onDestroy
     4:7:void com.getcapacitor.BridgeActivity.onDestroy():129:129 -> onDestroy
     8:9:void com.getcapacitor.Bridge.onDestroy():1386:1386 -> onDestroy
@@ -59537,34 +59626,39 @@ com.actionanand.flowra.app.MainActivity -> com.actionanand.flowra.app.MainActivi
     36:39:void com.getcapacitor.BridgeActivity.onNewIntent(android.content.Intent):205 -> onNewIntent
     40:43:void com.getcapacitor.Bridge.onNewIntent(android.content.Intent):1306:1306 -> onNewIntent
     40:43:void com.getcapacitor.BridgeActivity.onNewIntent(android.content.Intent):205 -> onNewIntent
-    1:3:void com.getcapacitor.BridgeActivity.onPause():105:105 -> onPause
-    4:7:void com.getcapacitor.BridgeActivity.onPause():106:106 -> onPause
-    8:9:void com.getcapacitor.Bridge.onPause():1359:1359 -> onPause
-    8:9:void com.getcapacitor.BridgeActivity.onPause():107 -> onPause
-      # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    10:29:void com.getcapacitor.Bridge.onPause():1359:1359 -> onPause
-    10:29:void com.getcapacitor.BridgeActivity.onPause():107 -> onPause
-    30:31:com.getcapacitor.Plugin com.getcapacitor.PluginHandle.getInstance():91:91 -> onPause
-    30:31:void com.getcapacitor.Bridge.onPause():1360 -> onPause
-      # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    30:31:void com.getcapacitor.BridgeActivity.onPause():107 -> onPause
-    32:35:void com.getcapacitor.Bridge.onPause():1360:1360 -> onPause
-    32:35:void com.getcapacitor.BridgeActivity.onPause():107 -> onPause
-    36:39:void com.getcapacitor.Bridge.onPause():1363:1363 -> onPause
-    36:39:void com.getcapacitor.BridgeActivity.onPause():107 -> onPause
-    40:50:boolean com.getcapacitor.Bridge.shouldKeepRunning():458:458 -> onPause
-    40:50:void com.getcapacitor.Bridge.onPause():1364 -> onPause
-    40:50:void com.getcapacitor.BridgeActivity.onPause():107 -> onPause
-    51:60:void com.getcapacitor.Bridge.onPause():1364:1364 -> onPause
-    51:60:void com.getcapacitor.BridgeActivity.onPause():107 -> onPause
-    61:65:void com.getcapacitor.Bridge.onPause():1365:1365 -> onPause
-    61:65:void com.getcapacitor.BridgeActivity.onPause():107 -> onPause
-    66:71:void com.getcapacitor.BridgeActivity.onPause():108:108 -> onPause
-    5:16:void onRequestPermissionsResult(int,java.lang.String[],int[]):217:217 -> onRequestPermissionsResult
-    17:21:void onRequestPermissionsResult(int,java.lang.String[],int[]):219:219 -> onRequestPermissionsResult
-    22:28:void onRequestPermissionsResult(int,java.lang.String[],int[]):223:223 -> onRequestPermissionsResult
-    29:34:void onRequestPermissionsResult(int,java.lang.String[],int[]):220:220 -> onRequestPermissionsResult
-    35:38:void onRequestPermissionsResult(int,java.lang.String[],int[]):228:228 -> onRequestPermissionsResult
+    1:10:void onPause():74:74 -> onPause
+    11:21:void showRecentPreviewOverlay():340:340 -> onPause
+    11:21:void onPause():75 -> onPause
+    22:26:void showRecentPreviewOverlay():341:341 -> onPause
+    22:26:void onPause():75 -> onPause
+    27:42:void showRecentPreviewOverlay():342:342 -> onPause
+    27:42:void onPause():75 -> onPause
+    43:50:void showRecentPreviewOverlay():343:343 -> onPause
+    43:50:void onPause():75 -> onPause
+    51:53:void showRecentPreviewOverlay():344:344 -> onPause
+    51:53:void onPause():75 -> onPause
+    54:60:void showRecentPreviewOverlay():345:345 -> onPause
+    54:60:void onPause():75 -> onPause
+    61:64:void showRecentPreviewOverlay():346:346 -> onPause
+    61:64:void onPause():75 -> onPause
+    65:67:void showRecentPreviewOverlay():347:347 -> onPause
+    65:67:void onPause():75 -> onPause
+    68:84:void showRecentPreviewOverlay():348:348 -> onPause
+    68:84:void onPause():75 -> onPause
+    85:86:void showRecentPreviewOverlay():349:349 -> onPause
+    85:86:void onPause():75 -> onPause
+    87:89:void showRecentPreviewOverlay():350:350 -> onPause
+    87:89:void onPause():75 -> onPause
+    90:98:void showRecentPreviewOverlay():351:351 -> onPause
+    90:98:void onPause():75 -> onPause
+    99:100:void showRecentPreviewOverlay():355:355 -> onPause
+    99:100:void onPause():75 -> onPause
+    101:104:void onPause():76:76 -> onPause
+    5:16:void onRequestPermissionsResult(int,java.lang.String[],int[]):257:257 -> onRequestPermissionsResult
+    17:21:void onRequestPermissionsResult(int,java.lang.String[],int[]):259:259 -> onRequestPermissionsResult
+    22:28:void onRequestPermissionsResult(int,java.lang.String[],int[]):263:263 -> onRequestPermissionsResult
+    29:34:void onRequestPermissionsResult(int,java.lang.String[],int[]):260:260 -> onRequestPermissionsResult
+    35:38:void onRequestPermissionsResult(int,java.lang.String[],int[]):268:268 -> onRequestPermissionsResult
     1:3:void com.getcapacitor.BridgeActivity.onRestart():86:86 -> onRestart
     4:7:void com.getcapacitor.BridgeActivity.onRestart():87:87 -> onRestart
     8:9:void com.getcapacitor.Bridge.onRestart():1324:1324 -> onRestart
@@ -59579,32 +59673,16 @@ com.actionanand.flowra.app.MainActivity -> com.actionanand.flowra.app.MainActivi
     32:35:void com.getcapacitor.Bridge.onRestart():1325:1325 -> onRestart
     32:35:void com.getcapacitor.BridgeActivity.onRestart():88 -> onRestart
     36:41:void com.getcapacitor.BridgeActivity.onRestart():89:89 -> onRestart
-    1:3:void com.getcapacitor.BridgeActivity.onResume():95:95 -> onResume
-    4:7:void com.getcapacitor.BridgeActivity.onResume():96:96 -> onResume
-    8:9:com.getcapacitor.App com.getcapacitor.Bridge.getApp():258:258 -> onResume
-    8:9:void com.getcapacitor.BridgeActivity.onResume():97 -> onResume
-      # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    10:12:void com.getcapacitor.BridgeActivity.onResume():97:97 -> onResume
-    13:14:void com.getcapacitor.BridgeActivity.onResume():98:98 -> onResume
-    15:16:void com.getcapacitor.Bridge.onResume():1346:1346 -> onResume
-    15:16:void com.getcapacitor.BridgeActivity.onResume():98 -> onResume
-      # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    17:36:void com.getcapacitor.Bridge.onResume():1346:1346 -> onResume
-    17:36:void com.getcapacitor.BridgeActivity.onResume():98 -> onResume
-    37:38:com.getcapacitor.Plugin com.getcapacitor.PluginHandle.getInstance():91:91 -> onResume
-    37:38:void com.getcapacitor.Bridge.onResume():1347 -> onResume
-      # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    37:38:void com.getcapacitor.BridgeActivity.onResume():98 -> onResume
-    39:42:void com.getcapacitor.Bridge.onResume():1347:1347 -> onResume
-    39:42:void com.getcapacitor.BridgeActivity.onResume():98 -> onResume
-    43:46:void com.getcapacitor.Bridge.onResume():1350:1350 -> onResume
-    43:46:void com.getcapacitor.BridgeActivity.onResume():98 -> onResume
-    47:55:boolean com.getcapacitor.Bridge.shouldKeepRunning():458:458 -> onResume
-    47:55:void com.getcapacitor.Bridge.onResume():1351 -> onResume
-    47:55:void com.getcapacitor.BridgeActivity.onResume():98 -> onResume
-    56:58:void com.getcapacitor.Bridge.onResume():1351:1351 -> onResume
-    56:58:void com.getcapacitor.BridgeActivity.onResume():98 -> onResume
-    59:64:void com.getcapacitor.BridgeActivity.onResume():99:99 -> onResume
+    1:3:void onResume():80:80 -> onResume
+    4:9:void hideRecentPreviewOverlay():359:359 -> onResume
+    4:9:void onResume():81 -> onResume
+    10:11:void hideRecentPreviewOverlay():361:361 -> onResume
+    10:11:void onResume():81 -> onResume
+    12:19:void hideRecentPreviewOverlay():362:362 -> onResume
+    12:19:void onResume():81 -> onResume
+    20:28:void hideRecentPreviewOverlay():363:363 -> onResume
+    20:28:void onResume():81 -> onResume
+    29:38:void onResume():82:82 -> onResume
     1:3:void com.getcapacitor.BridgeActivity.onSaveInstanceState(android.os.Bundle):68:68 -> onSaveInstanceState
     4:7:void com.getcapacitor.BridgeActivity.onSaveInstanceState(android.os.Bundle):69:69 -> onSaveInstanceState
     8:12:void com.getcapacitor.Bridge.saveInstanceState(android.os.Bundle):1087:1087 -> onSaveInstanceState
@@ -59680,170 +59758,164 @@ com.actionanand.flowra.app.MainActivity -> com.actionanand.flowra.app.MainActivi
     62:64:void com.getcapacitor.Bridge.onStop():1378:1378 -> onStop
     62:64:void com.getcapacitor.BridgeActivity.onStop():121 -> onStop
     65:70:void com.getcapacitor.BridgeActivity.onStop():122:122 -> onStop
-    1:20:void clearBiometricState():323:323 -> s
+    1:5:void onWindowFocusChanged(boolean):86:86 -> onWindowFocusChanged
+    6:15:void onWindowFocusChanged(boolean):87:87 -> onWindowFocusChanged
+    1:20:void clearBiometricState():390:390 -> s
       # {"id":"com.android.tools.r8.residualsignature","signature":"(Lcom/actionanand/flowra/app/MainActivity;)V"}
-    21:27:void clearBiometricState():324:324 -> s
-    28:30:void clearBiometricState():325:325 -> s
-    31:40:void clearBiometricState():326:326 -> s
-    1:8:javax.crypto.SecretKey createBiometricKey():304:304 -> t
+    21:27:void clearBiometricState():391:391 -> s
+    28:30:void clearBiometricState():392:392 -> s
+    31:40:void clearBiometricState():393:393 -> s
+    1:8:javax.crypto.SecretKey createBiometricKey():371:371 -> t
       # {"id":"com.android.tools.r8.residualsignature","signature":"(Lcom/actionanand/flowra/app/MainActivity;)Ljavax/crypto/SecretKey;"}
-    9:22:javax.crypto.SecretKey createBiometricKey():305:305 -> t
-    23:32:javax.crypto.SecretKey createBiometricKey():308:308 -> t
-    33:37:javax.crypto.SecretKey createBiometricKey():309:309 -> t
-    38:41:javax.crypto.SecretKey createBiometricKey():310:310 -> t
-    42:45:javax.crypto.SecretKey createBiometricKey():311:311 -> t
-    46:51:javax.crypto.SecretKey createBiometricKey():312:312 -> t
-    52:56:javax.crypto.SecretKey createBiometricKey():313:313 -> t
-    57:59:javax.crypto.SecretKey createBiometricKey():315:315 -> t
-    60:66:javax.crypto.SecretKey createBiometricKey():317:317 -> t
-    67:71:javax.crypto.SecretKey createBiometricKey():318:318 -> t
-    1:2:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):331:331 -> u
+    9:22:javax.crypto.SecretKey createBiometricKey():372:372 -> t
+    23:32:javax.crypto.SecretKey createBiometricKey():375:375 -> t
+    33:37:javax.crypto.SecretKey createBiometricKey():376:376 -> t
+    38:41:javax.crypto.SecretKey createBiometricKey():377:377 -> t
+    42:45:javax.crypto.SecretKey createBiometricKey():378:378 -> t
+    46:51:javax.crypto.SecretKey createBiometricKey():379:379 -> t
+    52:56:javax.crypto.SecretKey createBiometricKey():380:380 -> t
+    57:59:javax.crypto.SecretKey createBiometricKey():382:382 -> t
+    60:66:javax.crypto.SecretKey createBiometricKey():384:384 -> t
+    67:71:javax.crypto.SecretKey createBiometricKey():385:385 -> t
+    1:2:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):398:398 -> u
       # {"id":"com.android.tools.r8.residualsignature","signature":"(Lcom/actionanand/flowra/app/MainActivity;Ljava/lang/String;Ljavax/crypto/Cipher;Ljava/lang/Runnable;Ljava/lang/String;)V"}
-    3:7:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):331:331 -> u
-    8:13:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):332:332 -> u
+    3:7:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):398:398 -> u
+    8:13:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):399:399 -> u
     14:19:java.util.concurrent.Executor androidx.core.content.ContextCompat.getMainExecutor(android.content.Context):687:687 -> u
-    14:19:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):336 -> u
+    14:19:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):403 -> u
     20:24:java.util.concurrent.Executor androidx.core.content.ContextCompat.getMainExecutor(android.content.Context):688:688 -> u
-    20:24:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):336 -> u
+    20:24:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):403 -> u
     25:33:java.util.concurrent.Executor androidx.core.content.ContextCompat.getMainExecutor(android.content.Context):690:690 -> u
-    25:33:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):336 -> u
+    25:33:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):403 -> u
     34:40:java.util.concurrent.Executor androidx.core.os.ExecutorCompat.create(android.os.Handler):37:37 -> u
     34:40:java.util.concurrent.Executor androidx.core.content.ContextCompat.getMainExecutor(android.content.Context):690 -> u
-    34:40:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):336 -> u
-    41:52:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):337:337 -> u
-    53:57:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):349:349 -> u
+    34:40:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):403 -> u
+    41:52:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):404:404 -> u
+    53:57:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):416:416 -> u
     58:59:androidx.biometric.BiometricPrompt$PromptInfo$Builder androidx.biometric.BiometricPrompt$PromptInfo$Builder.setTitle(java.lang.CharSequence):421:421 -> u
-    58:59:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):350 -> u
-    60:61:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):350:350 -> u
+    58:59:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):417 -> u
+    60:61:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):417:417 -> u
     62:63:androidx.biometric.BiometricPrompt$PromptInfo$Builder androidx.biometric.BiometricPrompt$PromptInfo$Builder.setSubtitle(java.lang.CharSequence):433:433 -> u
-    62:63:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):351 -> u
-    64:65:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):351:351 -> u
+    62:63:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):418 -> u
+    64:65:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):418:418 -> u
     66:69:androidx.biometric.BiometricPrompt$PromptInfo$Builder androidx.biometric.BiometricPrompt$PromptInfo$Builder.setNegativeButtonText(java.lang.CharSequence):462:462 -> u
-    66:69:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):352 -> u
+    66:69:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):419 -> u
     70:71:androidx.biometric.BiometricPrompt$PromptInfo$Builder androidx.biometric.BiometricPrompt$PromptInfo$Builder.setAllowedAuthenticators(int):555:555 -> u
-    70:71:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):353 -> u
-    72:75:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):354:354 -> u
-    76:85:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):355:355 -> u
+    70:71:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):420 -> u
+    72:75:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):421:421 -> u
+    76:85:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):422:422 -> u
     86:100:int androidx.biometric.BiometricPrompt$PromptInfo.getAllowedAuthenticators():713:713 -> u
     86:100:int androidx.biometric.AuthenticatorUtils.getConsolidatedAuthenticators(androidx.biometric.BiometricPrompt$PromptInfo,androidx.biometric.BiometricPrompt$CryptoObject):79 -> u
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
     86:100:void androidx.biometric.BiometricPrompt.authenticate(androidx.biometric.BiometricPrompt$PromptInfo,androidx.biometric.BiometricPrompt$CryptoObject):944 -> u
-    86:100:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):355 -> u
+    86:100:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):422 -> u
     101:107:void androidx.biometric.BiometricPrompt.authenticate(androidx.biometric.BiometricPrompt$PromptInfo,androidx.biometric.BiometricPrompt$CryptoObject):950:950 -> u
-    101:107:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):355 -> u
+    101:107:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):422 -> u
     108:115:void androidx.biometric.BiometricPrompt.authenticate(androidx.biometric.BiometricPrompt$PromptInfo,androidx.biometric.BiometricPrompt$CryptoObject):951:951 -> u
-    108:115:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):355 -> u
+    108:115:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):422 -> u
     116:119:void androidx.biometric.BiometricPrompt.authenticate(androidx.biometric.BiometricPrompt$PromptInfo,androidx.biometric.BiometricPrompt$CryptoObject):955:955 -> u
-    116:119:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):355 -> u
+    116:119:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):422 -> u
     120:129:void androidx.biometric.BiometricPrompt.authenticate(androidx.biometric.BiometricPrompt$PromptInfo,androidx.biometric.BiometricPrompt$CryptoObject):946:946 -> u
-    120:129:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):355 -> u
-    130:131:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):357:357 -> u
-    132:139:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):358:358 -> u
-    1:14:void dispatchNativeResult(java.lang.String,boolean,java.lang.String,java.lang.String):363:363 -> v
-    2:17:int dp(int):300:300 -> w
-    1:7:void ensureReminderNotificationChannel():64:64 -> x
-    8:18:void ensureReminderNotificationChannel():65:65 -> x
-    19:22:void ensureReminderNotificationChannel():67:67 -> x
-    23:25:void ensureReminderNotificationChannel():68:68 -> x
-    26:28:void ensureReminderNotificationChannel():69:69 -> x
-    29:32:void ensureReminderNotificationChannel():70:70 -> x
-    1:8:boolean hasNotificationPermission():206:206 -> y
-    9:19:boolean hasNotificationPermission():207:207 -> y
-    1:5:void com.getcapacitor.BridgeActivity.onActivityResult(int,int,android.content.Intent):188:188 -> z
-    6:11:boolean com.getcapacitor.Bridge.onActivityResult(int,int,android.content.Intent):1270:1270 -> z
-    6:11:void com.getcapacitor.BridgeActivity.onActivityResult(int,int,android.content.Intent):192 -> z
+    120:129:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):422 -> u
+    130:131:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):424:424 -> u
+    132:139:void showBiometricPrompt(java.lang.String,javax.crypto.Cipher,java.lang.Runnable,java.lang.String):425:425 -> u
+    1:6:void applySystemBars(boolean):444:444 -> v
+    7:15:void applySystemBars(boolean):445:445 -> v
+    16:23:void applySystemBars(boolean):446:446 -> v
+    24:30:void applySystemBars(boolean):447:447 -> v
+    31:34:com.getcapacitor.Bridge com.getcapacitor.BridgeActivity.getBridge():63:63 -> v
+    31:34:void applySystemBars(boolean):448 -> v
+    35:38:android.webkit.WebView com.getcapacitor.Bridge.getWebView():512:512 -> v
+    35:38:void applySystemBars(boolean):448 -> v
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    12:16:com.getcapacitor.Plugin com.getcapacitor.PluginHandle.getInstance():91:91 -> z
-    12:16:boolean com.getcapacitor.Bridge.onActivityResult(int,int,android.content.Intent):1272 -> z
-    12:16:void com.getcapacitor.BridgeActivity.onActivityResult(int,int,android.content.Intent):192 -> z
-    17:22:boolean com.getcapacitor.Bridge.onActivityResult(int,int,android.content.Intent):1278:1278 -> z
-    17:22:void com.getcapacitor.BridgeActivity.onActivityResult(int,int,android.content.Intent):192 -> z
-    23:26:boolean com.getcapacitor.Bridge.onActivityResult(int,int,android.content.Intent):1284:1284 -> z
-    23:26:void com.getcapacitor.BridgeActivity.onActivityResult(int,int,android.content.Intent):192 -> z
-    27:28:com.getcapacitor.Plugin com.getcapacitor.PluginHandle.getInstance():91:91 -> z
-    27:28:boolean com.getcapacitor.Bridge.onActivityResult(int,int,android.content.Intent):1285 -> z
-    27:28:void com.getcapacitor.BridgeActivity.onActivityResult(int,int,android.content.Intent):192 -> z
-    29:31:boolean com.getcapacitor.Bridge.onActivityResult(int,int,android.content.Intent):1285:1285 -> z
-    29:31:void com.getcapacitor.BridgeActivity.onActivityResult(int,int,android.content.Intent):192 -> z
-    32:33:com.getcapacitor.Plugin com.getcapacitor.PluginHandle.getInstance():91:91 -> z
-    32:33:boolean com.getcapacitor.Bridge.onActivityResult(int,int,android.content.Intent):1288 -> z
-    32:33:void com.getcapacitor.BridgeActivity.onActivityResult(int,int,android.content.Intent):192 -> z
-    34:37:boolean com.getcapacitor.Bridge.onActivityResult(int,int,android.content.Intent):1288:1288 -> z
-    34:37:void com.getcapacitor.BridgeActivity.onActivityResult(int,int,android.content.Intent):192 -> z
-    38:41:boolean com.getcapacitor.Bridge.onActivityResult(int,int,android.content.Intent):1291:1291 -> z
-    38:41:void com.getcapacitor.BridgeActivity.onActivityResult(int,int,android.content.Intent):192 -> z
-    42:58:boolean com.getcapacitor.Bridge.onActivityResult(int,int,android.content.Intent):1273:1273 -> z
-    42:58:void com.getcapacitor.BridgeActivity.onActivityResult(int,int,android.content.Intent):192 -> z
-    59:66:boolean com.getcapacitor.Bridge.onActivityResult(int,int,android.content.Intent):1274:1274 -> z
-    59:66:void com.getcapacitor.BridgeActivity.onActivityResult(int,int,android.content.Intent):192 -> z
-    67:70:void com.getcapacitor.BridgeActivity.onActivityResult(int,int,android.content.Intent):193:193 -> z
-com.actionanand.flowra.app.MainActivity$$ExternalSyntheticApiModelOutline4 -> d1.b:
+    39:41:void applySystemBars(boolean):449:449 -> v
+    42:44:void applySystemBars(boolean):450:450 -> v
+    45:47:void applySystemBars(boolean):451:451 -> v
+    48:53:void applySystemBars(boolean):452:452 -> v
+    54:56:void applySystemBars(boolean):453:453 -> v
+    57:59:void applySystemBars(boolean):454:454 -> v
+    60:67:void applySystemBars(boolean):456:456 -> v
+    68:79:void applySystemBars(boolean):458:458 -> v
+    80:83:void applySystemBars(boolean):462:462 -> v
+    84:107:void applySystemBars(boolean):470:470 -> v
+    108:111:void applySystemBars(boolean):478:478 -> v
+    1:14:void dispatchNativeResult(java.lang.String,boolean,java.lang.String,java.lang.String):430:430 -> w
+    2:17:int dp(int):367:367 -> x
+    1:7:void ensureReminderNotificationChannel():90:90 -> y
+    8:18:void ensureReminderNotificationChannel():91:91 -> y
+    19:22:void ensureReminderNotificationChannel():93:93 -> y
+    23:25:void ensureReminderNotificationChannel():94:94 -> y
+    26:28:void ensureReminderNotificationChannel():95:95 -> y
+    29:32:void ensureReminderNotificationChannel():96:96 -> y
+    1:8:boolean hasNotificationPermission():246:246 -> z
+    9:19:boolean hasNotificationPermission():247:247 -> z
+com.actionanand.flowra.app.MainActivity$$ExternalSyntheticApiModelOutline6 -> d1.b:
 # {"id":"sourceFile","fileName":"R8$$SyntheticClass"}
 # {"id":"com.android.tools.r8.synthesized"}
-    1:5:int d1.MainActivity$$ExternalSyntheticApiModelOutline4.m$6():0:0 -> A
+    1:5:int d1.MainActivity$$ExternalSyntheticApiModelOutline6.m$6():0:0 -> A
       # {"id":"com.android.tools.r8.synthesized"}
-    1:7:void d1.MainActivity$$ExternalSyntheticApiModelOutline4.m$6(android.view.WindowInsetsController):0:0 -> B
+    1:7:void d1.MainActivity$$ExternalSyntheticApiModelOutline6.m$6(android.view.WindowInsetsController):0:0 -> B
       # {"id":"com.android.tools.r8.synthesized"}
-    1:5:int d1.MainActivity$$ExternalSyntheticApiModelOutline4.m$7():0:0 -> C
+    1:5:int d1.MainActivity$$ExternalSyntheticApiModelOutline6.m$7():0:0 -> C
       # {"id":"com.android.tools.r8.synthesized"}
-    1:5:int d1.MainActivity$$ExternalSyntheticApiModelOutline4.m():0:0 -> a
+    1:5:int d1.MainActivity$$ExternalSyntheticApiModelOutline6.m():0:0 -> a
       # {"id":"com.android.tools.r8.synthesized"}
-    1:5:android.graphics.Insets d1.MainActivity$$ExternalSyntheticApiModelOutline4.m(android.view.WindowInsets,int):0:0 -> b
+    1:5:android.graphics.Insets d1.MainActivity$$ExternalSyntheticApiModelOutline6.m(android.view.WindowInsets,int):0:0 -> b
       # {"id":"com.android.tools.r8.synthesized"}
-    1:3:android.view.WindowInsets d1.MainActivity$$ExternalSyntheticApiModelOutline4.m():0:0 -> c
+    1:3:android.view.WindowInsets d1.MainActivity$$ExternalSyntheticApiModelOutline6.m():0:0 -> c
       # {"id":"com.android.tools.r8.synthesized"}
-    1:5:android.view.WindowInsetsController d1.MainActivity$$ExternalSyntheticApiModelOutline4.m(android.view.View):0:0 -> d
+    1:5:android.view.WindowInsetsController d1.MainActivity$$ExternalSyntheticApiModelOutline6.m(android.view.View):0:0 -> d
       # {"id":"com.android.tools.r8.synthesized"}
-    1:5:android.view.WindowInsetsController d1.MainActivity$$ExternalSyntheticApiModelOutline4.m(android.view.Window):0:0 -> e
+    1:5:android.view.WindowInsetsController d1.MainActivity$$ExternalSyntheticApiModelOutline6.m(android.view.Window):0:0 -> e
       # {"id":"com.android.tools.r8.synthesized"}
-    1:3:android.view.accessibility.AccessibilityNodeInfo$AccessibilityAction d1.MainActivity$$ExternalSyntheticApiModelOutline4.m():0:0 -> f
+    1:3:android.view.accessibility.AccessibilityNodeInfo$AccessibilityAction d1.MainActivity$$ExternalSyntheticApiModelOutline6.m():0:0 -> f
       # {"id":"com.android.tools.r8.synthesized"}
-    1:6:void d1.MainActivity$$ExternalSyntheticApiModelOutline4.m(android.security.keystore.KeyGenParameterSpec$Builder):0:0 -> g
+    1:6:void d1.MainActivity$$ExternalSyntheticApiModelOutline6.m(android.security.keystore.KeyGenParameterSpec$Builder):0:0 -> g
       # {"id":"com.android.tools.r8.synthesized"}
-    1:4:void d1.MainActivity$$ExternalSyntheticApiModelOutline4.m(android.view.Window,boolean):0:0 -> h
+    1:4:void d1.MainActivity$$ExternalSyntheticApiModelOutline6.m(android.view.Window,boolean):0:0 -> h
       # {"id":"com.android.tools.r8.synthesized"}
-    1:4:void d1.MainActivity$$ExternalSyntheticApiModelOutline4.m(android.view.WindowInsets$Builder,int,android.graphics.Insets):0:0 -> i
+    1:4:void d1.MainActivity$$ExternalSyntheticApiModelOutline6.m(android.view.WindowInsets$Builder,int,android.graphics.Insets):0:0 -> i
       # {"id":"com.android.tools.r8.synthesized"}
-    1:6:void d1.MainActivity$$ExternalSyntheticApiModelOutline4.m(android.view.WindowInsetsController):0:0 -> j
+    1:6:void d1.MainActivity$$ExternalSyntheticApiModelOutline6.m(android.view.WindowInsetsController):0:0 -> j
       # {"id":"com.android.tools.r8.synthesized"}
-    1:6:void d1.MainActivity$$ExternalSyntheticApiModelOutline4.m(android.view.WindowInsetsController,int):0:0 -> k
+    1:6:void d1.MainActivity$$ExternalSyntheticApiModelOutline6.m(android.view.WindowInsetsController,int):0:0 -> k
       # {"id":"com.android.tools.r8.synthesized"}
-    1:4:void d1.MainActivity$$ExternalSyntheticApiModelOutline4.m(android.view.WindowInsetsController,h0.SoftwareKeyboardControllerCompat$Impl30$$ExternalSyntheticLambda5):0:0 -> l
-      # {"id":"com.android.tools.r8.synthesized"}
-      # {"id":"com.android.tools.r8.residualsignature","signature":"(Landroid/view/WindowInsetsController;Lh0/v;)V"}
-    1:5:boolean d1.MainActivity$$ExternalSyntheticApiModelOutline4.m(android.view.WindowInsets,int):0:0 -> m
-      # {"id":"com.android.tools.r8.synthesized"}
-    1:5:int d1.MainActivity$$ExternalSyntheticApiModelOutline4.m$1():0:0 -> n
-      # {"id":"com.android.tools.r8.synthesized"}
-    1:5:void d1.MainActivity$$ExternalSyntheticApiModelOutline4.m$1(android.view.WindowInsetsController):0:0 -> o
-      # {"id":"com.android.tools.r8.synthesized"}
-    1:4:void d1.MainActivity$$ExternalSyntheticApiModelOutline4.m$1(android.view.WindowInsetsController,int):0:0 -> p
-      # {"id":"com.android.tools.r8.synthesized"}
-    1:4:void d1.MainActivity$$ExternalSyntheticApiModelOutline4.m$1(android.view.WindowInsetsController,h0.SoftwareKeyboardControllerCompat$Impl30$$ExternalSyntheticLambda5):0:0 -> q
+    1:4:void d1.MainActivity$$ExternalSyntheticApiModelOutline6.m(android.view.WindowInsetsController,h0.SoftwareKeyboardControllerCompat$Impl30$$ExternalSyntheticLambda5):0:0 -> l
       # {"id":"com.android.tools.r8.synthesized"}
       # {"id":"com.android.tools.r8.residualsignature","signature":"(Landroid/view/WindowInsetsController;Lh0/v;)V"}
-    1:5:int d1.MainActivity$$ExternalSyntheticApiModelOutline4.m$2():0:0 -> r
+    1:5:boolean d1.MainActivity$$ExternalSyntheticApiModelOutline6.m(android.view.WindowInsets,int):0:0 -> m
       # {"id":"com.android.tools.r8.synthesized"}
-    1:5:void d1.MainActivity$$ExternalSyntheticApiModelOutline4.m$2(android.view.WindowInsetsController):0:0 -> s
+    1:5:int d1.MainActivity$$ExternalSyntheticApiModelOutline6.m$1():0:0 -> n
       # {"id":"com.android.tools.r8.synthesized"}
-    1:4:void d1.MainActivity$$ExternalSyntheticApiModelOutline4.m$2(android.view.WindowInsetsController,int):0:0 -> t
+    1:5:void d1.MainActivity$$ExternalSyntheticApiModelOutline6.m$1(android.view.WindowInsetsController):0:0 -> o
       # {"id":"com.android.tools.r8.synthesized"}
-    1:5:int d1.MainActivity$$ExternalSyntheticApiModelOutline4.m$3():0:0 -> u
+    1:4:void d1.MainActivity$$ExternalSyntheticApiModelOutline6.m$1(android.view.WindowInsetsController,int):0:0 -> p
       # {"id":"com.android.tools.r8.synthesized"}
-    1:6:void d1.MainActivity$$ExternalSyntheticApiModelOutline4.m$3(android.view.WindowInsetsController):0:0 -> v
+    1:4:void d1.MainActivity$$ExternalSyntheticApiModelOutline6.m$1(android.view.WindowInsetsController,h0.SoftwareKeyboardControllerCompat$Impl30$$ExternalSyntheticLambda5):0:0 -> q
       # {"id":"com.android.tools.r8.synthesized"}
-    1:5:int d1.MainActivity$$ExternalSyntheticApiModelOutline4.m$4():0:0 -> w
+      # {"id":"com.android.tools.r8.residualsignature","signature":"(Landroid/view/WindowInsetsController;Lh0/v;)V"}
+    1:5:int d1.MainActivity$$ExternalSyntheticApiModelOutline6.m$2():0:0 -> r
       # {"id":"com.android.tools.r8.synthesized"}
-    1:7:void d1.MainActivity$$ExternalSyntheticApiModelOutline4.m$4(android.view.WindowInsetsController):0:0 -> x
+    1:5:void d1.MainActivity$$ExternalSyntheticApiModelOutline6.m$2(android.view.WindowInsetsController):0:0 -> s
       # {"id":"com.android.tools.r8.synthesized"}
-    1:5:int d1.MainActivity$$ExternalSyntheticApiModelOutline4.m$5():0:0 -> y
+    1:4:void d1.MainActivity$$ExternalSyntheticApiModelOutline6.m$2(android.view.WindowInsetsController,int):0:0 -> t
       # {"id":"com.android.tools.r8.synthesized"}
-    1:6:void d1.MainActivity$$ExternalSyntheticApiModelOutline4.m$5(android.view.WindowInsetsController):0:0 -> z
+    1:5:int d1.MainActivity$$ExternalSyntheticApiModelOutline6.m$3():0:0 -> u
       # {"id":"com.android.tools.r8.synthesized"}
-com.actionanand.flowra.app.MainActivity$$ExternalSyntheticLambda5 -> d1.c:
+    1:6:void d1.MainActivity$$ExternalSyntheticApiModelOutline6.m$3(android.view.WindowInsetsController):0:0 -> v
+      # {"id":"com.android.tools.r8.synthesized"}
+    1:5:int d1.MainActivity$$ExternalSyntheticApiModelOutline6.m$4():0:0 -> w
+      # {"id":"com.android.tools.r8.synthesized"}
+    1:7:void d1.MainActivity$$ExternalSyntheticApiModelOutline6.m$4(android.view.WindowInsetsController):0:0 -> x
+      # {"id":"com.android.tools.r8.synthesized"}
+    1:5:int d1.MainActivity$$ExternalSyntheticApiModelOutline6.m$5():0:0 -> y
+      # {"id":"com.android.tools.r8.synthesized"}
+    1:6:void d1.MainActivity$$ExternalSyntheticApiModelOutline6.m$5(android.view.WindowInsetsController):0:0 -> z
+      # {"id":"com.android.tools.r8.synthesized"}
+com.actionanand.flowra.app.MainActivity$$ExternalSyntheticLambda7 -> d1.c:
 # {"id":"sourceFile","fileName":"R8$$SyntheticClass"}
 # {"id":"com.android.tools.r8.synthesized"}
-    int d1.MainActivity$$ExternalSyntheticLambda5.$r8$classId -> b
+    int d1.MainActivity$$ExternalSyntheticLambda7.$r8$classId -> b
       # {"id":"com.android.tools.r8.synthesized"}
     boolean com.actionanand.flowra.app.MainActivity$$InternalSyntheticLambda$1$2b904990c072b9e3058629f75c805623a2601aea4a7698767ec533fb1ccd8c21$0.f$2 -> c
       # {"id":"com.android.tools.r8.synthesized"}
@@ -59859,239 +59931,257 @@ com.actionanand.flowra.app.MainActivity$$ExternalSyntheticLambda5 -> d1.c:
     java.lang.String com.actionanand.flowra.app.MainActivity$$InternalSyntheticLambda$1$2b904990c072b9e3058629f75c805623a2601aea4a7698767ec533fb1ccd8c21$0.f$4 -> g
       # {"id":"com.android.tools.r8.residualsignature","signature":"Ljava/lang/Object;"}
       # {"id":"com.android.tools.r8.synthesized"}
-    1:1:void d1.MainActivity$$ExternalSyntheticLambda5.<init>(com.actionanand.flowra.app.MainActivity,java.lang.String,boolean,java.lang.String,java.lang.String):0:0 -> <init>
+    1:1:void d1.MainActivity$$ExternalSyntheticLambda7.<init>(com.actionanand.flowra.app.MainActivity,java.lang.String,boolean,java.lang.String,java.lang.String):0:0 -> <init>
       # {"id":"com.android.tools.r8.synthesized"}
-    2:2:void d1.MainActivity$$ExternalSyntheticLambda5.<init>(g1.SplashScreen,h.AppCompatActivity,g1.SplashScreenSettings,boolean,c1.WebMessageListenerAdapter):0:0 -> <init>
+    2:2:void d1.MainActivity$$ExternalSyntheticLambda7.<init>(g1.SplashScreen,h.AppCompatActivity,g1.SplashScreenSettings,boolean,c1.WebMessageListenerAdapter):0:0 -> <init>
       # {"id":"com.android.tools.r8.synthesized"}
       # {"id":"com.android.tools.r8.residualsignature","signature":"(Lg1/f;Lh/j;Lg1/h;ZLc1/j;)V"}
     25:28:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):189:189 -> run
-    25:28:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    25:28:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
       # {"id":"com.android.tools.r8.synthesized"}
     29:32:boolean com.capacitorjs.plugins.splashscreen.SplashScreenConfig.isImmersive():83:83 -> run
     29:32:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):189 -> run
-    29:32:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    29:32:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     33:43:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):190:190 -> run
-    33:43:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    33:43:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     44:47:boolean com.capacitorjs.plugins.splashscreen.SplashScreenConfig.isFullScreen():91:91 -> run
     44:47:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):191 -> run
-    44:47:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    44:47:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     48:58:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):192:192 -> run
-    48:58:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    48:58:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     59:68:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):194:194 -> run
-    59:68:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    59:68:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     69:73:java.lang.String com.capacitorjs.plugins.splashscreen.SplashScreenConfig.getLayoutName():115:115 -> run
     69:73:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):197 -> run
-    69:73:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    69:73:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     74:77:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):198:198 -> run
-    74:77:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    74:77:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     78:79:java.lang.String com.capacitorjs.plugins.splashscreen.SplashScreenConfig.getLayoutName():115:115 -> run
     78:79:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):198 -> run
-    78:79:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    78:79:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     80:91:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):198:198 -> run
-    80:91:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    80:91:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     92:101:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):200:200 -> run
-    92:101:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    92:101:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     102:107:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):204:204 -> run
-    102:107:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    102:107:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     108:111:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):206:206 -> run
-    108:111:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    108:111:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     112:116:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):207:207 -> run
-    112:116:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    112:116:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     117:126:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):208:208 -> run
-    117:126:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    117:126:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     127:131:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):211:211 -> run
-    127:131:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    127:131:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     132:134:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):213:213 -> run
-    132:134:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    132:134:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     135:139:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):215:215 -> run
-    135:139:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    135:139:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     140:144:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):218:218 -> run
-    140:144:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    140:144:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     145:152:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):219:219 -> run
-    145:152:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    145:152:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     153:157:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):220:220 -> run
-    153:157:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    153:157:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     158:159:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):222:222 -> run
-    158:159:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    158:159:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     160:163:boolean com.capacitorjs.plugins.splashscreen.SplashScreenSettings.isAutoHide():35:35 -> run
     160:163:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):224 -> run
-    160:163:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    160:163:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     164:180:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):225:225 -> run
-    164:180:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    164:180:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     181:182:java.lang.Integer com.capacitorjs.plugins.splashscreen.SplashScreenSettings.getShowDuration():11:11 -> run
     181:182:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):231 -> run
-    181:182:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    181:182:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     183:187:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):231:231 -> run
-    183:187:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    183:187:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     188:193:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):225:225 -> run
-    188:193:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    188:193:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     194:197:void com.capacitorjs.plugins.splashscreen.SplashScreen.lambda$showDialog$4(androidx.appcompat.app.AppCompatActivity,com.capacitorjs.plugins.splashscreen.SplashScreenSettings,boolean,com.capacitorjs.plugins.splashscreen.SplashListener):235:235 -> run
-    194:197:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
-    198:207:void d1.MainActivity$$ExternalSyntheticLambda5.run():0:0 -> run
-    208:213:void com.actionanand.flowra.app.MainActivity.lambda$dispatchNativeResult$1(java.lang.String,boolean,java.lang.String,java.lang.String):364:364 -> run
-    208:213:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    194:197:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
+    198:207:void d1.MainActivity$$ExternalSyntheticLambda7.run():0:0 -> run
+    208:213:void com.actionanand.flowra.app.MainActivity.lambda$dispatchNativeResult$1(java.lang.String,boolean,java.lang.String,java.lang.String):431:431 -> run
+    208:213:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     214:217:com.getcapacitor.Bridge com.getcapacitor.BridgeActivity.getBridge():63:63 -> run
-    214:217:void com.actionanand.flowra.app.MainActivity.lambda$dispatchNativeResult$1(java.lang.String,boolean,java.lang.String,java.lang.String):364 -> run
-    214:217:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    214:217:void com.actionanand.flowra.app.MainActivity.lambda$dispatchNativeResult$1(java.lang.String,boolean,java.lang.String,java.lang.String):431 -> run
+    214:217:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     218:222:android.webkit.WebView com.getcapacitor.Bridge.getWebView():512:512 -> run
-    218:222:void com.actionanand.flowra.app.MainActivity.lambda$dispatchNativeResult$1(java.lang.String,boolean,java.lang.String,java.lang.String):364 -> run
+    218:222:void com.actionanand.flowra.app.MainActivity.lambda$dispatchNativeResult$1(java.lang.String,boolean,java.lang.String,java.lang.String):431 -> run
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    218:222:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
-    223:229:void com.actionanand.flowra.app.MainActivity.lambda$dispatchNativeResult$1(java.lang.String,boolean,java.lang.String,java.lang.String):365:365 -> run
-    223:229:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
-    230:251:void com.actionanand.flowra.app.MainActivity.lambda$dispatchNativeResult$1(java.lang.String,boolean,java.lang.String,java.lang.String):366:366 -> run
-    230:251:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
-    252:271:void com.actionanand.flowra.app.MainActivity.lambda$dispatchNativeResult$1(java.lang.String,boolean,java.lang.String,java.lang.String):368:368 -> run
-    252:271:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
-    272:287:void com.actionanand.flowra.app.MainActivity.lambda$dispatchNativeResult$1(java.lang.String,boolean,java.lang.String,java.lang.String):369:369 -> run
-    272:287:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    218:222:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
+    223:229:void com.actionanand.flowra.app.MainActivity.lambda$dispatchNativeResult$1(java.lang.String,boolean,java.lang.String,java.lang.String):432:432 -> run
+    223:229:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
+    230:251:void com.actionanand.flowra.app.MainActivity.lambda$dispatchNativeResult$1(java.lang.String,boolean,java.lang.String,java.lang.String):433:433 -> run
+    230:251:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
+    252:271:void com.actionanand.flowra.app.MainActivity.lambda$dispatchNativeResult$1(java.lang.String,boolean,java.lang.String,java.lang.String):435:435 -> run
+    252:271:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
+    272:287:void com.actionanand.flowra.app.MainActivity.lambda$dispatchNativeResult$1(java.lang.String,boolean,java.lang.String,java.lang.String):436:436 -> run
+    272:287:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     288:289:com.getcapacitor.Bridge com.getcapacitor.BridgeActivity.getBridge():63:63 -> run
-    288:289:void com.actionanand.flowra.app.MainActivity.lambda$dispatchNativeResult$1(java.lang.String,boolean,java.lang.String,java.lang.String):371 -> run
-    288:289:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
+    288:289:void com.actionanand.flowra.app.MainActivity.lambda$dispatchNativeResult$1(java.lang.String,boolean,java.lang.String,java.lang.String):438 -> run
+    288:289:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
     290:292:android.webkit.WebView com.getcapacitor.Bridge.getWebView():512:512 -> run
-    290:292:void com.actionanand.flowra.app.MainActivity.lambda$dispatchNativeResult$1(java.lang.String,boolean,java.lang.String,java.lang.String):371 -> run
+    290:292:void com.actionanand.flowra.app.MainActivity.lambda$dispatchNativeResult$1(java.lang.String,boolean,java.lang.String,java.lang.String):438 -> run
       # {"id":"com.android.tools.r8.rewriteFrame","conditions":["throws(Ljava/lang/NullPointerException;)"],"actions":["removeInnerFrames(1)"]}
-    290:292:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
-    293:296:void com.actionanand.flowra.app.MainActivity.lambda$dispatchNativeResult$1(java.lang.String,boolean,java.lang.String,java.lang.String):371:371 -> run
-    293:296:void d1.MainActivity$$ExternalSyntheticLambda5.run():0 -> run
-com.actionanand.flowra.app.MainActivity$$ExternalSyntheticLambda6 -> d1.d:
+    290:292:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
+    293:296:void com.actionanand.flowra.app.MainActivity.lambda$dispatchNativeResult$1(java.lang.String,boolean,java.lang.String,java.lang.String):438:438 -> run
+    293:296:void d1.MainActivity$$ExternalSyntheticLambda7.run():0 -> run
+com.actionanand.flowra.app.MainActivity$$ExternalSyntheticLambda8 -> d1.d:
 # {"id":"sourceFile","fileName":"R8$$SyntheticClass"}
 # {"id":"com.android.tools.r8.synthesized"}
-    int d1.MainActivity$$ExternalSyntheticLambda6.$r8$classId -> b
+    int d1.MainActivity$$ExternalSyntheticLambda8.$r8$classId -> b
       # {"id":"com.android.tools.r8.synthesized"}
     android.view.View com.actionanand.flowra.app.MainActivity$$InternalSyntheticLambda$3$5057bb1d6bb18277654b593eb5dc0e0008ddaa8325d00f676b5407b86c274832$0.f$0 -> c
       # {"id":"com.android.tools.r8.synthesized"}
-    1:8:void d1.MainActivity$$ExternalSyntheticLambda6.<init>(android.view.View,int):0:0 -> <init>
+    1:8:void d1.MainActivity$$ExternalSyntheticLambda8.<init>(android.view.View,int):0:0 -> <init>
       # {"id":"com.android.tools.r8.synthesized"}
     8:13:void androidx.core.view.SoftwareKeyboardControllerCompat$Impl20.lambda$show$0(android.view.View):133:133 -> run
-    8:13:void d1.MainActivity$$ExternalSyntheticLambda6.run():0 -> run
+    8:13:void d1.MainActivity$$ExternalSyntheticLambda8.run():0 -> run
       # {"id":"com.android.tools.r8.synthesized"}
     14:20:void androidx.core.view.SoftwareKeyboardControllerCompat$Impl20.lambda$show$0(android.view.View):134:134 -> run
-    14:20:void d1.MainActivity$$ExternalSyntheticLambda6.run():0 -> run
+    14:20:void d1.MainActivity$$ExternalSyntheticLambda8.run():0 -> run
     21:24:void androidx.core.view.SoftwareKeyboardControllerCompat$Impl20.lambda$show$0(android.view.View):135:135 -> run
-    21:24:void d1.MainActivity$$ExternalSyntheticLambda6.run():0 -> run
-    25:26:void d1.MainActivity$$ExternalSyntheticLambda6.run():0:0 -> run
-    27:34:void com.actionanand.flowra.app.MainActivity.lambda$hideLaunchOverlay$0(android.view.View):294:294 -> run
-    27:34:void d1.MainActivity$$ExternalSyntheticLambda6.run():0 -> run
-    35:44:void com.actionanand.flowra.app.MainActivity.lambda$hideLaunchOverlay$0(android.view.View):295:295 -> run
-    35:44:void d1.MainActivity$$ExternalSyntheticLambda6.run():0 -> run
+    21:24:void d1.MainActivity$$ExternalSyntheticLambda8.run():0 -> run
+    25:26:void d1.MainActivity$$ExternalSyntheticLambda8.run():0:0 -> run
+    27:34:void com.actionanand.flowra.app.MainActivity.lambda$hideLaunchOverlay$0(android.view.View):334:334 -> run
+    27:34:void d1.MainActivity$$ExternalSyntheticLambda8.run():0 -> run
+    35:44:void com.actionanand.flowra.app.MainActivity.lambda$hideLaunchOverlay$0(android.view.View):335:335 -> run
+    35:44:void d1.MainActivity$$ExternalSyntheticLambda8.run():0 -> run
 com.actionanand.flowra.app.MainActivity$1 -> d1.e:
 # {"id":"sourceFile","fileName":"MainActivity.java"}
     java.lang.Runnable val$success -> e
     java.lang.String val$action -> f
     com.actionanand.flowra.app.MainActivity this$0 -> g
     1:3:void androidx.biometric.BiometricPrompt$AuthenticationCallback.<init>():365:365 -> <init>
-    1:3:void <init>(com.actionanand.flowra.app.MainActivity,java.lang.Runnable,java.lang.String):337 -> <init>
-    4:10:void <init>(com.actionanand.flowra.app.MainActivity,java.lang.Runnable,java.lang.String):337:337 -> <init>
-    2:5:void onAuthenticationError(int,java.lang.CharSequence):345:345 -> H
+    1:3:void <init>(com.actionanand.flowra.app.MainActivity,java.lang.Runnable,java.lang.String):404 -> <init>
+    4:10:void <init>(com.actionanand.flowra.app.MainActivity,java.lang.Runnable,java.lang.String):404:404 -> <init>
+    2:5:void onAuthenticationError(int,java.lang.CharSequence):412:412 -> H
       # {"id":"com.android.tools.r8.residualsignature","signature":"(Ljava/lang/CharSequence;)V"}
-    6:18:void onAuthenticationError(int,java.lang.CharSequence):346:346 -> H
-    1:5:void onAuthenticationSucceeded(androidx.biometric.BiometricPrompt$AuthenticationResult):340:340 -> J
+    6:18:void onAuthenticationError(int,java.lang.CharSequence):413:413 -> H
+    1:5:void onAuthenticationSucceeded(androidx.biometric.BiometricPrompt$AuthenticationResult):407:407 -> J
       # {"id":"com.android.tools.r8.residualsignature","signature":"(Landroidx/biometric/t;)V"}
-    6:11:void onAuthenticationSucceeded(androidx.biometric.BiometricPrompt$AuthenticationResult):341:341 -> J
+    6:11:void onAuthenticationSucceeded(androidx.biometric.BiometricPrompt$AuthenticationResult):408:408 -> J
 com.actionanand.flowra.app.MainActivity$FlowraNativeBridge -> d1.h:
 # {"id":"sourceFile","fileName":"MainActivity.java"}
     com.actionanand.flowra.app.MainActivity this$0 -> a
-    1:6:void <init>(com.actionanand.flowra.app.MainActivity):72:72 -> <init>
-    1:12:void authenticateBiometric():142:142 -> authenticateBiometric
-    1:6:void disableBiometric():169:169 -> disableBiometric
-    1:12:void enableBiometric(java.lang.String):112:112 -> enableBiometric
-    1:8:void ensureNotificationChannel():201:201 -> ensureNotificationChannel
-    1:12:void hideSplash():74:74 -> hideSplash
+    1:6:void <init>(com.actionanand.flowra.app.MainActivity):98:98 -> <init>
+    1:12:void authenticateBiometric():182:182 -> authenticateBiometric
+    1:6:void disableBiometric():209:209 -> disableBiometric
+    1:12:void enableBiometric(java.lang.String):152:152 -> enableBiometric
+    1:8:void ensureNotificationChannel():241:241 -> ensureNotificationChannel
+    1:12:void hideSplash():100:100 -> hideSplash
     1:15:androidx.biometric.BiometricManager androidx.biometric.BiometricManager.from(android.content.Context):282:282 -> isBiometricAvailable
-    1:15:boolean isBiometricAvailable():106 -> isBiometricAvailable
-    16:25:boolean isBiometricAvailable():106:106 -> isBiometricAvailable
-    1:9:boolean notificationPermissionGranted():172:172 -> notificationPermissionGranted
-    1:12:void openBackup():93:93 -> openBackup
-    1:12:void requestNotificationPermission():176:176 -> requestNotificationPermission
-    1:12:void saveBackup(java.lang.String,java.lang.String):78:78 -> saveBackup
-    1:11:void setScreenshotProtection(boolean):102:102 -> setScreenshotProtection
-com.actionanand.flowra.app.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0 -> d1.f:
+    1:15:boolean isBiometricAvailable():146 -> isBiometricAvailable
+    16:25:boolean isBiometricAvailable():146:146 -> isBiometricAvailable
+    1:9:boolean notificationPermissionGranted():212:212 -> notificationPermissionGranted
+    1:12:void openBackup():119:119 -> openBackup
+    1:12:void requestNotificationPermission():216:216 -> requestNotificationPermission
+    1:12:void saveBackup(java.lang.String,java.lang.String):104:104 -> saveBackup
+    1:4:void setDarkMode(boolean):141:141 -> setDarkMode
+    5:14:void setDarkMode(boolean):142:142 -> setDarkMode
+    1:4:void setRecentPreviewProtection(boolean):132:132 -> setRecentPreviewProtection
+    5:14:void setRecentPreviewProtection(boolean):133:133 -> setRecentPreviewProtection
+    1:12:void setScreenshotProtection(boolean):128:128 -> setScreenshotProtection
+com.actionanand.flowra.app.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1 -> d1.f:
 # {"id":"sourceFile","fileName":"R8$$SyntheticClass"}
 # {"id":"com.android.tools.r8.synthesized"}
-    int d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.$r8$classId -> b
+    int d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.$r8$classId -> b
       # {"id":"com.android.tools.r8.synthesized"}
     com.actionanand.flowra.app.MainActivity$FlowraNativeBridge com.actionanand.flowra.app.MainActivity$FlowraNativeBridge$$InternalSyntheticLambda$1$2011f5b1442c4d9f519dfbd404bddb98f1514ff87c1fcbdc135fa3b22e3fec31$0.f$0 -> c
       # {"id":"com.android.tools.r8.residualsignature","signature":"Ld1/h;"}
       # {"id":"com.android.tools.r8.synthesized"}
-    1:8:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.<init>(d1.MainActivity$FlowraNativeBridge,int):0:0 -> <init>
+    1:8:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.<init>(d1.MainActivity$FlowraNativeBridge,int):0:0 -> <init>
       # {"id":"com.android.tools.r8.synthesized"}
       # {"id":"com.android.tools.r8.residualsignature","signature":"(Ld1/h;I)V"}
-    12:23:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$requestNotificationPermission$8():178:178 -> run
-    12:23:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
+    12:23:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$requestNotificationPermission$10():218:218 -> run
+    12:23:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
       # {"id":"com.android.tools.r8.synthesized"}
-    24:26:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$requestNotificationPermission$8():179:179 -> run
-    24:26:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-    27:35:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$requestNotificationPermission$8():180:180 -> run
-    27:35:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-    36:47:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$requestNotificationPermission$8():183:183 -> run
-    36:47:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-    48:53:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$requestNotificationPermission$8():192:192 -> run
-    48:53:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-    54:56:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$requestNotificationPermission$8():193:193 -> run
-    54:56:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-    57:60:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$requestNotificationPermission$8():194:194 -> run
-    57:60:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-    61:66:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$requestNotificationPermission$8():188:188 -> run
-    61:66:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-    67:69:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0:0 -> run
-    70:76:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$openBackup$2():94:94 -> run
-    70:76:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-    77:81:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$openBackup$2():95:95 -> run
-    77:81:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-    82:86:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$openBackup$2():96:96 -> run
-    82:86:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-    87:94:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$openBackup$2():97:97 -> run
-    87:94:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-    95:110:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$7():144:144 -> run
-    95:110:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-    111:124:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$7():145:145 -> run
-    111:124:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-    125:130:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$7():147:147 -> run
-    125:130:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-    131:133:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$7():148:148 -> run
-    131:133:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-    134:143:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$7():149:149 -> run
-    134:143:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-    144:149:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$7():151:151 -> run
-    144:149:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-    150:164:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$7():152:152 -> run
-    150:164:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-    165:176:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$7():153:153 -> run
-    165:176:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-    177:184:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$7():150:150 -> run
-    177:184:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-    185:192:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$7():146:146 -> run
-    185:192:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-    193:200:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$7():164:164 -> run
-    193:200:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-    201:202:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$hideSplash$0():74:74 -> run
-    201:202:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-    203:207:void com.actionanand.flowra.app.MainActivity.hideLaunchOverlay():290:290 -> run
-    203:207:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$hideSplash$0():74 -> run
-    203:207:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-    208:209:void com.actionanand.flowra.app.MainActivity.hideLaunchOverlay():292:292 -> run
-    208:209:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$hideSplash$0():74 -> run
-    208:209:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-    210:233:void com.actionanand.flowra.app.MainActivity.hideLaunchOverlay():293:293 -> run
-    210:233:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$hideSplash$0():74 -> run
-    210:233:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-    234:238:void com.actionanand.flowra.app.MainActivity.hideLaunchOverlay():296:296 -> run
-    234:238:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$hideSplash$0():74 -> run
-    234:238:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda0.run():0 -> run
-com.actionanand.flowra.app.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda6 -> d1.g:
+    24:26:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$requestNotificationPermission$10():219:219 -> run
+    24:26:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+    27:35:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$requestNotificationPermission$10():220:220 -> run
+    27:35:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+    36:47:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$requestNotificationPermission$10():223:223 -> run
+    36:47:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+    48:53:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$requestNotificationPermission$10():232:232 -> run
+    48:53:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+    54:56:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$requestNotificationPermission$10():233:233 -> run
+    54:56:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+    57:60:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$requestNotificationPermission$10():234:234 -> run
+    57:60:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+    61:66:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$requestNotificationPermission$10():228:228 -> run
+    61:66:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+    67:69:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0:0 -> run
+    70:76:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$openBackup$2():120:120 -> run
+    70:76:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+    77:81:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$openBackup$2():121:121 -> run
+    77:81:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+    82:86:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$openBackup$2():122:122 -> run
+    82:86:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+    87:94:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$openBackup$2():123:123 -> run
+    87:94:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+    95:110:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$9():184:184 -> run
+    95:110:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+    111:124:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$9():185:185 -> run
+    111:124:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+    125:130:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$9():187:187 -> run
+    125:130:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+    131:133:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$9():188:188 -> run
+    131:133:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+    134:143:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$9():189:189 -> run
+    134:143:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+    144:149:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$9():191:191 -> run
+    144:149:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+    150:164:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$9():192:192 -> run
+    150:164:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+    165:175:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$9():193:193 -> run
+    165:175:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+    176:183:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$9():190:190 -> run
+    176:183:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+    184:191:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$9():186:186 -> run
+    184:191:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+    192:199:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$authenticateBiometric$9():204:204 -> run
+    192:199:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+    200:201:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$hideSplash$0():100:100 -> run
+    200:201:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+    202:206:void com.actionanand.flowra.app.MainActivity.hideLaunchOverlay():330:330 -> run
+    202:206:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$hideSplash$0():100 -> run
+    202:206:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+    207:208:void com.actionanand.flowra.app.MainActivity.hideLaunchOverlay():332:332 -> run
+    207:208:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$hideSplash$0():100 -> run
+    207:208:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+    209:232:void com.actionanand.flowra.app.MainActivity.hideLaunchOverlay():333:333 -> run
+    209:232:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$hideSplash$0():100 -> run
+    209:232:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+    233:236:void com.actionanand.flowra.app.MainActivity.hideLaunchOverlay():336:336 -> run
+    233:236:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$hideSplash$0():100 -> run
+    233:236:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda1.run():0 -> run
+com.actionanand.flowra.app.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda4 -> d1.g:
 # {"id":"sourceFile","fileName":"R8$$SyntheticClass"}
 # {"id":"com.android.tools.r8.synthesized"}
-    com.actionanand.flowra.app.MainActivity$FlowraNativeBridge com.actionanand.flowra.app.MainActivity$FlowraNativeBridge$$InternalSyntheticLambda$1$e5e5e7ebe59198a78d616d5584fb82db346ce7ee32d78036a5a892e07bb24a83$0.f$0 -> b
+    int d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda4.$r8$classId -> b
+      # {"id":"com.android.tools.r8.synthesized"}
+    com.actionanand.flowra.app.MainActivity$FlowraNativeBridge com.actionanand.flowra.app.MainActivity$FlowraNativeBridge$$InternalSyntheticLambda$1$5d58863f7d46b9aa5f1e667436b351de785f06992f50a6113341196cadde5fd4$0.f$0 -> c
       # {"id":"com.android.tools.r8.residualsignature","signature":"Ld1/h;"}
       # {"id":"com.android.tools.r8.synthesized"}
-    boolean com.actionanand.flowra.app.MainActivity$FlowraNativeBridge$$InternalSyntheticLambda$1$e5e5e7ebe59198a78d616d5584fb82db346ce7ee32d78036a5a892e07bb24a83$0.f$1 -> c
+    boolean com.actionanand.flowra.app.MainActivity$FlowraNativeBridge$$InternalSyntheticLambda$1$5d58863f7d46b9aa5f1e667436b351de785f06992f50a6113341196cadde5fd4$0.f$1 -> d
       # {"id":"com.android.tools.r8.synthesized"}
-    1:8:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda6.<init>(d1.MainActivity$FlowraNativeBridge,boolean):0:0 -> <init>
+    1:10:void d1.MainActivity$FlowraNativeBridge$$ExternalSyntheticLambda4.<init>(d1.MainActivity$FlowraNativeBridge,boolean,int):0:0 -> <init>
       # {"id":"com.android.tools.r8.synthesized"}
-      # {"id":"com.android.tools.r8.residualsignature","signature":"(Ld1/h;Z)V"}
-    1:22:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$setScreenshotProtection$3(boolean):102:102 -> run
+      # {"id":"com.android.tools.r8.residualsignature","signature":"(Ld1/h;ZI)V"}
+    10:27:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$setScreenshotProtection$3(boolean):128:128 -> run
       # {"id":"com.android.tools.r8.residualsignature","signature":"()V"}
+    28:35:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$setDarkMode$5(boolean):142:142 -> run
+    36:45:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$setRecentPreviewProtection$4(boolean):134:134 -> run
+    46:50:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$setRecentPreviewProtection$4(boolean):135:135 -> run
+    51:52:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$setRecentPreviewProtection$4(boolean):136:136 -> run
+    53:58:void com.actionanand.flowra.app.MainActivity.hideRecentPreviewOverlay():359:359 -> run
+    53:58:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$setRecentPreviewProtection$4(boolean):136 -> run
+    59:60:void com.actionanand.flowra.app.MainActivity.hideRecentPreviewOverlay():361:361 -> run
+    59:60:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$setRecentPreviewProtection$4(boolean):136 -> run
+    61:68:void com.actionanand.flowra.app.MainActivity.hideRecentPreviewOverlay():362:362 -> run
+    61:68:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$setRecentPreviewProtection$4(boolean):136 -> run
+    69:78:void com.actionanand.flowra.app.MainActivity.hideRecentPreviewOverlay():363:363 -> run
+    69:78:void com.actionanand.flowra.app.MainActivity$FlowraNativeBridge.lambda$setRecentPreviewProtection$4(boolean):136 -> run
 com.capacitorjs.plugins.filesystem.DoubleUri -> e1.a:
 # {"id":"sourceFile","fileName":"FilesystemMethodOptions.kt"}
     io.ionic.libs.ionfilesystemlib.model.IONFILEUri$Unresolved fromUri -> a

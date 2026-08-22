@@ -4,6 +4,34 @@
   gap: 1rem;
   box-shadow: none;
 }
+.mobile-profile-link {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.8rem;
+  color: var(--text);
+  text-decoration: none;
+}
+.mobile-profile-link > span:first-child {
+  display: grid;
+  width: 2.8rem;
+  height: 2.8rem;
+  place-items: center;
+  border-radius: 0.9rem;
+  color: var(--primary);
+  background: var(--primary-soft);
+  font-size: 1.3rem;
+}
+.mobile-profile-link > span:nth-child(2) {
+  display: grid;
+  gap: 0.18rem;
+}
+.mobile-profile-link small {
+  color: var(--text-muted);
+}
+.mobile-profile-link > ion-icon {
+  color: var(--text-muted);
+}
 .group-title {
   display: flex;
   align-items: center;
@@ -140,12 +168,18 @@
     grid-template-columns: 1fr 1fr;
   }
   .page-heading,
+  .mobile-profile-link,
   .privacy-card {
     grid-column: 1/-1;
   }
   .backup-actions > * {
     flex: 0 1 auto;
     min-width: 11rem;
+  }
+}
+@media (min-width: 960px) {
+  .mobile-profile-link {
+    display: none;
   }
 }
 .password-backdrop {

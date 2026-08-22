@@ -166,14 +166,14 @@ export class BackupService {
   }
 
   private async replaceSnapshot(data: AppSnapshot): Promise<void> {
-    await Promise.all([
-      this.repository.replaceAll('profiles', data.profiles),
-      this.repository.replaceAll('periods', data.periods),
-      this.repository.replaceAll('daily_logs', data.dailyLogs),
-      this.repository.replaceAll('health_events', data.healthEvents),
-      this.repository.replaceAll('cycle_predictions', data.predictions),
-      this.repository.replaceAll('notification_settings', data.notificationSettings),
-      this.repository.replaceAll('app_settings', [data.appSettings]),
-    ]);
+    // Capacitor SQLite exposes one connection. Starting these transactions in
+    // parallel races the connection and fails with "Already in transaction".
+    await this.repository.replaceAll('profiles', data.profiles);
+    await this.repository.replaceAll('periods', data.periods);
+    await this.repository.replaceAll('daily_logs', data.dailyLogs);
+    await this.repository.replaceAll('health_events', data.healthEvents);
+    await this.repository.replaceAll('cycle_predictions', data.predictions);
+    await this.repository.replaceAll('notification_settings', data.notificationSettings);
+    await this.repository.replaceAll('app_settings', [data.appSettings]);
   }
 }

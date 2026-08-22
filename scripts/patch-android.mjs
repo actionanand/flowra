@@ -177,6 +177,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -189,6 +190,8 @@ import android.util.Base64;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowInsetsController;
 import android.webkit.JavascriptInterface;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -222,14 +225,37 @@ public class MainActivity extends BridgeActivity {
   private BiometricPrompt biometricPrompt;
   private byte[] pendingBackup;
   private View launchOverlay;
+  private View recentPreviewOverlay;
+  private boolean darkMode;
+  private boolean hideRecentPreview;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     registerPlugin(FlowraExportPlugin.class);
     super.onCreate(savedInstanceState);
+    darkMode = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)
+      == Configuration.UI_MODE_NIGHT_YES;
     showLaunchOverlay();
-    getBridge().getWebView().setBackgroundColor(Color.parseColor("#FFF7FB"));
+    getBridge().getWebView().setBackgroundColor(Color.parseColor(darkMode ? "#160F14" : "#FFF8FB"));
     getBridge().getWebView().addJavascriptInterface(new FlowraNativeBridge(), "FlowraNative");
+    applySystemBars(darkMode);
     if (hasNotificationPermission()) ensureReminderNotificationChannel();
+  }
+
+  @Override public void onPause() {
+    if (hideRecentPreview && Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU)
+      showRecentPreviewOverlay();
+    super.onPause();
+  }
+
+  @Override public void onResume() {
+    super.onResume();
+    hideRecentPreviewOverlay();
+    if (launchOverlay == null) applySystemBars(darkMode);
+  }
+
+  @Override public void onWindowFocusChanged(boolean hasFocus) {
+    super.onWindowFocusChanged(hasFocus);
+    if (hasFocus && launchOverlay == null) applySystemBars(darkMode);
   }
   private void ensureReminderNotificationChannel() {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return;
@@ -271,6 +297,20 @@ public class MainActivity extends BridgeActivity {
 
     @JavascriptInterface public void setScreenshotProtection(boolean enabled) {
       runOnUiThread(() -> { if (enabled) getWindow().setFlags(android.view.WindowManager.LayoutParams.FLAG_SECURE, android.view.WindowManager.LayoutParams.FLAG_SECURE); else getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_SECURE); });
+    }
+
+    @JavascriptInterface public void setRecentPreviewProtection(boolean enabled) {
+      hideRecentPreview = enabled;
+      runOnUiThread(() -> {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+          setRecentsScreenshotEnabled(!enabled);
+        if (!enabled) hideRecentPreviewOverlay();
+      });
+    }
+
+    @JavascriptInterface public void setDarkMode(boolean enabled) {
+      darkMode = enabled;
+      runOnUiThread(() -> applySystemBars(enabled));
     }
 
     @JavascriptInterface public boolean isBiometricAvailable() {
@@ -467,6 +507,33 @@ public class MainActivity extends BridgeActivity {
     }).start();
   }
 
+  private void showRecentPreviewOverlay() {
+    if (recentPreviewOverlay != null || isFinishing()) return;
+    FrameLayout overlay = new FrameLayout(this);
+    overlay.setBackgroundColor(Color.parseColor(darkMode ? "#160F14" : "#FFF8FB"));
+    ImageView icon = new ImageView(this);
+    icon.setImageResource(R.drawable.flowra_splash_logo);
+    icon.setScaleType(ImageView.ScaleType.FIT_CENTER);
+    int padding = dp(18);
+    icon.setPadding(padding, padding, padding, padding);
+    FrameLayout.LayoutParams layout = new FrameLayout.LayoutParams(dp(112), dp(112));
+    layout.gravity = Gravity.CENTER;
+    overlay.addView(icon, layout);
+    addContentView(overlay, new ViewGroup.LayoutParams(
+      ViewGroup.LayoutParams.MATCH_PARENT,
+      ViewGroup.LayoutParams.MATCH_PARENT
+    ));
+    recentPreviewOverlay = overlay;
+  }
+
+  private void hideRecentPreviewOverlay() {
+    View overlay = recentPreviewOverlay;
+    if (overlay == null) return;
+    recentPreviewOverlay = null;
+    if (overlay.getParent() instanceof ViewGroup)
+      ((ViewGroup) overlay.getParent()).removeView(overlay);
+  }
+
   private int dp(int value) {
     return Math.round(value * getResources().getDisplayMetrics().density);
   }
@@ -541,6 +608,45 @@ public class MainActivity extends BridgeActivity {
         + "}}));";
       getBridge().getWebView().evaluateJavascript(script, null);
     });
+  }
+
+  @SuppressWarnings("deprecation")
+  private void applySystemBars(boolean dark) {
+    Window window = getWindow();
+    int background = Color.parseColor(dark ? "#160F14" : "#FFF8FB");
+    window.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(background));
+    window.getDecorView().setBackgroundColor(background);
+    if (getBridge() != null && getBridge().getWebView() != null)
+      getBridge().getWebView().setBackgroundColor(background);
+    window.setStatusBarColor(background);
+    window.setNavigationBarColor(background);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+      window.setStatusBarContrastEnforced(false);
+      window.setNavigationBarContrastEnforced(false);
+    }
+    View decor = window.getDecorView();
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+      WindowInsetsController controller = decor.getWindowInsetsController();
+      if (controller != null) {
+        int appearance = dark ? 0 : WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+          | WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS;
+        controller.setSystemBarsAppearance(
+          appearance,
+          WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+            | WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+        );
+      }
+      return;
+    }
+    int flags = decor.getSystemUiVisibility();
+    flags = dark
+      ? flags & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+      : flags | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+      flags = dark
+        ? flags & ~View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+        : flags | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+    decor.setSystemUiVisibility(flags);
   }
 }
 `;

@@ -6,6 +6,8 @@ interface FlowraNativeBridge {
   saveBackup(fileName: string, base64Data: string): void;
   openBackup(): void;
   setScreenshotProtection(enabled: boolean): void;
+  setRecentPreviewProtection(enabled: boolean): void;
+  setDarkMode(enabled: boolean): void;
   isBiometricAvailable(): boolean;
   enableBiometric(secret: string): void;
   authenticateBiometric(): void;
@@ -51,6 +53,14 @@ export class NativeIntegrationService {
   }
   setScreenshotProtection(enabled: boolean): void {
     this.bridge()?.setScreenshotProtection(enabled);
+  }
+
+  setRecentPreviewProtection(enabled: boolean): void {
+    this.bridge()?.setRecentPreviewProtection(enabled);
+  }
+
+  setDarkMode(enabled: boolean): void {
+    this.bridge()?.setDarkMode(enabled);
   }
 
   enableBiometric(secret: string): Promise<void> {

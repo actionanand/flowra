@@ -84,7 +84,7 @@
     }
   </main>
   <nav class="bottom-nav" [attr.aria-label]="'app.mainNavigation' | translate">
-    @for (item of nav.slice(0, 5); track item.path) {
+    @for (item of mobileNav; track item.path) {
       <a [routerLink]="item.path" routerLinkActive="active"
         ><ion-icon [name]="item.icon" aria-hidden="true" /><span>{{
           item.label | translate
