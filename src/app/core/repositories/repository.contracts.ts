@@ -1,5 +1,5 @@
 import { InjectionToken, inject } from '@angular/core';
-import { RecordKind } from '../models/app.models';
+import { AppSnapshot, RecordKind } from '../models/app.models';
 import { PlatformRepository } from './platform.repository';
 
 export interface LocalRecordRepository {
@@ -10,6 +10,7 @@ export interface LocalRecordRepository {
     kind: RecordKind,
     values: readonly T[],
   ): Promise<void>;
+  replaceSnapshot?(snapshot: AppSnapshot): Promise<void>;
 }
 
 export const LOCAL_RECORD_REPOSITORY = new InjectionToken<LocalRecordRepository>(
