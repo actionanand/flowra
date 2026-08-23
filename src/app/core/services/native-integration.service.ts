@@ -105,11 +105,15 @@ export class NativeIntegrationService {
     const nativeWindow = this.document.defaultView;
     if (!nativeWindow) return Promise.reject(new Error('The Android bridge is unavailable.'));
     return new Promise<string>((resolve, reject) => {
+      const chunkTransfers = new Map<string, string[]>();
       const finish = (success: boolean, data: string, message: string): void => {
         globalThis.clearTimeout(timeout);
         nativeWindow.removeEventListener('flowra-native-result', handleResult);
-        if (success) resolve(data);
-        else reject(new Error(message || 'The Android request failed.'));
+        if (!success) {
+          reject(new Error(message || 'The Android request failed.'));
+          return;
+        }
+        resolve(chunkTransfers.get(data)?.join('') ?? data);
       };
       const handleResult = (event: Event): void => {
         const detail = (
@@ -118,8 +122,19 @@ export class NativeIntegrationService {
             success: boolean;
             data?: string;
             message?: string;
+            transferId?: string;
+            index?: number;
+            total?: number;
           }>
         ).detail;
+        if (detail.action === `${action}-chunk`) {
+          const transferId = detail.transferId;
+          if (!transferId) return;
+          const chunks = chunkTransfers.get(transferId) ?? [];
+          chunks[detail.index ?? chunks.length] = detail.data ?? '';
+          chunkTransfers.set(transferId, chunks);
+          return;
+        }
         if (detail.action === action)
           finish(detail.success, detail.data ?? '', detail.message ?? '');
       };
