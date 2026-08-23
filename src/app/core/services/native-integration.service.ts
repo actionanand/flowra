@@ -15,6 +15,8 @@ interface FlowraNativeBridge {
   notificationPermissionGranted(): boolean;
   requestNotificationPermission(): void;
   ensureNotificationChannel(): void;
+  scheduleReminder(id: number, title: string, body: string, atMillis: number): void;
+  cancelReminders(ids: string): void;
 }
 
 interface NativeWindow extends Window {
@@ -95,6 +97,14 @@ export class NativeIntegrationService {
 
   ensureNotificationChannel(): void {
     this.bridge()?.ensureNotificationChannel();
+  }
+
+  scheduleReminder(id: number, title: string, body: string, atMillis: number): void {
+    this.bridge()?.scheduleReminder(id, title, body, atMillis);
+  }
+
+  cancelReminders(ids: readonly number[]): void {
+    this.bridge()?.cancelReminders(ids.join(','));
   }
 
   private bridge(): FlowraNativeBridge | undefined {
