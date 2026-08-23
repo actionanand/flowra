@@ -44,6 +44,8 @@ describe('NotificationService', () => {
   };
 
   beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-08-19T08:00:00.000+05:30'));
     TestBed.configureTestingModule({});
     vi.spyOn(Capacitor, 'isNativePlatform').mockReturnValue(true);
     vi.spyOn(Capacitor, 'getPlatform').mockReturnValue('android');
@@ -53,7 +55,10 @@ describe('NotificationService', () => {
     vi.spyOn(LocalNotifications, 'cancel').mockResolvedValue(undefined);
   });
 
-  afterEach(() => vi.restoreAllMocks());
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.restoreAllMocks();
+  });
 
   it('uses the guarded native Android permission bridge', async () => {
     const native = TestBed.inject(NativeIntegrationService);
@@ -98,6 +103,7 @@ describe('NotificationService', () => {
     expect(at?.getMonth()).toBe(7);
     expect(at?.getDate()).toBe(20);
     expect(at?.getHours()).toBe(9);
+    expect(notification.isExactNotification).toBe(false);
     expect(notification.title).toBe('Flowra');
     expect(notification.body).toBe('Upcoming health reminder');
     expect(TestBed.inject(NativeIntegrationService).ensureNotificationChannel).toHaveBeenCalled();
