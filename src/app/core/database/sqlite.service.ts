@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CapacitorSQLite, SQLiteConnection, SQLiteDBConnection } from '@capacitor-community/sqlite';
-import { RecordKind } from '../models/app.models';
+import { AppSnapshot, RecordKind } from '../models/app.models';
 import type { LocalRecordRepository } from '../repositories/repository.contracts';
 
 const TABLES: readonly RecordKind[] = [
@@ -12,6 +12,8 @@ const TABLES: readonly RecordKind[] = [
   'notification_settings',
   'app_settings',
 ];
+
+type SnapshotTable = Record<RecordKind, readonly { readonly id: string }[]>;
 
 @Injectable({ providedIn: 'root' })
 export class SqliteService implements LocalRecordRepository {
@@ -46,14 +48,25 @@ export class SqliteService implements LocalRecordRepository {
     await this.enqueueWrite(async (database) => {
       const transaction = await database.isTransactionActive();
       if (transaction.result) await database.rollbackTransaction();
-      const updatedAt = new Date().toISOString();
-      await database.executeTransaction([
-        { statement: `DELETE FROM ${kind}` },
-        ...values.map((value) => ({
-          statement: `INSERT INTO ${kind} (id, payload, updated_at) VALUES (?, ?, ?)`,
-          values: [value.id, JSON.stringify(value), updatedAt],
-        })),
-      ]);
+      await database.executeTransaction(this.replaceTasks({ [kind]: values }));
+    });
+  }
+
+  async replaceSnapshot(snapshot: AppSnapshot): Promise<void> {
+    await this.enqueueWrite(async (database) => {
+      const transaction = await database.isTransactionActive();
+      if (transaction.result) await database.rollbackTransaction();
+      await database.executeTransaction(
+        this.replaceTasks({
+          profiles: snapshot.profiles,
+          periods: snapshot.periods,
+          daily_logs: snapshot.dailyLogs,
+          health_events: snapshot.healthEvents,
+          cycle_predictions: snapshot.predictions,
+          notification_settings: snapshot.notificationSettings,
+          app_settings: [snapshot.appSettings],
+        }),
+      );
     });
   }
 
@@ -61,6 +74,21 @@ export class SqliteService implements LocalRecordRepository {
     const pending = this.writeQueue.then(async () => operation(await this.database()));
     this.writeQueue = pending.catch(() => undefined);
     return pending;
+  }
+
+  private replaceTasks(snapshot: Partial<SnapshotTable>) {
+    const updatedAt = new Date().toISOString();
+    return TABLES.flatMap((table) => {
+      const values = snapshot[table];
+      if (!values) return [];
+      return [
+        { statement: `DELETE FROM ${table}` },
+        ...values.map((value) => ({
+          statement: `INSERT INTO ${table} (id, payload, updated_at) VALUES (?, ?, ?)`,
+          values: [value.id, JSON.stringify(value), updatedAt],
+        })),
+      ];
+    });
   }
 
   private database(): Promise<SQLiteDBConnection> {

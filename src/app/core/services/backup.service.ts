@@ -122,7 +122,9 @@ export class BackupService {
     const backup = await this.crypto.decryptWithPassword<VersionedBackup>(parsed, password);
     if (backup.format !== 'flowra-data' || backup.schemaVersion !== 1)
       throw new Error('This is not a supported Flowra backup.');
-    const data = backup.data;
+    if (!backup.data || typeof backup.data !== 'object')
+      throw new Error('Backup validation failed.');
+    const data = this.normalizeSnapshot(backup.data);
     if (!Array.isArray(data.profiles) || !Array.isArray(data.periods) || !data.appSettings)
       throw new Error('Backup validation failed.');
     const safety = await Promise.all([
@@ -166,8 +168,10 @@ export class BackupService {
   }
 
   private async replaceSnapshot(data: AppSnapshot): Promise<void> {
-    // Capacitor SQLite exposes one connection. Starting these transactions in
-    // parallel races the connection and fails with "Already in transaction".
+    if (this.repository.replaceSnapshot) {
+      await this.repository.replaceSnapshot(data);
+      return;
+    }
     await this.repository.replaceAll('profiles', data.profiles);
     await this.repository.replaceAll('periods', data.periods);
     await this.repository.replaceAll('daily_logs', data.dailyLogs);
@@ -175,5 +179,19 @@ export class BackupService {
     await this.repository.replaceAll('cycle_predictions', data.predictions);
     await this.repository.replaceAll('notification_settings', data.notificationSettings);
     await this.repository.replaceAll('app_settings', [data.appSettings]);
+  }
+
+  private normalizeSnapshot(data: AppSnapshot): AppSnapshot {
+    return {
+      profiles: Array.isArray(data.profiles) ? data.profiles : [],
+      periods: Array.isArray(data.periods) ? data.periods : [],
+      dailyLogs: Array.isArray(data.dailyLogs) ? data.dailyLogs : [],
+      healthEvents: Array.isArray(data.healthEvents) ? data.healthEvents : [],
+      predictions: Array.isArray(data.predictions) ? data.predictions : [],
+      notificationSettings: Array.isArray(data.notificationSettings)
+        ? data.notificationSettings
+        : [],
+      appSettings: { ...DEFAULT_APP_SETTINGS, ...(data.appSettings ?? {}) },
+    };
   }
 }
