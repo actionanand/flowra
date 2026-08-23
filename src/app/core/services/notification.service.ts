@@ -1,6 +1,5 @@
 import { inject, Injectable } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
-import { LocalNotifications } from '@capacitor/local-notifications';
 import { AppSnapshot, CyclePrediction, NotificationSettings, Profile } from '../models/app.models';
 import { addCalendarDays, parseCalendarDate } from '../utils/calendar-date';
 import { PredictionEngine } from '../cycle-engine/prediction-engine';
@@ -28,7 +27,7 @@ export class NotificationService {
   ): Promise<void> {
     if (!this.isAndroid()) return;
     const id = this.notificationId(profile.id);
-    await LocalNotifications.cancel({ notifications: [{ id }] });
+    this.native.cancelReminders([id]);
     if (!settings.enabled || !prediction) return;
     if (!this.native.notificationPermissionGranted()) return;
     this.native.ensureNotificationChannel();
@@ -41,22 +40,12 @@ export class NotificationService {
       settings.daysBefore === 0
         ? 'Your next period may begin today.'
         : `Your next period may begin in about ${settings.daysBefore} days.`;
-    await LocalNotifications.schedule({
-      notifications: [
-        {
-          id,
-          title: settings.privacyMode ? 'Flowra' : `${profile.name}'s cycle reminder`,
-          body: settings.privacyMode ? privateText : uncertainText,
-          schedule: { at: schedule, allowWhileIdle: true },
-          isExactNotification: false,
-          channelId: 'flowra-cycle-reminders',
-          smallIcon: 'ic_stat_flowra',
-        },
-      ],
-    });
-    const pending = await LocalNotifications.getPending();
-    if (!pending.notifications.some((notification) => notification.id === id))
-      throw new Error('Android did not retain the requested reminder schedule.');
+    this.native.scheduleReminder(
+      id,
+      settings.privacyMode ? 'Flowra' : `${profile.name}'s cycle reminder`,
+      settings.privacyMode ? privateText : uncertainText,
+      schedule.getTime(),
+    );
   }
 
   async rescheduleSnapshot(snapshot: AppSnapshot): Promise<void> {
@@ -90,13 +79,10 @@ export class NotificationService {
         ...previousProfiles.map((profile) => profile.id),
         ...snapshot.profiles.map((profile) => profile.id),
       ]);
-      if (profileIds.size) {
-        await LocalNotifications.cancel({
-          notifications: [...profileIds].map((profileId) => ({
-            id: this.notificationId(profileId),
-          })),
-        });
-      }
+      if (profileIds.size)
+        this.native.cancelReminders(
+          [...profileIds].map((profileId) => this.notificationId(profileId)),
+        );
       await this.rescheduleSnapshot(snapshot);
     } catch {
       // Restored health data remains valid if Android declines a scheduling operation.

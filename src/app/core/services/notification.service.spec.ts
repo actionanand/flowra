@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 import { Capacitor } from '@capacitor/core';
-import { LocalNotifications } from '@capacitor/local-notifications';
 import { CyclePrediction, NotificationSettings, Profile } from '../models/app.models';
 import { NotificationService } from './notification.service';
 import { NativeIntegrationService } from './native-integration.service';
@@ -52,7 +51,8 @@ describe('NotificationService', () => {
     const native = TestBed.inject(NativeIntegrationService);
     vi.spyOn(native, 'notificationPermissionGranted').mockReturnValue(true);
     vi.spyOn(native, 'ensureNotificationChannel').mockReturnValue(undefined);
-    vi.spyOn(LocalNotifications, 'cancel').mockResolvedValue(undefined);
+    vi.spyOn(native, 'cancelReminders').mockReturnValue(undefined);
+    vi.spyOn(native, 'scheduleReminder').mockReturnValue(undefined);
   });
 
   afterEach(() => {
@@ -64,12 +64,10 @@ describe('NotificationService', () => {
     const native = TestBed.inject(NativeIntegrationService);
     vi.mocked(native.notificationPermissionGranted).mockReturnValue(false);
     const request = vi.spyOn(native, 'requestNotificationPermission').mockResolvedValue(true);
-    const pluginRequest = vi.spyOn(LocalNotifications, 'requestPermissions');
 
     await expect(TestBed.inject(NotificationService).requestPermission()).resolves.toBe(true);
 
     expect(request).toHaveBeenCalledOnce();
-    expect(pluginRequest).not.toHaveBeenCalled();
   });
 
   it('returns denied instead of propagating native permission errors', async () => {
@@ -83,42 +81,34 @@ describe('NotificationService', () => {
   });
 
   it('schedules the selected number of days before the prediction at 9 AM', async () => {
-    let pendingId = 0;
-    const schedule = vi
-      .spyOn(LocalNotifications, 'schedule')
-      .mockImplementation(async ({ notifications }) => {
-        pendingId = notifications[0].id;
-        return { notifications: notifications.map(({ id }) => ({ id })) };
-      });
-    vi.spyOn(LocalNotifications, 'getPending').mockImplementation(async () => ({
-      notifications: [{ id: pendingId, title: 'Flowra', body: 'Upcoming health reminder' }],
-    }));
+    const native = TestBed.inject(NativeIntegrationService);
 
     await TestBed.inject(NotificationService).reschedule(profile, prediction, settings);
 
-    const notification = schedule.mock.calls[0][0].notifications[0];
-    const at = notification.schedule?.at;
-    expect(at).toBeDefined();
-    expect(at?.getFullYear()).toBe(2026);
-    expect(at?.getMonth()).toBe(7);
-    expect(at?.getDate()).toBe(20);
-    expect(at?.getHours()).toBe(9);
-    expect(notification.isExactNotification).toBe(false);
-    expect(notification.title).toBe('Flowra');
-    expect(notification.body).toBe('Upcoming health reminder');
-    expect(TestBed.inject(NativeIntegrationService).ensureNotificationChannel).toHaveBeenCalled();
+    const atMillis = vi.mocked(native.scheduleReminder).mock.calls[0][3];
+    const at = new Date(atMillis);
+    expect(at.getFullYear()).toBe(2026);
+    expect(at.getMonth()).toBe(7);
+    expect(at.getDate()).toBe(20);
+    expect(at.getHours()).toBe(9);
+    expect(native.scheduleReminder).toHaveBeenCalledWith(
+      expect.any(Number),
+      'Flowra',
+      'Upcoming health reminder',
+      atMillis,
+    );
+    expect(native.ensureNotificationChannel).toHaveBeenCalled();
   });
 
   it('cancels the stable profile notification when reminders are disabled', async () => {
-    const cancel = vi.spyOn(LocalNotifications, 'cancel');
-    const schedule = vi.spyOn(LocalNotifications, 'schedule');
+    const native = TestBed.inject(NativeIntegrationService);
 
     await TestBed.inject(NotificationService).reschedule(profile, prediction, {
       ...settings,
       enabled: false,
     });
 
-    expect(cancel).toHaveBeenCalledOnce();
-    expect(schedule).not.toHaveBeenCalled();
+    expect(native.cancelReminders).toHaveBeenCalledOnce();
+    expect(native.scheduleReminder).not.toHaveBeenCalled();
   });
 });

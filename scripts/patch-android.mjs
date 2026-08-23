@@ -11,6 +11,11 @@ const exportPluginPath = resolve(
   ...appId.split('.'),
   'FlowraExportPlugin.java',
 );
+const reminderReceiverPath = resolve(
+  'android/app/src/main/java',
+  ...appId.split('.'),
+  'FlowraReminderReceiver.java',
+);
 const manifestPath = resolve('android/app/src/main/AndroidManifest.xml');
 const gradlePath = resolve('android/app/build.gradle');
 const proguardPath = resolve('android/app/proguard-rules.pro');
@@ -58,6 +63,11 @@ if (!manifest.includes('androidx.core.content.FileProvider'))
                 android:resource="@xml/flowra_file_paths" />
         </provider>
     </application>`,
+  );
+if (!manifest.includes('.FlowraReminderReceiver'))
+  manifest = manifest.replace(
+    /(\s*<provider\b)/,
+    `\n        <receiver\n            android:name=".FlowraReminderReceiver"\n            android:exported="false" />\n$1`,
   );
 await writeFile(manifestPath, manifest, 'utf8');
 
@@ -173,9 +183,12 @@ const java = `package ${appId};
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.pm.PackageManager;
@@ -413,6 +426,48 @@ public class MainActivity extends BridgeActivity {
     @JavascriptInterface public void ensureNotificationChannel() {
       ensureReminderNotificationChannel();
     }
+
+    @JavascriptInterface public void scheduleReminder(int id, String title, String body, long atMillis) {
+      runOnUiThread(() -> {
+        try {
+          ensureReminderNotificationChannel();
+          AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+          if (alarmManager == null) throw new IllegalStateException("Android alarm service is unavailable.");
+          PendingIntent pendingIntent = reminderPendingIntent(id, title, body);
+          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, atMillis, pendingIntent);
+          else alarmManager.set(AlarmManager.RTC_WAKEUP, atMillis, pendingIntent);
+        } catch (Exception error) {
+          dispatchNativeResult("notification-scheduled", false, "", error.getMessage());
+        }
+      });
+    }
+
+    @JavascriptInterface public void cancelReminders(String ids) {
+      runOnUiThread(() -> {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        if (alarmManager == null || ids == null || ids.isEmpty()) return;
+        for (String rawId : ids.split(",")) {
+          try {
+            int id = Integer.parseInt(rawId.trim());
+            alarmManager.cancel(reminderPendingIntent(id, "", ""));
+          } catch (NumberFormatException ignored) { }
+        }
+      });
+    }
+  }
+
+  private PendingIntent reminderPendingIntent(int id, String title, String body) {
+    Intent intent = new Intent(this, FlowraReminderReceiver.class);
+    intent.putExtra("id", id);
+    intent.putExtra("title", title == null ? "Flowra" : title);
+    intent.putExtra("body", body == null ? "Upcoming health reminder" : body);
+    return PendingIntent.getBroadcast(
+      this,
+      id,
+      intent,
+      PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+    );
   }
 
   private boolean hasNotificationPermission() {
@@ -682,6 +737,15 @@ const exportPluginTemplate = await readFile(
   'utf8',
 );
 await writeFile(exportPluginPath, exportPluginTemplate.replaceAll('__APP_ID__', appId), 'utf8');
+const reminderReceiverTemplate = await readFile(
+  resolve('scripts/android/FlowraReminderReceiver.java'),
+  'utf8',
+);
+await writeFile(
+  reminderReceiverPath,
+  reminderReceiverTemplate.replaceAll('__APP_ID__', appId),
+  'utf8',
+);
 console.log(
   'Applied Flowra Android biometric, privacy, notification, splash, export, R8, and backup patches.',
 );
