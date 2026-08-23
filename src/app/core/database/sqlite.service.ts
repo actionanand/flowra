@@ -12,6 +12,7 @@ const TABLES: readonly RecordKind[] = [
   'notification_settings',
   'app_settings',
 ];
+const RESTORE_BATCH_SIZE = 75;
 
 type SnapshotTable = Record<RecordKind, readonly { readonly id: string }[]>;
 
@@ -48,7 +49,7 @@ export class SqliteService implements LocalRecordRepository {
     await this.enqueueWrite(async (database) => {
       const transaction = await database.isTransactionActive();
       if (transaction.result) await database.rollbackTransaction();
-      await database.executeTransaction(this.replaceTasks({ [kind]: values }));
+      await this.replaceTable(database, kind, values);
     });
   }
 
@@ -56,17 +57,16 @@ export class SqliteService implements LocalRecordRepository {
     await this.enqueueWrite(async (database) => {
       const transaction = await database.isTransactionActive();
       if (transaction.result) await database.rollbackTransaction();
-      await database.executeTransaction(
-        this.replaceTasks({
-          profiles: snapshot.profiles,
-          periods: snapshot.periods,
-          daily_logs: snapshot.dailyLogs,
-          health_events: snapshot.healthEvents,
-          cycle_predictions: snapshot.predictions,
-          notification_settings: snapshot.notificationSettings,
-          app_settings: [snapshot.appSettings],
-        }),
-      );
+      const tables: Partial<SnapshotTable> = {
+        profiles: snapshot.profiles,
+        periods: snapshot.periods,
+        daily_logs: snapshot.dailyLogs,
+        health_events: snapshot.healthEvents,
+        cycle_predictions: snapshot.predictions,
+        notification_settings: snapshot.notificationSettings,
+        app_settings: [snapshot.appSettings],
+      };
+      for (const table of TABLES) await this.replaceTable(database, table, tables[table] ?? []);
     });
   }
 
@@ -76,19 +76,35 @@ export class SqliteService implements LocalRecordRepository {
     return pending;
   }
 
-  private replaceTasks(snapshot: Partial<SnapshotTable>) {
+  private async replaceTable(
+    database: SQLiteDBConnection,
+    table: RecordKind,
+    values: readonly { readonly id: string }[],
+  ): Promise<void> {
+    if (!values.length) {
+      await database.executeTransaction([{ statement: `DELETE FROM ${table}` }]);
+      return;
+    }
+    for (let index = 0; index < values.length; index += RESTORE_BATCH_SIZE) {
+      await database.executeTransaction(
+        this.replaceTasks(table, values.slice(index, index + RESTORE_BATCH_SIZE), index === 0),
+      );
+    }
+  }
+
+  private replaceTasks(
+    table: RecordKind,
+    values: readonly { readonly id: string }[],
+    clearFirst: boolean,
+  ) {
     const updatedAt = new Date().toISOString();
-    return TABLES.flatMap((table) => {
-      const values = snapshot[table];
-      if (!values) return [];
-      return [
-        { statement: `DELETE FROM ${table}` },
-        ...values.map((value) => ({
-          statement: `INSERT INTO ${table} (id, payload, updated_at) VALUES (?, ?, ?)`,
-          values: [value.id, JSON.stringify(value), updatedAt],
-        })),
-      ];
-    });
+    return [
+      ...(clearFirst ? [{ statement: `DELETE FROM ${table}` }] : []),
+      ...values.map((value) => ({
+        statement: `INSERT INTO ${table} (id, payload, updated_at) VALUES (?, ?, ?)`,
+        values: [value.id, JSON.stringify(value), updatedAt],
+      })),
+    ];
   }
 
   private database(): Promise<SQLiteDBConnection> {

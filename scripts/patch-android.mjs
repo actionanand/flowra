@@ -208,6 +208,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.KeyStore;
+import java.util.UUID;
 import java.util.concurrent.Executor;
 
 import javax.crypto.Cipher;
@@ -219,6 +220,7 @@ public class MainActivity extends BridgeActivity {
   private static final int CREATE_BACKUP_REQUEST = 4101;
   private static final int OPEN_BACKUP_REQUEST = 4102;
   private static final int NOTIFICATION_PERMISSION_REQUEST = 4103;
+  private static final int NATIVE_RESULT_CHUNK_SIZE = 120_000;
   private static final String NOTIFICATION_CHANNEL = "flowra-cycle-reminders";
   private static final String BIOMETRIC_KEY_ALIAS = "flowra_biometric_key";
   private static final String SECURITY_PREFERENCES = "flowra_security";
@@ -600,6 +602,17 @@ public class MainActivity extends BridgeActivity {
   private void dispatchNativeResult(String action, boolean success, String data, String message) {
     runOnUiThread(() -> {
       if (isFinishing() || getBridge() == null || getBridge().getWebView() == null) return;
+      if (success && data != null && data.length() > NATIVE_RESULT_CHUNK_SIZE) {
+        String transferId = UUID.randomUUID().toString();
+        int total = (int) Math.ceil((double) data.length() / NATIVE_RESULT_CHUNK_SIZE);
+        for (int index = 0; index < total; index++) {
+          int start = index * NATIVE_RESULT_CHUNK_SIZE;
+          int end = Math.min(data.length(), start + NATIVE_RESULT_CHUNK_SIZE);
+          dispatchNativeChunk(action, transferId, index, total, data.substring(start, end));
+        }
+        dispatchNativeResult(action, true, transferId, message);
+        return;
+      }
       String script = "window.dispatchEvent(new CustomEvent('flowra-native-result',{detail:{"
         + "action:" + JSONObject.quote(action) + ","
         + "success:" + success + ","
@@ -608,6 +621,18 @@ public class MainActivity extends BridgeActivity {
         + "}}));";
       getBridge().getWebView().evaluateJavascript(script, null);
     });
+  }
+
+  private void dispatchNativeChunk(String action, String transferId, int index, int total, String data) {
+    String script = "window.dispatchEvent(new CustomEvent('flowra-native-result',{detail:{"
+      + "action:" + JSONObject.quote(action + "-chunk") + ","
+      + "success:true,"
+      + "transferId:" + JSONObject.quote(transferId) + ","
+      + "index:" + index + ","
+      + "total:" + total + ","
+      + "data:" + JSONObject.quote(data == null ? "" : data)
+      + "}}));";
+    getBridge().getWebView().evaluateJavascript(script, null);
   }
 
   @SuppressWarnings("deprecation")
