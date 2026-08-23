@@ -48,6 +48,7 @@ export class NotificationService {
           title: settings.privacyMode ? 'Flowra' : `${profile.name}'s cycle reminder`,
           body: settings.privacyMode ? privateText : uncertainText,
           schedule: { at: schedule, allowWhileIdle: true },
+          isExactNotification: false,
           channelId: 'flowra-cycle-reminders',
           smallIcon: 'ic_stat_flowra',
         },
