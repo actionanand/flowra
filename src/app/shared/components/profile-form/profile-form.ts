@@ -1,7 +1,7 @@
-import { Component, inject, output, signal } from '@angular/core';
+import { Component, effect, inject, input, output, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AppStore } from '../../../core/services/app-store.service';
-import { AgePrecision, Relationship } from '../../../core/models/app.models';
+import { AgePrecision, Profile, Relationship } from '../../../core/models/app.models';
 import { SelectPicker, SelectPickerOption } from '../select-picker/select-picker';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -13,6 +13,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class ProfileForm {
   private readonly store = inject(AppStore);
+  readonly profile = input<Profile | undefined>();
   readonly saved = output<void>();
   readonly busy = signal(false);
   readonly relationshipOptions: readonly SelectPickerOption[] = [
@@ -84,6 +85,11 @@ export class ProfileForm {
       Validators.max(30),
     ]),
   });
+
+  constructor() {
+    effect(() => this.applyProfile(this.profile()));
+  }
+
   canSave(): boolean {
     return this.form.valid && !this.busy();
   }
@@ -111,9 +117,32 @@ export class ProfileForm {
     this.form.markAllAsTouched();
     if (this.form.invalid) return;
     this.busy.set(true);
+    const existing = this.profile();
+    const value = this.profilePayload();
+    if (existing) await this.store.updateProfile({ ...existing, ...value });
+    else await this.store.createProfile(value);
+    this.busy.set(false);
+    if (!existing) this.resetForm();
+    this.saved.emit();
+  }
+
+  private profilePayload(): {
+    name: string;
+    relationship: Relationship;
+    agePrecision: Profile['agePrecision'];
+    dateOfBirth?: string;
+    birthYear?: number;
+    approximateAge?: number;
+    ageRange?: string;
+    menstruationStarted: Profile['menstruationStarted'];
+    menarcheDate?: string;
+    menarcheYear?: number;
+    approximateMenarcheAge?: number;
+  } {
     const value = this.form.getRawValue();
-    await this.store.createProfile({
-      name: value.name,
+    const periodsStarted = value.menstruationStarted === 'YES';
+    return {
+      name: value.name.trim(),
       relationship: value.relationship,
       agePrecision: value.agePrecision,
       dateOfBirth: value.agePrecision === 'EXACT_DOB' ? value.dateOfBirth || undefined : undefined,
@@ -123,15 +152,48 @@ export class ProfileForm {
       ageRange: value.agePrecision === 'AGE_RANGE' ? value.ageRange : undefined,
       menstruationStarted: value.menstruationStarted,
       menarcheDate:
-        value.menarchePrecision === 'EXACT' ? value.menarcheDate || undefined : undefined,
+        periodsStarted && value.menarchePrecision === 'EXACT'
+          ? value.menarcheDate || undefined
+          : undefined,
       menarcheYear:
-        value.menarchePrecision === 'YEAR' ? (value.menarcheYear ?? undefined) : undefined,
+        periodsStarted && value.menarchePrecision === 'YEAR'
+          ? (value.menarcheYear ?? undefined)
+          : undefined,
       approximateMenarcheAge:
-        value.menarchePrecision === 'APPROXIMATE_AGE'
+        periodsStarted && value.menarchePrecision === 'APPROXIMATE_AGE'
           ? (value.approximateMenarcheAge ?? undefined)
           : undefined,
+    };
+  }
+
+  private applyProfile(profile: Profile | undefined): void {
+    if (!profile) {
+      this.resetForm();
+      return;
+    }
+    this.form.reset({
+      name: profile.name,
+      relationship: profile.relationship,
+      agePrecision: profile.agePrecision,
+      dateOfBirth: profile.dateOfBirth ?? '',
+      birthYear: profile.birthYear ?? null,
+      approximateAge: profile.approximateAge ?? null,
+      ageRange: profile.ageRange ?? '20–29',
+      menstruationStarted: profile.menstruationStarted,
+      menarchePrecision: profile.menarcheDate
+        ? 'EXACT'
+        : profile.menarcheYear
+          ? 'YEAR'
+          : profile.approximateMenarcheAge
+            ? 'APPROXIMATE_AGE'
+            : 'UNKNOWN',
+      menarcheDate: profile.menarcheDate ?? '',
+      menarcheYear: profile.menarcheYear ?? null,
+      approximateMenarcheAge: profile.approximateMenarcheAge ?? null,
     });
-    this.busy.set(false);
+  }
+
+  private resetForm(): void {
     this.form.reset({
       name: '',
       relationship: 'SELF',
@@ -146,6 +208,5 @@ export class ProfileForm {
       menarcheYear: null,
       approximateMenarcheAge: null,
     });
-    this.saved.emit();
   }
 }
