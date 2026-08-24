@@ -44,6 +44,10 @@
           />
         </div>
         <div class="privacy-row">
+          <button type="button" (click)="editing.set(profile)">
+            <ion-icon name="create-outline" aria-hidden="true" />
+            {{ 'profilesPage.edit' | translate }}
+          </button>
           <button
             type="button"
             [class.on]="profile.hiddenFromPreviews"
@@ -77,13 +81,39 @@
         <button
           type="button"
           [attr.aria-label]="'profilesPage.close' | translate"
-          (click)="adding.set(false)"
+          (click)="closeModal()"
         >
           <ion-icon name="close-outline" aria-hidden="true" />
           {{ 'profilesPage.close' | translate }}
         </button>
       </header>
-      <app-profile-form (saved)="adding.set(false)" />
+      <app-profile-form (saved)="closeModal()" />
+    </section>
+  </div>
+}
+@if (editing(); as profile) {
+  <div class="modal-backdrop">
+    <section
+      class="modal card"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="edit-profile-title"
+    >
+      <header>
+        <div>
+          <span class="eyebrow">{{ 'profilesPage.independent' | translate }}</span>
+          <h2 id="edit-profile-title">{{ 'profilesPage.editProfile' | translate }}</h2>
+        </div>
+        <button
+          type="button"
+          [attr.aria-label]="'profilesPage.close' | translate"
+          (click)="closeModal()"
+        >
+          <ion-icon name="close-outline" aria-hidden="true" />
+          {{ 'profilesPage.close' | translate }}
+        </button>
+      </header>
+      <app-profile-form [profile]="profile" (saved)="closeModal()" />
     </section>
   </div>
 }

@@ -121,6 +121,12 @@
     {{ 'profile.privacyNote' | translate }}
   </p>
   <button class="primary-button" type="submit" [disabled]="!canSave()">
-    {{ busy() ? ('profile.saving' | translate) : ('profile.create' | translate) }}
+    {{
+      busy()
+        ? ('profile.saving' | translate)
+        : profile()
+          ? ('profile.update' | translate)
+          : ('profile.create' | translate)
+    }}
   </button>
 </form>

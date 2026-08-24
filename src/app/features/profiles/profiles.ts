@@ -18,6 +18,7 @@ import {
 export class ProfilesPage {
   protected readonly store = inject(AppStore);
   protected readonly adding = signal(false);
+  protected readonly editing = signal<Profile | undefined>(undefined);
   protected readonly stages: readonly SelectPickerOption[] = [
     'PRE_MENARCHE',
     'EARLY_POST_MENARCHE',
@@ -51,5 +52,10 @@ export class ProfilesPage {
     key: 'hiddenFromPreviews' | 'requiresAuthentication',
   ): Promise<void> {
     await this.store.updateProfile({ ...profile, [key]: !profile[key] });
+  }
+
+  protected closeModal(): void {
+    this.adding.set(false);
+    this.editing.set(undefined);
   }
 }
