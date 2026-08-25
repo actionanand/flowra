@@ -119,7 +119,7 @@ export class ProfileForm {
     this.busy.set(true);
     const existing = this.profile();
     const value = this.profilePayload();
-    if (existing) await this.store.updateProfile({ ...existing, ...value });
+    if (existing) await this.store.updateProfileDetails(existing, { ...existing, ...value });
     else await this.store.createProfile(value);
     this.busy.set(false);
     if (!existing) this.resetForm();
