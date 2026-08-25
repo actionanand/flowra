@@ -13,6 +13,10 @@ import {
 } from '../models/app.models';
 import { LOCAL_RECORD_REPOSITORY } from '../repositories/repository.contracts';
 import { calendarDaysBetween, todayCalendarDate } from '../utils/calendar-date';
+import {
+  inferReproductiveStage,
+  reproductiveStageFactorsChanged,
+} from '../utils/reproductive-stage';
 import { NotificationService } from './notification.service';
 import { ThemeService } from './theme.service';
 
@@ -101,36 +105,7 @@ export class AppStore {
     approximateMenarcheAge?: number;
   }): Promise<Profile> {
     const now = new Date().toISOString();
-    const rangeAge =
-      input.ageRange === 'Under 10'
-        ? 9
-        : input.ageRange
-          ? Number.parseInt(input.ageRange, 10)
-          : undefined;
-    const approximateAge =
-      input.approximateAge ??
-      rangeAge ??
-      (input.birthYear
-        ? new Date().getFullYear() - input.birthYear
-        : input.dateOfBirth
-          ? new Date().getFullYear() - Number(input.dateOfBirth.slice(0, 4))
-          : undefined);
-    const menarcheYear =
-      input.menarcheYear ??
-      (input.menarcheDate
-        ? Number(input.menarcheDate.slice(0, 4))
-        : input.approximateMenarcheAge && approximateAge
-          ? new Date().getFullYear() - (approximateAge - input.approximateMenarcheAge)
-          : undefined);
-    const gynecologicAge = menarcheYear ? new Date().getFullYear() - menarcheYear : undefined;
-    const stage =
-      input.menstruationStarted === 'NO'
-        ? 'PRE_MENARCHE'
-        : gynecologicAge !== undefined && gynecologicAge <= 5
-          ? 'EARLY_POST_MENARCHE'
-          : (approximateAge ?? 20) < 20
-            ? 'ADOLESCENT'
-            : 'ADULT_REPRODUCTIVE';
+    const stage = inferReproductiveStage(input);
     const profile: Profile = {
       id: crypto.randomUUID(),
       name: input.name.trim(),
@@ -145,6 +120,7 @@ export class AppStore {
       menarcheYear: input.menarcheYear,
       approximateMenarcheAge: input.approximateMenarcheAge,
       reproductiveStage: stage,
+      reproductiveStageSource: 'INFERRED',
       predictionEpoch: 'NORMAL',
       hiddenFromPreviews: false,
       requiresAuthentication: false,
@@ -179,6 +155,17 @@ export class AppStore {
     if (updated.id === this.activeProfileId()) await this.syncReminder();
   }
 
+  async updateProfileDetails(previous: Profile, profile: Profile): Promise<void> {
+    const shouldInfer =
+      previous.reproductiveStageSource !== 'MANUAL' ||
+      reproductiveStageFactorsChanged(previous, profile);
+    await this.updateProfile({
+      ...profile,
+      reproductiveStage: shouldInfer ? inferReproductiveStage(profile) : previous.reproductiveStage,
+      reproductiveStageSource: shouldInfer ? 'INFERRED' : 'MANUAL',
+    });
+  }
+
   async startPeriod(date = todayCalendarDate()): Promise<void> {
     const profile = this.activeProfile();
     if (!profile) return;
@@ -210,6 +197,7 @@ export class AppStore {
         ...profile,
         menstruationStarted: 'YES',
         reproductiveStage: 'EARLY_POST_MENARCHE',
+        reproductiveStageSource: 'INFERRED',
       });
     }
     await this.syncReminder();

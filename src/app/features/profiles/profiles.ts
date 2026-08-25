@@ -45,7 +45,12 @@ export class ProfilesPage {
         : stage === 'PREGNANT'
           ? 'PRE_PREGNANCY'
           : profile.predictionEpoch;
-    await this.store.updateProfile({ ...profile, reproductiveStage: stage, predictionEpoch });
+    await this.store.updateProfile({
+      ...profile,
+      reproductiveStage: stage,
+      reproductiveStageSource: 'MANUAL',
+      predictionEpoch,
+    });
   }
   protected async toggle(
     profile: Profile,

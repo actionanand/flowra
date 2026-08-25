@@ -61,6 +61,7 @@ export interface Profile {
   readonly menarcheYear?: number;
   readonly approximateMenarcheAge?: number;
   readonly reproductiveStage: ReproductiveStage;
+  readonly reproductiveStageSource?: 'INFERRED' | 'MANUAL';
   readonly predictionEpoch: PredictionEpoch;
   readonly hiddenFromPreviews: boolean;
   readonly requiresAuthentication: boolean;
