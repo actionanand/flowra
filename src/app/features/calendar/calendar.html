@@ -107,7 +107,7 @@
           <p>{{ 'calendar.noEntry' | translate }}</p>
         </div>
       }
-      <a class="primary-button" routerLink="/log"
+      <a class="primary-button" routerLink="/log" [queryParams]="{ date: selectedDate() }"
         ><ion-icon name="create-outline" aria-hidden="true" />
         {{ 'calendar.addEntry' | translate }}</a
       >
