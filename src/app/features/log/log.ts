@@ -9,7 +9,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { DailyLog, FlowLevel, Severity } from '../../core/models/app.models';
 import { AppStore } from '../../core/services/app-store.service';
@@ -34,9 +34,10 @@ export class LogPage {
   protected readonly store = inject(AppStore);
   private readonly i18n = inject(I18nService);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
   private readonly snackbar = inject(SnackbarService);
   protected readonly today = todayCalendarDate();
-  protected readonly date = new FormControl(todayCalendarDate(), { nonNullable: true });
+  protected readonly date = new FormControl(this.initialDate(), { nonNullable: true });
   private readonly selectedDate = toSignal(this.date.valueChanges, {
     initialValue: this.date.value,
   });
@@ -230,4 +231,9 @@ export class LogPage {
     this.editing.set(false);
   }
   protected displayDate = displayDate;
+
+  private initialDate(): string {
+    const requestedDate = this.route.snapshot.queryParamMap.get('date');
+    return requestedDate && /^\d{4}-\d{2}-\d{2}$/.test(requestedDate) ? requestedDate : this.today;
+  }
 }
