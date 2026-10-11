@@ -17,6 +17,7 @@ import {
   inferReproductiveStage,
   reproductiveStageFactorsChanged,
 } from '../utils/reproductive-stage';
+import { validateHistoricalPeriodRange } from '../utils/period-range';
 import { NotificationService } from './notification.service';
 import { ThemeService } from './theme.service';
 
@@ -211,6 +212,53 @@ export class AppStore {
     this.periods.update((periods) =>
       periods.map((item) => (item.id === updated.id ? updated : item)),
     );
+  }
+
+  async saveHistoricalPeriod(startDate: string, endDate: string): Promise<Period> {
+    const profile = this.activeProfile();
+    if (!profile) throw new Error('PROFILE_REQUIRED');
+
+    const existing = this.profilePeriods().find((period) => period.startDate === startDate);
+    const validationError = validateHistoricalPeriodRange(
+      startDate,
+      endDate,
+      todayCalendarDate(),
+      this.profilePeriods(),
+      existing?.id,
+    );
+    if (validationError) throw new Error(validationError);
+
+    const now = new Date().toISOString();
+    const period: Period = existing
+      ? { ...existing, endDate, confirmed: true, updatedAt: now }
+      : {
+          id: crypto.randomUUID(),
+          profileId: profile.id,
+          startDate,
+          endDate,
+          confirmed: true,
+          excludedFromPrediction: false,
+          predictionEpoch: profile.predictionEpoch,
+          createdAt: now,
+          updatedAt: now,
+        };
+    await this.repository.put('periods', period);
+    this.periods.update((periods) =>
+      existing
+        ? periods.map((item) => (item.id === period.id ? period : item))
+        : [...periods, period],
+    );
+
+    if (profile.menstruationStarted === 'NO') {
+      await this.updateProfile({
+        ...profile,
+        menstruationStarted: 'YES',
+        reproductiveStage: 'EARLY_POST_MENARCHE',
+        reproductiveStageSource: 'INFERRED',
+      });
+    }
+    await this.syncReminder();
+    return period;
   }
 
   async saveDailyLog(log: DailyLog): Promise<void> {

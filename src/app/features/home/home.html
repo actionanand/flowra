@@ -1,7 +1,7 @@
 <section
   class="page"
-  [attr.aria-hidden]="periodConfirmationOpen() ? 'true' : null"
-  [attr.inert]="periodConfirmationOpen() ? '' : null"
+  [attr.aria-hidden]="overlayOpen() ? 'true' : null"
+  [attr.inert]="overlayOpen() ? '' : null"
 >
   @if (store.activeProfile(); as profile) {
     <header class="page-heading">
@@ -78,7 +78,7 @@
         }}</span>
       </button>
       @if (!store.activePeriod()) {
-        <button class="earlier" type="button" routerLink="/log">
+        <button #periodEarlierButton class="earlier" type="button" (click)="openPeriodHistory()">
           {{ 'home.periodEarlier' | translate }}
         </button>
       }
@@ -217,5 +217,16 @@
     [iconName]="store.activePeriod() ? 'checkmark-circle-outline' : 'water-outline'"
     (confirmed)="primaryPeriodAction()"
     (cancelled)="cancelPeriodAction()"
+  />
+}
+@if (periodHistoryOpen()) {
+  <app-period-history-dialog
+    [today]="today"
+    [latestStartDate]="latestHistoricalStartDate"
+    [busy]="periodHistorySaving()"
+    [externalErrorKey]="periodHistoryErrorKey()"
+    (changed)="clearPeriodHistoryError()"
+    (confirmed)="saveHistoricalPeriod($event)"
+    (cancelled)="cancelPeriodHistory()"
   />
 }

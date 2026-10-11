@@ -1,0 +1,81 @@
+<div class="period-history-backdrop" tabindex="-1" (click)="cancel()" (keydown.escape)="cancel()">
+  <section
+    class="period-history-dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="period-history-title"
+    aria-describedby="period-history-description"
+    (click)="$event.stopPropagation()"
+    (keydown.escape)="$event.stopPropagation(); cancel()"
+    (keydown.tab)="trapFocus($event)"
+  >
+    <header>
+      <span class="dialog-icon" aria-hidden="true">
+        <ion-icon name="calendar-outline" />
+      </span>
+      <div>
+        <h2 id="period-history-title">{{ 'home.periodEarlier' | translate }}</h2>
+        <p id="period-history-description">{{ 'periodHistory.description' | translate }}</p>
+      </div>
+      <button
+        #closeButton
+        class="close-button"
+        type="button"
+        [disabled]="busy()"
+        [attr.aria-label]="'common.close' | translate"
+        (click)="cancel()"
+      >
+        <ion-icon name="close-outline" aria-hidden="true" />
+      </button>
+    </header>
+
+    <form (submit)="submit($event)" novalidate>
+      <div class="date-fields">
+        <label>
+          <span>{{ 'periodHistory.startDate' | translate }}</span>
+          <input
+            #startInput
+            type="date"
+            required
+            [max]="latestStartDate()"
+            [value]="startDate()"
+            [disabled]="busy()"
+            [attr.aria-invalid]="localErrorKey() ? 'true' : null"
+            (input)="updateStart($event)"
+          />
+        </label>
+        <label>
+          <span>{{ 'periodHistory.endDate' | translate }}</span>
+          <input
+            type="date"
+            required
+            [min]="startDate() || null"
+            [max]="today()"
+            [value]="endDate()"
+            [disabled]="busy()"
+            [attr.aria-invalid]="localErrorKey() ? 'true' : null"
+            (input)="updateEnd($event)"
+          />
+        </label>
+      </div>
+
+      <p class="privacy-note">
+        <ion-icon name="shield-checkmark-outline" aria-hidden="true" />
+        {{ 'periodHistory.privateNote' | translate }}
+      </p>
+      @if (errorKey()) {
+        <p class="form-error" role="alert">{{ errorKey() | translate }}</p>
+      }
+
+      <div class="dialog-actions">
+        <button class="secondary-button" type="button" [disabled]="busy()" (click)="cancel()">
+          {{ 'common.cancel' | translate }}
+        </button>
+        <button #saveButton class="primary-button" type="submit" [disabled]="busy()">
+          <ion-icon name="checkmark-circle-outline" aria-hidden="true" />
+          {{ (busy() ? 'periodHistory.saving' : 'periodHistory.save') | translate }}
+        </button>
+      </div>
+    </form>
+  </section>
+</div>

@@ -14,16 +14,30 @@ import { AppStore } from '../../core/services/app-store.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { I18nService } from '../../core/i18n/i18n.service';
 import {
+  addCalendarDays,
   calendarDaysBetween,
   displayDate,
   todayCalendarDate,
 } from '../../core/utils/calendar-date';
 import { SnackbarService } from '../../core/services/snackbar.service';
 import { ConfirmationDialog } from '../../shared/components/confirmation-dialog/confirmation-dialog';
+import {
+  HistoricalPeriodRange,
+  PeriodHistoryDialog,
+} from '../../shared/components/period-history-dialog/period-history-dialog';
+
+const PERIOD_HISTORY_ERROR_KEYS: Readonly<Record<string, string>> = {
+  REQUIRED: 'periodHistory.errors.REQUIRED',
+  INVALID_DATE: 'periodHistory.errors.INVALID_DATE',
+  START_NOT_EARLIER: 'periodHistory.errors.START_NOT_EARLIER',
+  FUTURE_DATE: 'periodHistory.errors.FUTURE_DATE',
+  INVALID_RANGE: 'periodHistory.errors.INVALID_RANGE',
+  OVERLAP: 'periodHistory.errors.OVERLAP',
+};
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, DecimalPipe, ConfirmationDialog, TranslatePipe],
+  imports: [RouterLink, DecimalPipe, ConfirmationDialog, PeriodHistoryDialog, TranslatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './home.html',
   styleUrls: ['./home.scss', './home.flags.scss'],
@@ -33,9 +47,18 @@ export class Home {
   private readonly i18n = inject(I18nService);
   private readonly snackbar = inject(SnackbarService);
   protected readonly periodConfirmationOpen = signal(false);
+  protected readonly periodHistoryOpen = signal(false);
+  protected readonly periodHistorySaving = signal(false);
+  protected readonly periodHistoryErrorKey = signal('');
   private readonly periodActionButton =
     viewChild<ElementRef<HTMLButtonElement>>('periodActionButton');
+  private readonly periodEarlierButton =
+    viewChild<ElementRef<HTMLButtonElement>>('periodEarlierButton');
   protected readonly today = todayCalendarDate();
+  protected readonly latestHistoricalStartDate = addCalendarDays(this.today, -1);
+  protected readonly overlayOpen = computed(
+    () => this.periodConfirmationOpen() || this.periodHistoryOpen(),
+  );
   protected readonly cycleLengths = computed(() => {
     const periods = this.store.profilePeriods();
     return periods
@@ -107,6 +130,41 @@ export class Home {
       );
     } finally {
       globalThis.setTimeout(() => this.periodActionButton()?.nativeElement.focus());
+    }
+  }
+
+  protected openPeriodHistory(): void {
+    this.snackbar.dismiss();
+    this.periodHistoryErrorKey.set('');
+    this.periodHistoryOpen.set(true);
+  }
+
+  protected cancelPeriodHistory(): void {
+    if (this.periodHistorySaving()) return;
+    this.periodHistoryOpen.set(false);
+    this.periodHistoryErrorKey.set('');
+    globalThis.setTimeout(() => this.periodEarlierButton()?.nativeElement.focus());
+  }
+
+  protected clearPeriodHistoryError(): void {
+    this.periodHistoryErrorKey.set('');
+  }
+
+  protected async saveHistoricalPeriod(range: HistoricalPeriodRange): Promise<void> {
+    this.periodHistorySaving.set(true);
+    this.periodHistoryErrorKey.set('');
+    try {
+      await this.store.saveHistoricalPeriod(range.startDate, range.endDate);
+      this.periodHistoryOpen.set(false);
+      this.snackbar.show(this.i18n.text('periodHistory.saved'));
+      globalThis.setTimeout(() => this.periodEarlierButton()?.nativeElement.focus());
+    } catch (error) {
+      const code = error instanceof Error ? error.message : '';
+      this.periodHistoryErrorKey.set(
+        PERIOD_HISTORY_ERROR_KEYS[code] ?? 'periodHistory.errors.SAVE_FAILED',
+      );
+    } finally {
+      this.periodHistorySaving.set(false);
     }
   }
 }
