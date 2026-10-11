@@ -25,7 +25,9 @@ jobs:
         with: { node-version: '24.16.0', cache: npm }
       - uses: actions/setup-java@v4
         with: { distribution: temurin, java-version: '21' }
-      - uses: android-actions/setup-android@v3
+      - uses: android-actions/setup-android@v4
+        with:
+          packages: platform-tools
       - name: Install locked dependencies
         run: npm ci
       - name: Lint
